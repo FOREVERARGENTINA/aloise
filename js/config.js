@@ -18,11 +18,25 @@ const CONFIG = {
     }
   },
 
+  // ========== COLORES DE MARCA ==========
+  brandColors: {
+    // Azul Corporativo - Color principal
+    primary: '#252b3b',
+    primaryDark: '#1a1f2e',
+    primaryLight: '#2a3142',
+
+    // Dorado Elegante - Color de acento
+    accent: '#C9A961',
+    accentDark: '#A38841',
+    accentLight: '#E4D4A8',
+    accentSubtle: '#D4B976'
+  },
+
   // ========== CONTACTO ==========
   contact: {
     phone: '+54 11 1234-5678', // ACTUALIZAR
     whatsapp: '5491112345678', // ACTUALIZAR (sin + ni espacios)
-    email: 'info@gabrielaaloise.com', // ACTUALIZAR
+    email: 'info@aloisepropiedades.com.ar', // ACTUALIZAR
     whatsappMessage: 'Hola! Quisiera más información sobre las propiedades'
   },
 
@@ -81,20 +95,33 @@ const CONFIG = {
     markerColor: '#0047AB' // Color azul de la marca
   },
 
+  // ========== FIREBASE ==========
+  firebase: {
+    enabled: true,
+    projectId: 'frandoweb-4c2c7',
+    // Los servicios de Firebase se inicializan en firebase-config.js
+    features: {
+      analytics: true,
+      firestore: true,
+      storage: true,
+      auth: false // Cambiar a true si necesitas autenticación
+    }
+  },
+
   // ========== ANALYTICS ==========
   analytics: {
-    googleAnalyticsId: '', // AGREGAR GA4 ID (opcional)
+    googleAnalyticsId: 'G-1X8T159RTT', // ID de Firebase Analytics
     facebookPixelId: '', // AGREGAR Facebook Pixel (opcional)
-    enabled: false // Activar cuando configures analytics
+    enabled: true // Activado con Firebase Analytics
   },
 
   // ========== SEO ==========
   seo: {
     siteName: 'Gabriela Aloise Propiedades',
     defaultTitle: 'Gabriela Aloise Propiedades | Inmobiliaria en Caseros',
-    defaultDescription: 'Inmobiliaria en Caseros con matrícula 2987. Ventas, alquileres, tasaciones y administraciones.',
+    defaultDescription: 'Inmobiliaria en Caseros. Martillera Pública Nº 2987. Ventas, alquileres, tasaciones y administraciones.',
     defaultImage: '/images/og-image.jpg',
-    siteUrl: 'https://gabrielaaloise.com', // ACTUALIZAR con tu dominio real
+    siteUrl: 'https://aloisepropiedades.com.ar',
     twitterHandle: '' // Opcional
   },
 
@@ -122,7 +149,7 @@ const MOCK_PROPERTIES = [
     rooms: 2,
     area: 45,
     covered_area: 45,
-    images: ['/images/properties/property-1.jpg'],
+    images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80'],
     url: '/propiedades/1',
     featured: true,
     created_at: '2025-01-15'
@@ -141,7 +168,7 @@ const MOCK_PROPERTIES = [
     rooms: 5,
     area: 120,
     covered_area: 100,
-    images: ['/images/properties/property-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80'],
     url: '/propiedades/2',
     featured: true,
     created_at: '2025-01-14'
@@ -160,7 +187,7 @@ const MOCK_PROPERTIES = [
     rooms: 3,
     area: 70,
     covered_area: 60,
-    images: ['/images/properties/property-3.jpg'],
+    images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80'],
     url: '/propiedades/3',
     featured: true,
     created_at: '2025-01-13'
@@ -179,7 +206,7 @@ const MOCK_PROPERTIES = [
     rooms: 3,
     area: 65,
     covered_area: 65,
-    images: ['/images/properties/property-1.jpg'],
+    images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80'],
     url: '/propiedades/4',
     featured: false,
     created_at: '2025-01-12'
@@ -198,7 +225,7 @@ const MOCK_PROPERTIES = [
     rooms: 1,
     area: 50,
     covered_area: 50,
-    images: ['/images/properties/property-2.jpg'],
+    images: ['https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'],
     url: '/propiedades/5',
     featured: false,
     created_at: '2025-01-11'
@@ -217,7 +244,7 @@ const MOCK_PROPERTIES = [
     rooms: 4,
     area: 140,
     covered_area: 110,
-    images: ['/images/properties/property-3.jpg'],
+    images: ['https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80'],
     url: '/propiedades/6',
     featured: false,
     created_at: '2025-01-10'

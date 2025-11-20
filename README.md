@@ -276,11 +276,11 @@ npx http-server -p 8000
 
 Buscar y reemplazar en todo el proyecto:
 
-- **WhatsApp**: `5491112345678` → [NÚMERO REAL]
-- **Email**: `info@mariascarpino.com` → [EMAIL REAL]
+- **WhatsApp**: `5491112345678` → [NÚMERO REAL DE GABRIELA ALOISE]
+- **Email**: `info@aloisepropiedades.com.ar` → [EMAIL REAL SI ES DIFERENTE]
 - **Teléfono**: `+54 11 1234-5678` → [TELÉFONO REAL]
-- **Facebook**: `gabrielaaloisepropiedades` → [USERNAME REAL]
-- **Instagram**: `gabrielaaloisepropiedades` → [USERNAME REAL]
+- **Facebook**: `gabrielaaloisepropiedades` → [USERNAME REAL DE FACEBOOK]
+- **Instagram**: `gabrielaaloisepropiedades` → [USERNAME REAL DE INSTAGRAM]
 
 ## Paleta de Colores
 

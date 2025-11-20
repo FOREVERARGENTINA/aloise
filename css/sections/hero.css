@@ -4,7 +4,7 @@
 
 .hero {
   position: relative;
-  min-height: 600px;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,13 +14,14 @@
 
 @media (min-width: 768px) {
   .hero {
-    min-height: 700px;
+    min-height: 750px;
   }
 }
 
 @media (min-width: 1024px) {
   .hero {
     min-height: 85vh;
+    max-height: none;
   }
 }
 
@@ -48,8 +49,10 @@
   z-index: 2;
   text-align: center;
   color: var(--color-white);
-  max-width: 900px;
-  padding: var(--space-xl);
+  max-width: 1000px;
+  padding: var(--space-2xl) var(--space-lg);
+  width: 100%;
+  margin: 0 auto;
 }
 
 .hero__eyebrow {
@@ -107,7 +110,7 @@
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
   color: var(--color-gray-100);
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -137,6 +140,7 @@
 
 /* Hero scroll indicator */
 .hero__scroll {
+  display: none; /* Ocultado por diseño más profesional */
   position: absolute;
   bottom: var(--space-2xl);
   left: 50%;
@@ -189,33 +193,33 @@
 
 /* Hero con logo central */
 .hero__logo {
-  width: 200px;
+  width: 180px;
   height: auto;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
   animation: fadeIn var(--transition-slow) ease-in;
 }
 
 @media (min-width: 768px) {
   .hero__logo {
-    width: 280px;
+    width: 220px;
   }
 }
 
 @media (min-width: 1024px) {
   .hero__logo {
-    width: 350px;
+    width: 280px;
   }
 }
 
 /* Hero con línea divisoria */
 .hero__divider {
   width: 1px;
-  height: 100px;
+  height: 60px;
   background: linear-gradient(
     to bottom,
     transparent,
     var(--color-accent),
     transparent
   );
-  margin: var(--space-xl) auto;
+  margin: var(--space-lg) auto;
 }

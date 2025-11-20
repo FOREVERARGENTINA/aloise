@@ -1,0 +1,111 @@
+/* ==============================================
+   SERVICES SECTION - ELEGANT DESIGN
+   ============================================== */
+
+#servicios {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decoraciones de fondo */
+#servicios::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#servicios::after {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 71, 171, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#servicios .container {
+  position: relative;
+  z-index: 1;
+}
+
+#servicios .section-header__eyebrow {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+#servicios .section-header__title {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Service Cards */
+#servicios .feature {
+  background: white;
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 71, 171, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+#servicios .feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#servicios .feature:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 71, 171, 0.15);
+}
+
+#servicios .feature__icon {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+  color: var(--color-accent);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  transition: all 0.3s ease;
+}
+
+#servicios .feature:hover .feature__icon {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+}
+
+#servicios .feature__title {
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+#servicios .feature__description {
+  color: var(--color-gray-600);
+  line-height: 1.6;
+}
+
+#servicios .grid {
+  gap: var(--space-xl);
+}

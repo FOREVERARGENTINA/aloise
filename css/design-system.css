@@ -1,20 +1,23 @@
 /* ==============================================
-   SISTEMA DE DISEÑO - MARÍA SCARPINO REAL ESTATE
+   SISTEMA DE DISEÑO - GABRIELA ALOISE PROPIEDADES
    ============================================== */
 
 :root {
-  /* ========== COLORES ========== */
+  /* ========== COLORES DE MARCA ========== */
 
-  /* Primarios */
-  --color-primary: #0047AB;        /* Azul royal - navegación, botones principales */
-  --color-primary-dark: #003380;   /* Azul oscuro - hover states */
-  --color-primary-light: #4A7FBF;  /* Azul claro - backgrounds sutiles */
+  /* Azul Corporativo - Color principal de la marca */
+  --color-primary: #252b3b;        /* Azul oscuro corporativo - navbar, footer */
+  --color-primary-dark: #1a1f2e;   /* Azul muy oscuro - hover states, gradientes */
+  --color-primary-light: #2a3142;  /* Azul medio - backgrounds sutiles */
+
+  /* Dorado Elegante - Color de acento de la marca */
+  --color-accent: #C9A961;         /* Dorado principal - CTAs, destacados */
+  --color-accent-dark: #A38841;    /* Dorado oscuro - hover, sombras */
+  --color-accent-light: #E4D4A8;   /* Dorado claro - backgrounds, hover brillante */
+  --color-accent-subtle: #D4B976;  /* Dorado sutil - detalles, bordes */
 
   /* Secundarios */
   --color-secondary: #2C3E50;      /* Gris azulado - textos, headers */
-  --color-accent: #D4AF37;         /* Dorado - CTAs, destacados, detalles elegantes */
-  --color-accent-dark: #B8941F;    /* Dorado oscuro - hover */
-  --color-accent-light: #F4E4C1;   /* Dorado claro - backgrounds sutiles */
 
   /* Neutrales */
   --color-white: #FFFFFF;

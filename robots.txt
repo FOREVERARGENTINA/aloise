@@ -10,7 +10,7 @@ Disallow: /*.js$
 Disallow: /*.css$
 
 # Sitemap
-Sitemap: https://gabrielaaloise.com/sitemap.xml
+Sitemap: https://aloisepropiedades.com.ar/sitemap.xml
 
 # Crawler específicos
 User-agent: Googlebot

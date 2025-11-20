@@ -7,27 +7,27 @@
 
   <!-- SEO Básico -->
   <title>Gabriela Aloise Propiedades | Inmobiliaria en Caseros, Buenos Aires</title>
-  <meta name="description" content="Inmobiliaria en Caseros con matrícula 2987. Ventas, alquileres, tasaciones y administraciones. Equipo de martilleros con amplia experiencia y marketing profesional.">
+  <meta name="description" content="Inmobiliaria en Caseros. Martillera Pública Nº 2987. Ventas, alquileres, tasaciones y administraciones. Equipo de profesionales con amplia experiencia y marketing profesional.">
   <meta name="keywords" content="inmobiliaria, Caseros, Buenos Aires, propiedades, ventas, alquileres, tasaciones, administración, martillero">
   <meta name="author" content="Gabriela Aloise Propiedades">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://gabrielaaloise.com/">
+  <meta property="og:url" content="https://aloisepropiedades.com.ar/">
   <meta property="og:title" content="Gabriela Aloise Propiedades | Inmobiliaria en Caseros">
-  <meta property="og:description" content="Inmobiliaria en Caseros. Ventas, alquileres, tasaciones y administraciones. Matrícula 2987.">
-  <meta property="og:image" content="https://gabrielaaloise.com/images/og-image.jpg">
+  <meta property="og:description" content="Inmobiliaria en Caseros. Martillera Pública Nº 2987. Ventas, alquileres, tasaciones y administraciones.">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
   <meta property="og:locale" content="es_AR">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://gabrielaaloise.com/">
+  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/">
   <meta property="twitter:title" content="Gabriela Aloise Propiedades | Inmobiliaria en Caseros">
   <meta property="twitter:description" content="Inmobiliaria en Caseros. Ventas, alquileres, tasaciones y administraciones.">
-  <meta property="twitter:image" content="https://gabrielaaloise.com/images/og-image.jpg">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://gabrielaaloise.com/">
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
@@ -47,6 +47,7 @@
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/sections/navigation.css">
   <link rel="stylesheet" href="/css/sections/hero.css">
+  <link rel="stylesheet" href="/css/sections/services.css">
   <link rel="stylesheet" href="/css/sections/footer.css">
 
   <!-- Structured Data (JSON-LD) -->
@@ -55,10 +56,10 @@
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
     "name": "Gabriela Aloise Propiedades",
-    "description": "Inmobiliaria especializada en ventas, alquileres, tasaciones y administraciones en Caseros, Buenos Aires. Matrícula 2987.",
-    "url": "https://gabrielaaloise.com",
-    "logo": "https://gabrielaaloise.com/images/logo.png",
-    "image": "https://gabrielaaloise.com/images/og-image.jpg",
+    "description": "Inmobiliaria especializada en ventas, alquileres, tasaciones y administraciones en Caseros, Buenos Aires. Martillera Pública Nº 2987.",
+    "url": "https://aloisepropiedades.com.ar",
+    "logo": "https://aloisepropiedades.com.ar/images/logo.png",
+    "image": "https://aloisepropiedades.com.ar/images/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Tres de Febrero 2958",
@@ -93,26 +94,27 @@
   <header class="header" role="banner">
     <div class="container">
       <div class="header__container">
-        <!-- Logo -->
+        <!-- Navegación izquierda -->
+        <nav class="nav nav--left" role="navigation" aria-label="Navegación izquierda">
+          <ul class="nav__list">
+            <li><a href="/" class="nav__link active">Inicio</a></li>
+            <li><a href="/propiedades.html" class="nav__link">Propiedades</a></li>
+            <li><a href="#servicios" class="nav__link">Servicios</a></li>
+          </ul>
+        </nav>
+
+        <!-- Logo centrado -->
         <a href="/" class="header__logo" aria-label="Gabriela Aloise Propiedades - Inicio">
-          <svg class="header__logo-image" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- Logo placeholder - reemplazar con logo real -->
-            <circle cx="25" cy="25" r="24" stroke="currentColor" stroke-width="2"/>
-            <text x="25" y="32" text-anchor="middle" fill="currentColor" font-family="Playfair Display" font-size="18" font-weight="bold">GA</text>
-          </svg>
-          <span class="header__logo-text sr-only">Gabriela Aloise</span>
+          <img src="/images/logo/logo1.jpg" alt="Gabriela Aloise Propiedades" class="header__logo-image">
         </a>
 
-        <!-- Navegación Desktop -->
-        <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <!-- Navegación derecha -->
+        <nav class="nav nav--right" role="navigation" aria-label="Navegación derecha">
           <ul class="nav__list">
-            <li><a href="/" class="nav__link active">Home</a></li>
-            <li><a href="/servicios.html" class="nav__link">Servicios</a></li>
             <li><a href="/quienes-somos.html" class="nav__link">Quiénes somos</a></li>
-            <li><a href="/propiedades.html" class="nav__link">Propiedades</a></li>
+            <li><a href="/vende-con-nosotros.html" class="nav__link">Vendé con nosotros</a></li>
             <li><a href="/contacto.html" class="nav__link">Contacto</a></li>
           </ul>
-          <a href="/vende-con-nosotros.html" class="btn btn-accent nav__cta">Vendé con nosotros</a>
         </nav>
 
         <!-- Botón menú móvil -->
@@ -129,15 +131,13 @@
   <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menú de navegación móvil">
     <nav role="navigation" aria-label="Navegación móvil">
       <ul class="mobile-menu__list">
-        <li class="mobile-menu__item"><a href="/" class="mobile-menu__link active">Home</a></li>
-        <li class="mobile-menu__item"><a href="/servicios.html" class="mobile-menu__link">Servicios</a></li>
-        <li class="mobile-menu__item"><a href="/quienes-somos.html" class="mobile-menu__link">Quiénes somos</a></li>
+        <li class="mobile-menu__item"><a href="/" class="mobile-menu__link active">Inicio</a></li>
         <li class="mobile-menu__item"><a href="/propiedades.html" class="mobile-menu__link">Propiedades</a></li>
+        <li class="mobile-menu__item"><a href="#servicios" class="mobile-menu__link">Servicios</a></li>
+        <li class="mobile-menu__item"><a href="/quienes-somos.html" class="mobile-menu__link">Quiénes somos</a></li>
+        <li class="mobile-menu__item"><a href="/vende-con-nosotros.html" class="mobile-menu__link">Vendé con nosotros</a></li>
         <li class="mobile-menu__item"><a href="/contacto.html" class="mobile-menu__link">Contacto</a></li>
       </ul>
-      <div class="mobile-menu__cta">
-        <a href="/vende-con-nosotros.html" class="btn btn-accent btn-block">Vendé con nosotros</a>
-      </div>
     </nav>
   </div>
 
@@ -145,29 +145,15 @@
   <main id="main-content">
 
     <!-- Hero Section -->
-    <section class="hero hero--image" style="background-image: url('/images/hero/buenos-aires-skyline.jpg')" aria-label="Presentación principal">
+    <section class="hero hero--image" style="background-image: url('https://plus.unsplash.com/premium_photo-1754211851708-019956b12300?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" aria-label="Presentación principal">
       <div class="container">
         <div class="hero__content">
-          <span class="hero__eyebrow">BIENVENIDOS</span>
-
-          <!-- Logo central (opcional) -->
-          <svg class="hero__logo" width="350" height="100" viewBox="0 0 350 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- Logo placeholder simplificado -->
-            <rect width="350" height="100" fill="transparent"/>
-            <text x="175" y="60" text-anchor="middle" fill="white" font-family="Playfair Display" font-size="48" font-weight="bold">GA</text>
-            <line x1="50" y1="75" x2="140" y2="75" stroke="#D4AF37" stroke-width="2"/>
-            <line x1="210" y1="75" x2="300" y2="75" stroke="#D4AF37" stroke-width="2"/>
-            <text x="175" y="90" text-anchor="middle" fill="#D4AF37" font-family="Inter" font-size="11" letter-spacing="2">PROPIEDADES</text>
-          </svg>
-
-          <div class="hero__divider" aria-hidden="true"></div>
-
           <h1 class="hero__title">
             <span class="hero__title-highlight">Gabriela Aloise</span> Propiedades
           </h1>
 
           <p class="hero__subtitle">
-            Martillera matrícula 2987. Expertos en ventas, alquileres, tasaciones y administraciones en Caseros y zona oeste.
+            Expertos en Ventas, Alquileres, Tasaciones y Administraciones.
           </p>
 
           <div class="hero__actions">
@@ -184,7 +170,7 @@
     </section>
 
     <!-- Servicios Section -->
-    <section class="section bg-gray-50" aria-labelledby="servicios-title">
+    <section id="servicios" class="section" aria-labelledby="servicios-title">
       <div class="container">
         <div class="section-header">
           <span class="section-header__eyebrow">SERVICIOS</span>
@@ -270,7 +256,7 @@
           <!-- Propiedad 1 -->
           <article class="card property-card">
             <div style="position: relative;">
-              <img src="/images/properties/property-1.jpg" alt="Departamento moderno de 2 ambientes en Palermo" class="card__image" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" alt="Departamento moderno de 2 ambientes en Palermo" class="card__image" loading="lazy">
               <span class="card__badge">VENTA</span>
             </div>
             <div class="card__body">
@@ -300,7 +286,7 @@
           <!-- Propiedad 2 -->
           <article class="card property-card">
             <div style="position: relative;">
-              <img src="/images/properties/property-2.jpg" alt="Casa de 3 dormitorios en Belgrano con jardín" class="card__image" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80" alt="Casa de 3 dormitorios en Belgrano con jardín" class="card__image" loading="lazy">
               <span class="card__badge" style="background-color: var(--color-primary); color: white;">ALQUILER</span>
             </div>
             <div class="card__body">
@@ -330,7 +316,7 @@
           <!-- Propiedad 3 -->
           <article class="card property-card">
             <div style="position: relative;">
-              <img src="/images/properties/property-3.jpg" alt="PH de 2 dormitorios en Caseros con patio" class="card__image" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="PH de 2 dormitorios en Caseros con patio" class="card__image" loading="lazy">
               <span class="card__badge">VENTA</span>
             </div>
             <div class="card__body">
@@ -389,13 +375,11 @@
         <!-- Brand -->
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <svg class="footer__logo-image" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="25" cy="25" r="24" stroke="currentColor" stroke-width="2"/>
-              <text x="25" y="32" text-anchor="middle" fill="currentColor" font-family="Playfair Display" font-size="18" font-weight="bold">GA</text>
-            </svg>
+            <img src="/images/logo/logo1.jpg" alt="Gabriela Aloise Propiedades" class="footer__logo-image">
           </a>
           <p class="footer__description">
-            Martillera matrícula 2987. Equipo de profesionales con amplia experiencia en el mercado inmobiliario de Caseros y zona oeste.
+            <strong>Martillera Pública Nº 2987</strong><br>
+            Equipo de profesionales con amplia experiencia en el mercado inmobiliario de Caseros y zona oeste.
           </p>
           <div class="footer__social">
             <a href="https://www.facebook.com/gabrielaaloisepropiedades" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
@@ -449,7 +433,7 @@
                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
               </svg>
-              <a href="mailto:info@mariascarpino.com" class="footer__contact-link">info@mariascarpino.com</a>
+              <a href="mailto:info@gabrielaaloise.com" class="footer__contact-link">info@aloisepropiedades.com.ar</a>
             </div>
             <div class="footer__contact-item">
               <svg class="footer__contact-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -463,12 +447,16 @@
 
       <div class="footer__bottom">
         <p class="footer__copyright">
-          &copy; 2025 Gabriela Aloise Propiedades. Matrícula 2987. Todos los derechos reservados.
+          &copy; 2025 Gabriela Aloise Propiedades. Martillera Pública Nº 2987. Todos los derechos reservados.
         </p>
         <div class="footer__legal">
           <a href="/privacidad.html" class="footer__legal-link">Política de Privacidad</a>
           <a href="/terminos.html" class="footer__legal-link">Términos y Condiciones</a>
         </div>
+      </div>
+      <div style="text-align: center; padding-top: var(--space-lg); margin-top: var(--space-lg); border-top: 1px solid var(--color-gray-200); font-size: var(--font-size-sm); color: var(--color-gray-500);">
+        <p style="margin: 0;">Diseñado por</p>
+        <a href="https://www.frandoweb.com" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='var(--color-accent-dark)'" onmouseout="this.style.color='var(--color-accent)'">www.FrandoWeb.com</a>
       </div>
     </div>
   </footer>
@@ -483,6 +471,15 @@
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </a>
+
+  <!-- Firebase SDK - CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+  <!-- Inicializar Firebase -->
+  <script src="/js/firebase-init.js"></script>
 
   <!-- JavaScript - EN ORDEN -->
   <script src="/js/config.js"></script>
