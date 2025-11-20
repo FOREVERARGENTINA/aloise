@@ -1,0 +1,231 @@
+/* ==============================================
+   FOOTER
+   ============================================== */
+
+.footer {
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-300);
+  padding-top: var(--space-4xl);
+  padding-bottom: var(--space-xl);
+}
+
+.footer__main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-3xl);
+}
+
+@media (min-width: 640px) {
+  .footer__main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer__main {
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: var(--space-2xl);
+  }
+}
+
+/* Footer brand */
+.footer__brand {
+  max-width: 350px;
+}
+
+.footer__logo {
+  display: inline-block;
+  margin-bottom: var(--space-lg);
+}
+
+.footer__logo-image {
+  height: 50px;
+  width: auto;
+  filter: brightness(0) invert(1); /* Hacer logo blanco */
+}
+
+.footer__description {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-gray-400);
+  margin-bottom: var(--space-lg);
+}
+
+.footer__social {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-gray-800);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.footer__social-link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+/* Footer sections */
+.footer__section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+}
+
+.footer__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__list-item {
+  margin-bottom: var(--space-sm);
+}
+
+.footer__link {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-400);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  display: inline-block;
+}
+
+.footer__link:hover {
+  color: var(--color-accent);
+  padding-left: var(--space-xs);
+}
+
+/* Footer contact */
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.footer__contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--font-size-base);
+  color: var(--color-gray-400);
+}
+
+.footer__contact-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+}
+
+.footer__contact-link {
+  color: var(--color-gray-400);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer__contact-link:hover {
+  color: var(--color-accent);
+}
+
+/* Footer bottom */
+.footer__bottom {
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-gray-800);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer__copyright {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.footer__legal {
+  display: flex;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .footer__legal {
+    justify-content: flex-end;
+  }
+}
+
+.footer__legal-link {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer__legal-link:hover {
+  color: var(--color-accent);
+}
+
+/* WhatsApp float button */
+.whatsapp-float {
+  position: fixed;
+  bottom: var(--space-2xl);
+  right: var(--space-2xl);
+  z-index: var(--z-sticky);
+  width: 60px;
+  height: 60px;
+  background-color: #25D366; /* Color oficial de WhatsApp */
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-xl);
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+  fill: white;
+}
+
+@media (max-width: 767px) {
+  .whatsapp-float {
+    width: 56px;
+    height: 56px;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+  }
+
+  .whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+  }
+}

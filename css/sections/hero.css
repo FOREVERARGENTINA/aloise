@@ -1,0 +1,221 @@
+/* ==============================================
+   HERO SECTION
+   ============================================== */
+
+.hero {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    min-height: 700px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 85vh;
+  }
+}
+
+/* Hero con imagen de fondo */
+.hero--image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero--image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-dark);
+  z-index: 1;
+}
+
+/* Hero content */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--color-white);
+  max-width: 900px;
+  padding: var(--space-xl);
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-accent);
+  margin-bottom: var(--space-lg);
+  animation: fadeIn var(--transition-slow) ease-in;
+}
+
+@media (min-width: 768px) {
+  .hero__eyebrow {
+    font-size: var(--font-size-base);
+  }
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__title {
+    font-size: var(--font-size-5xl);
+  }
+}
+
+.hero__title-highlight {
+  font-style: italic;
+  color: var(--color-accent);
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hero__title-highlight {
+    display: inline;
+  }
+}
+
+.hero__subtitle {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-gray-100);
+  margin-bottom: var(--space-2xl);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 1s ease-in 0.4s both;
+}
+
+@media (min-width: 768px) {
+  .hero__subtitle {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+  animation: fadeIn 1.2s ease-in 0.6s both;
+}
+
+@media (min-width: 640px) {
+  .hero__actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* Hero scroll indicator */
+.hero__scroll {
+  position: absolute;
+  bottom: var(--space-2xl);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: bounce 2s infinite;
+}
+
+.hero__scroll-icon {
+  display: block;
+  width: 30px;
+  height: 50px;
+  border: 2px solid var(--color-white);
+  border-radius: 25px;
+  position: relative;
+}
+
+.hero__scroll-icon::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: scroll 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 1;
+    top: 8px;
+  }
+  100% {
+    opacity: 0;
+    top: 30px;
+  }
+}
+
+/* Hero con logo central */
+.hero__logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: var(--space-xl);
+  animation: fadeIn var(--transition-slow) ease-in;
+}
+
+@media (min-width: 768px) {
+  .hero__logo {
+    width: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__logo {
+    width: 350px;
+  }
+}
+
+/* Hero con línea divisoria */
+.hero__divider {
+  width: 1px;
+  height: 100px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+  margin: var(--space-xl) auto;
+}

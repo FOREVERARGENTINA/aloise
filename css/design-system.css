@@ -1,0 +1,199 @@
+/* ==============================================
+   SISTEMA DE DISEÑO - MARÍA SCARPINO REAL ESTATE
+   ============================================== */
+
+:root {
+  /* ========== COLORES ========== */
+
+  /* Primarios */
+  --color-primary: #0047AB;        /* Azul royal - navegación, botones principales */
+  --color-primary-dark: #003380;   /* Azul oscuro - hover states */
+  --color-primary-light: #4A7FBF;  /* Azul claro - backgrounds sutiles */
+
+  /* Secundarios */
+  --color-secondary: #2C3E50;      /* Gris azulado - textos, headers */
+  --color-accent: #D4AF37;         /* Dorado - CTAs, destacados, detalles elegantes */
+  --color-accent-dark: #B8941F;    /* Dorado oscuro - hover */
+  --color-accent-light: #F4E4C1;   /* Dorado claro - backgrounds sutiles */
+
+  /* Neutrales */
+  --color-white: #FFFFFF;
+  --color-gray-50: #F8F9FA;        /* Backgrounds claros */
+  --color-gray-100: #F1F3F5;       /* Backgrounds alternos */
+  --color-gray-200: #E9ECEF;       /* Bordes sutiles */
+  --color-gray-300: #DEE2E6;       /* Bordes */
+  --color-gray-400: #CED4DA;       /* Disabled states */
+  --color-gray-500: #ADB5BD;       /* Placeholders */
+  --color-gray-600: #6C757D;       /* Textos secundarios */
+  --color-gray-700: #495057;       /* Textos principales */
+  --color-gray-800: #343A40;       /* Headings */
+  --color-gray-900: #212529;       /* Textos oscuros */
+  --color-black: #000000;
+
+  /* Semánticos */
+  --color-success: #28A745;
+  --color-error: #DC3545;
+  --color-warning: #FFC107;
+  --color-info: #17A2B8;
+
+  /* Overlay */
+  --overlay-dark: rgba(0, 0, 0, 0.6);
+  --overlay-light: rgba(255, 255, 255, 0.9);
+
+
+  /* ========== TIPOGRAFÍA ========== */
+
+  /* Familias */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-mono: 'Courier New', monospace;
+
+  /* Tamaños - Escala modular (1.250 - Major Third) */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-md: 1.125rem;     /* 18px */
+  --font-size-lg: 1.25rem;      /* 20px */
+  --font-size-xl: 1.563rem;     /* 25px */
+  --font-size-2xl: 1.953rem;    /* 31px */
+  --font-size-3xl: 2.441rem;    /* 39px */
+  --font-size-4xl: 3.052rem;    /* 49px */
+  --font-size-5xl: 3.815rem;    /* 61px */
+
+  /* Pesos */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+
+
+  /* ========== ESPACIADO ========== */
+
+  /* Escala de 8px */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  --space-4xl: 6rem;      /* 96px */
+  --space-5xl: 8rem;      /* 128px */
+
+  /* Contenedores */
+  --container-xs: 480px;
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+
+
+  /* ========== BORDES ========== */
+
+  /* Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 1rem;       /* 16px */
+  --radius-xl: 1.5rem;     /* 24px */
+  --radius-full: 9999px;   /* Circular */
+
+  /* Widths */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+
+  /* ========== SOMBRAS ========== */
+
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+
+  /* ========== TRANSICIONES ========== */
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+
+  /* ========== Z-INDEX ========== */
+
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+
+  /* ========== BREAKPOINTS (para usar en JavaScript) ========== */
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+
+/* ========== TIPOGRAFÍA RESPONSIVE ========== */
+
+@media (min-width: 768px) {
+  :root {
+    --font-size-base: 1.125rem;   /* 18px en tablet+ */
+    --font-size-3xl: 3rem;        /* 48px */
+    --font-size-4xl: 3.75rem;     /* 60px */
+    --font-size-5xl: 4.5rem;      /* 72px */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --font-size-4xl: 4.5rem;      /* 72px en desktop */
+    --font-size-5xl: 6rem;        /* 96px */
+  }
+}
+
+
+/* ========== UTILIDADES DE SISTEMA ========== */
+
+/* Esconder visualmente pero mantener accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible para accesibilidad */
+.focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

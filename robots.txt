@@ -1,0 +1,20 @@
+# robots.txt para Gabriela Aloise Propiedades
+
+User-agent: *
+Allow: /
+
+# Bloquear archivos y directorios privados
+Disallow: /js/
+Disallow: /css/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Sitemap
+Sitemap: https://gabrielaaloise.com/sitemap.xml
+
+# Crawler específicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
