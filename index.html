@@ -264,7 +264,9 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3">
+        <div class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3" id="latest-properties-grid">
+          <!-- Las propiedades se cargarán dinámicamente desde la API -->
+          <!-- Propiedades estáticas como fallback (se reemplazarán) -->
           <!-- Propiedad 1 -->
           <article class="card property-card">
             <div style="position: relative;">
@@ -482,7 +484,33 @@
     </svg>
   </a>
 
-  <!-- JavaScript -->
-  <script src="/js/main.js" defer></script>
+  <!-- JavaScript - EN ORDEN -->
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+  <script src="/js/modules/property-service.js"></script>
+  <script src="/js/modules/property-renderer.js"></script>
+  <script src="/js/main.js"></script>
+
+  <!-- JavaScript específico para home - cargar últimos ingresos -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Inicializar servicio de propiedades
+      const propertyService = new PropertyService(CONFIG);
+      const renderer = new PropertyRenderer();
+
+      // Cargar últimos ingresos dinámicamente
+      const result = await propertyService.getLatestProperties(CONFIG.xintel.searchLimits.latest);
+
+      if (result.success && result.data.properties) {
+        // Renderizar propiedades
+        renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid');
+
+        // Mostrar badge de datos de prueba si aplica
+        if (result.mock) {
+          console.log('⚠️ Mostrando datos de prueba. Configurá la API de Xintel en js/config.js');
+        }
+      }
+    });
+  </script>
 </body>
 </html>

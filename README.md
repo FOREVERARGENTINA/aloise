@@ -16,6 +16,7 @@ Sitio web profesional para inmobiliaria en Caseros, Buenos Aires.
 - CSS3 con variables (Design System)
 - JavaScript vanilla (sin frameworks)
 - Mobile-first responsive design
+- **Integración con API de Xintel** (plataforma de datos inmobiliarios)
 
 ### Optimizaciones Implementadas
 
@@ -39,6 +40,15 @@ Sitio web profesional para inmobiliaria en Caseros, Buenos Aires.
 - JavaScript optimizado
 - Sin dependencias externas pesadas
 - Fonts con preconnect
+- Caché inteligente de datos de API
+
+✅ **Integración Xintel API**
+- Carga dinámica de propiedades
+- Filtros de búsqueda avanzados
+- Paginación automática
+- Fallback a datos mock para desarrollo
+- Sistema de caché para optimizar llamadas
+- Manejo robusto de errores
 
 ✅ **Responsive Design**
 - Mobile-first approach
@@ -51,13 +61,15 @@ Sitio web profesional para inmobiliaria en Caseros, Buenos Aires.
 ```
 aloise/
 ├── index.html                 # Página principal
+├── propiedades.html          # ✅ Listado de propiedades con filtros
 ├── servicios.html            # Servicios (por crear)
-├── propiedades.html          # Listado de propiedades (por crear)
 ├── quienes-somos.html        # Sobre nosotros (por crear)
 ├── contacto.html             # Formulario de contacto (por crear)
 ├── vende-con-nosotros.html   # CTA vendedores (por crear)
 ├── robots.txt
 ├── sitemap.xml
+├── README.md
+├── XINTEL_INTEGRATION.md     # ✅ Documentación API Xintel
 ├── css/
 │   ├── design-system.css     # Variables y sistema de diseño
 │   ├── global.css            # Reset, base, utilidades
@@ -67,8 +79,12 @@ aloise/
 │       ├── hero.css
 │       └── footer.css
 ├── js/
+│   ├── config.js             # ✅ Configuración global y API keys
 │   ├── main.js               # JavaScript principal
-│   └── modules/              # Módulos específicos (futuro)
+│   └── modules/              # ✅ Módulos de API y renderizado
+│       ├── xintel-api.js     # Cliente de API Xintel
+│       ├── property-service.js  # Servicio con fallback
+│       └── property-renderer.js # Renderizado de propiedades
 ├── images/
 │   ├── hero/                 # Imágenes del hero
 │   ├── properties/           # Imágenes de propiedades
@@ -77,21 +93,82 @@ aloise/
     └── fonts/                # Fuentes (si se usan locales)
 ```
 
+## Integración con Xintel API
+
+**📘 Ver documentación completa:** [XINTEL_INTEGRATION.md](./XINTEL_INTEGRATION.md)
+
+### Configuración Rápida
+
+1. **Obtener API Key de Xintel**
+   - Registrarse en https://www.xintel.com.ar/
+   - Ir a Configuración → API
+   - Copiar tu API Key
+
+2. **Configurar en el sitio**
+   - Editar `/js/config.js`
+   - Actualizar:
+     ```javascript
+     xintel: {
+       enabled: true,
+       apiKey: 'TU_API_KEY_AQUI'
+     },
+     development: {
+       useMockData: false  // Cambiar a false
+     }
+     ```
+
+3. **Verificar**
+   - Abrir el sitio
+   - Verificar consola del navegador
+   - Si aparece "⚠️ Usando datos de prueba", revisar configuración
+
+### Modo de Desarrollo (Sin API)
+
+El sitio funciona perfectamente **sin API de Xintel** usando datos mock:
+
+```javascript
+// En js/config.js
+development: {
+  useMockData: true,  // Activar datos de prueba
+  mockDataDelay: 1000
+}
+```
+
+**Beneficios:**
+- ✅ Desarrollo local sin cuenta de Xintel
+- ✅ Testing sin consumir cuota de API
+- ✅ Demostración del sitio funcional
+- ✅ Personalizar datos de prueba en `MOCK_PROPERTIES`
+
+**Para producción:** Cambiar a `useMockData: false` y configurar API real.
+
 ## Tareas Pendientes
 
-### Alto Prioridad
+### 🔴 Alto Prioridad
+
+**Configuración API Xintel:**
+- [ ] Obtener cuenta y API key de Xintel
+- [ ] Configurar API key en `/js/config.js`
+- [ ] Probar integración con API real
+- [ ] Desactivar mock data (`useMockData: false`)
+
+**Datos de Contacto:**
 - [ ] Actualizar número de WhatsApp real en:
-  - index.html (botón flotante y footer)
-  - js/main.js (CONFIG.whatsappNumber)
-- [ ] Actualizar email real en footer (actualmente: info@mariascarpino.com)
-- [ ] Actualizar número de teléfono real en footer
+  - `/js/config.js` (CONFIG.contact.whatsapp)
+  - index.html y propiedades.html (botón flotante)
+- [ ] Actualizar email real en `/js/config.js` y footer
+- [ ] Actualizar teléfono real en footer
+- [ ] Actualizar redes sociales en `/js/config.js`
+
+**Contenido Visual:**
 - [ ] Agregar logo real (reemplazar SVG placeholder)
 - [ ] Agregar imágenes de propiedades reales
+- [ ] Agregar foto de skyline de Buenos Aires para hero
 
-### Páginas por Crear
-- [ ] servicios.html - Detalle de servicios
-- [ ] propiedades.html - Listado completo de propiedades
-- [ ] quienes-somos.html - Sobre el equipo
+### 🟡 Páginas por Crear
+- [x] ~~propiedades.html~~ - ✅ **Completado con filtros y API**
+- [ ] servicios.html - Detalle de cada servicio
+- [ ] quienes-somos.html - Historia y equipo
 - [ ] contacto.html - Formulario de contacto
 - [ ] vende-con-nosotros.html - Landing para vendedores
 - [ ] privacidad.html - Política de privacidad

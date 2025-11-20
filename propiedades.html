@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ========== META TAGS ESENCIALES ========== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Básico -->
+  <title>Propiedades en Venta y Alquiler | Gabriela Aloise Propiedades</title>
+  <meta name="description" content="Explorá todas nuestras propiedades en venta y alquiler en Caseros y zona oeste. Casas, departamentos, PH y más.">
+  <meta name="keywords" content="propiedades, venta, alquiler, Caseros, Buenos Aires, casas, departamentos">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gabrielaaloise.com/propiedades.html">
+  <meta property="og:title" content="Propiedades | Gabriela Aloise Propiedades">
+  <meta property="og:description" content="Encontrá tu propiedad ideal en Caseros y zona oeste">
+  <meta property="og:image" content="https://gabrielaaloise.com/images/og-image.jpg">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://gabrielaaloise.com/propiedades.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/sections/navigation.css">
+  <link rel="stylesheet" href="/css/sections/footer.css">
+
+  <style>
+    /* Estilos específicos para filtros */
+    .filters {
+      background-color: var(--color-gray-50);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .filters__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    @media (min-width: 640px) {
+      .filters__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .filters__grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .filters__actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .results-count {
+      font-size: var(--font-size-lg);
+      color: var(--color-gray-700);
+    }
+
+    .results-count strong {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-bold);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
+
+  <!-- HEADER - Copiado del index.html -->
+  <header class="header" role="banner">
+    <div class="container">
+      <div class="header__container">
+        <a href="/" class="header__logo" aria-label="Gabriela Aloise Propiedades - Inicio">
+          <svg class="header__logo-image" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="25" cy="25" r="24" stroke="currentColor" stroke-width="2"/>
+            <text x="25" y="32" text-anchor="middle" fill="currentColor" font-family="Playfair Display" font-size="18" font-weight="bold">GA</text>
+          </svg>
+          <span class="header__logo-text sr-only">Gabriela Aloise</span>
+        </a>
+
+        <nav class="nav" role="navigation" aria-label="Navegación principal">
+          <ul class="nav__list">
+            <li><a href="/" class="nav__link">Home</a></li>
+            <li><a href="/servicios.html" class="nav__link">Servicios</a></li>
+            <li><a href="/quienes-somos.html" class="nav__link">Quiénes somos</a></li>
+            <li><a href="/propiedades.html" class="nav__link active">Propiedades</a></li>
+            <li><a href="/contacto.html" class="nav__link">Contacto</a></li>
+          </ul>
+          <a href="/vende-con-nosotros.html" class="btn btn-accent nav__cta">Vendé con nosotros</a>
+        </nav>
+
+        <button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+          <span class="mobile-menu-toggle__bar"></span>
+          <span class="mobile-menu-toggle__bar"></span>
+          <span class="mobile-menu-toggle__bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menú Móvil -->
+  <div class="mobile-menu" id="mobile-menu">
+    <nav role="navigation">
+      <ul class="mobile-menu__list">
+        <li class="mobile-menu__item"><a href="/" class="mobile-menu__link">Home</a></li>
+        <li class="mobile-menu__item"><a href="/servicios.html" class="mobile-menu__link">Servicios</a></li>
+        <li class="mobile-menu__item"><a href="/quienes-somos.html" class="mobile-menu__link">Quiénes somos</a></li>
+        <li class="mobile-menu__item"><a href="/propiedades.html" class="mobile-menu__link active">Propiedades</a></li>
+        <li class="mobile-menu__item"><a href="/contacto.html" class="mobile-menu__link">Contacto</a></li>
+      </ul>
+      <div class="mobile-menu__cta">
+        <a href="/vende-con-nosotros.html" class="btn btn-accent btn-block">Vendé con nosotros</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+
+    <!-- Page Header -->
+    <section class="section bg-gray-50">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__eyebrow">PROPIEDADES</span>
+          <h1 class="section-header__title">Encontrá tu propiedad ideal</h1>
+          <p class="section-header__description">
+            Explorá nuestra selección de propiedades en Caseros y zona oeste
+          </p>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+          <form id="filtersForm" role="search">
+            <div class="filters__grid">
+              <!-- Tipo de operación -->
+              <div class="form-group">
+                <label for="operationType" class="form-label">Tipo de operación</label>
+                <select id="operationType" name="operationType" class="form-select">
+                  <option value="">Todas</option>
+                  <option value="venta">Venta</option>
+                  <option value="alquiler">Alquiler</option>
+                </select>
+              </div>
+
+              <!-- Tipo de propiedad -->
+              <div class="form-group">
+                <label for="propertyType" class="form-label">Tipo de propiedad</label>
+                <select id="propertyType" name="propertyType" class="form-select">
+                  <option value="">Todas</option>
+                  <option value="casa">Casa</option>
+                  <option value="departamento">Departamento</option>
+                  <option value="ph">PH</option>
+                  <option value="local">Local Comercial</option>
+                  <option value="terreno">Terreno</option>
+                </select>
+              </div>
+
+              <!-- Ubicación -->
+              <div class="form-group">
+                <label for="location" class="form-label">Ubicación</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  class="form-input"
+                  placeholder="Ej: Caseros"
+                >
+              </div>
+
+              <!-- Dormitorios -->
+              <div class="form-group">
+                <label for="minRooms" class="form-label">Dormitorios mínimos</label>
+                <select id="minRooms" name="minRooms" class="form-select">
+                  <option value="">Cualquiera</option>
+                  <option value="1">1+</option>
+                  <option value="2">2+</option>
+                  <option value="3">3+</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="filters__actions">
+              <button type="submit" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right: 8px;">
+                  <circle cx="11" cy="11" r="8" stroke-width="2"/>
+                  <path d="m21 21-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Buscar propiedades
+              </button>
+              <button type="button" class="btn btn-outline" id="clearFilters">Limpiar filtros</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resultados -->
+    <section class="section">
+      <div class="container">
+        <!-- Header de resultados -->
+        <div class="results-header">
+          <p class="results-count" id="resultsCount">
+            Cargando propiedades...
+          </p>
+
+          <div class="form-group" style="margin: 0; min-width: 180px;">
+            <label for="sortBy" class="form-label sr-only">Ordenar por</label>
+            <select id="sortBy" name="sortBy" class="form-select">
+              <option value="date_desc">Más recientes</option>
+              <option value="price_asc">Menor precio</option>
+              <option value="price_desc">Mayor precio</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Grid de propiedades -->
+        <div class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3" id="propertiesGrid">
+          <!-- Las propiedades se cargarán dinámicamente aquí -->
+        </div>
+
+        <!-- Paginación -->
+        <div id="pagination"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER - Igual que index.html -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__main">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <svg class="footer__logo-image" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="25" cy="25" r="24" stroke="currentColor" stroke-width="2"/>
+              <text x="25" y="32" text-anchor="middle" fill="currentColor" font-family="Playfair Display" font-size="18" font-weight="bold">GA</text>
+            </svg>
+          </a>
+          <p class="footer__description">
+            Martillera matrícula 2987. Equipo de profesionales con amplia experiencia en el mercado inmobiliario de Caseros y zona oeste.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          &copy; 2025 Gabriela Aloise Propiedades. Matrícula 2987. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/5491112345678?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- JavaScript - EN ORDEN -->
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+  <script src="/js/modules/property-service.js"></script>
+  <script src="/js/modules/property-renderer.js"></script>
+  <script src="/js/main.js"></script>
+
+  <!-- JavaScript específico de esta página -->
+  <script>
+    // Inicialización de la página de propiedades
+    document.addEventListener('DOMContentLoaded', async () => {
+      const propertyService = new PropertyService(CONFIG);
+      const renderer = new PropertyRenderer();
+
+      let currentPage = 1;
+      let currentFilters = {};
+
+      // Función para cargar propiedades
+      async function loadProperties() {
+        // Mostrar loading
+        renderer.renderLoadingState('#propertiesGrid');
+
+        // Obtener filtros del formulario
+        const formData = new FormData(document.getElementById('filtersForm'));
+        currentFilters = {
+          operationType: formData.get('operationType') || undefined,
+          propertyType: formData.get('propertyType') || undefined,
+          location: formData.get('location') || undefined,
+          minRooms: formData.get('minRooms') ? parseInt(formData.get('minRooms')) : undefined,
+          sort: document.getElementById('sortBy').value || 'date_desc',
+          page: currentPage,
+          limit: CONFIG.xintel.defaultFilters.limit
+        };
+
+        // Obtener propiedades
+        const result = await propertyService.getProperties(currentFilters);
+
+        if (!result.success) {
+          renderer.renderErrorState('#propertiesGrid', result.error);
+          return;
+        }
+
+        const { properties, pagination } = result.data;
+
+        // Renderizar propiedades
+        renderer.renderPropertiesGrid(properties, '#propertiesGrid');
+
+        // Actualizar contador de resultados
+        const resultsCount = document.getElementById('resultsCount');
+        if (pagination) {
+          resultsCount.innerHTML = `
+            Mostrando <strong>${properties.length}</strong> de <strong>${pagination.total_items}</strong> propiedades
+            ${result.mock ? '<span style="color: var(--color-warning); margin-left: 8px;">(Datos de prueba)</span>' : ''}
+          `;
+
+          // Renderizar paginación
+          if (pagination.total_pages > 1) {
+            const paginationHTML = renderer.renderPagination(
+              pagination.current_page,
+              pagination.total_pages,
+              'goToPage'
+            );
+            document.getElementById('pagination').innerHTML = paginationHTML;
+          } else {
+            document.getElementById('pagination').innerHTML = '';
+          }
+        }
+
+        // Scroll to top suave
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Handler de búsqueda
+      document.getElementById('filtersForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        currentPage = 1;
+        loadProperties();
+      });
+
+      // Handler de limpiar filtros
+      document.getElementById('clearFilters').addEventListener('click', () => {
+        document.getElementById('filtersForm').reset();
+        currentPage = 1;
+        loadProperties();
+      });
+
+      // Handler de ordenamiento
+      document.getElementById('sortBy').addEventListener('change', () => {
+        currentPage = 1;
+        loadProperties();
+      });
+
+      // Función global para paginación
+      window.goToPage = (page) => {
+        currentPage = page;
+        loadProperties();
+      };
+
+      // Cargar propiedades inicialmente
+      loadProperties();
+
+      // Log de estado de la API
+      const apiStatus = propertyService.getAPIStatus();
+      if (apiStatus.useMockData) {
+        console.log('⚠️ Usando datos de prueba. Configurá la API de Xintel en js/config.js');
+      }
+    });
+  </script>
+</body>
+</html>
