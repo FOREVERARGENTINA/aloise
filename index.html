@@ -29,10 +29,19 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://aloisepropiedades.com.ar/">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <!-- Favicons (from DATOS/favicomatic) -->
+  <link rel="icon" href="/images/favicomatic/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/images/favicomatic/favicon-196x196.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicomatic/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicomatic/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicomatic/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicomatic/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicomatic/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicomatic/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicomatic/apple-touch-icon-114x114.png">
+  <meta name="msapplication-TileColor" content="#252b3b">
+  <meta name="msapplication-TileImage" content="/images/favicomatic/mstile-150x150.png">
+  <meta name="theme-color" content="#252b3b">
 
   <!-- Preconnect para performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,7 +108,7 @@
           <ul class="nav__list">
             <li><a href="/" class="nav__link active">Inicio</a></li>
             <li><a href="/propiedades.html" class="nav__link">Propiedades</a></li>
-            <li><a href="#servicios" class="nav__link">Servicios</a></li>
+            <li><a href="/servicios.html" class="nav__link">Servicios</a></li>
           </ul>
         </nav>
 
@@ -133,7 +142,7 @@
       <ul class="mobile-menu__list">
         <li class="mobile-menu__item"><a href="/" class="mobile-menu__link active">Inicio</a></li>
         <li class="mobile-menu__item"><a href="/propiedades.html" class="mobile-menu__link">Propiedades</a></li>
-        <li class="mobile-menu__item"><a href="#servicios" class="mobile-menu__link">Servicios</a></li>
+        <li class="mobile-menu__item"><a href="/servicios.html" class="mobile-menu__link">Servicios</a></li>
         <li class="mobile-menu__item"><a href="/quienes-somos.html" class="mobile-menu__link">Quiénes somos</a></li>
         <li class="mobile-menu__item"><a href="/vende-con-nosotros.html" class="mobile-menu__link">Vendé con nosotros</a></li>
         <li class="mobile-menu__item"><a href="/contacto.html" class="mobile-menu__link">Contacto</a></li>
@@ -238,6 +247,7 @@
         </div>
       </div>
     </section>
+
 
     <!-- Últimos Ingresos / Propiedades -->
     <section class="section" aria-labelledby="propiedades-title">
@@ -368,101 +378,16 @@
 
   </main>
 
-  <!-- ========== FOOTER ========== -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer__main">
-        <!-- Brand -->
-        <div class="footer__brand">
-          <a href="/" class="footer__logo">
-            <img src="/images/logo/logo1.jpg" alt="Gabriela Aloise Propiedades" class="footer__logo-image">
-          </a>
-          <p class="footer__description">
-            <strong>Martillera Pública Nº 2987</strong><br>
-            Equipo de profesionales con amplia experiencia en el mercado inmobiliario de Caseros y zona oeste.
-          </p>
-          <div class="footer__social">
-            <a href="https://www.facebook.com/gabrielaaloisepropiedades" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            </a>
-            <a href="https://www.instagram.com/gabrielaaloisepropiedades" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Navegación rápida -->
-        <div>
-          <h3 class="footer__section-title">Navegación</h3>
-          <ul class="footer__list">
-            <li class="footer__list-item"><a href="/" class="footer__link">Home</a></li>
-            <li class="footer__list-item"><a href="/servicios.html" class="footer__link">Servicios</a></li>
-            <li class="footer__list-item"><a href="/propiedades.html" class="footer__link">Propiedades</a></li>
-            <li class="footer__list-item"><a href="/quienes-somos.html" class="footer__link">Quiénes somos</a></li>
-            <li class="footer__list-item"><a href="/contacto.html" class="footer__link">Contacto</a></li>
-          </ul>
-        </div>
-
-        <!-- Servicios -->
-        <div>
-          <h3 class="footer__section-title">Servicios</h3>
-          <ul class="footer__list">
-            <li class="footer__list-item"><a href="/servicios.html#ventas" class="footer__link">Ventas</a></li>
-            <li class="footer__list-item"><a href="/servicios.html#alquileres" class="footer__link">Alquileres</a></li>
-            <li class="footer__list-item"><a href="/servicios.html#tasaciones" class="footer__link">Tasaciones</a></li>
-            <li class="footer__list-item"><a href="/servicios.html#administraciones" class="footer__link">Administraciones</a></li>
-          </ul>
-        </div>
-
-        <!-- Contacto -->
-        <div>
-          <h3 class="footer__section-title">Contacto</h3>
-          <div class="footer__contact">
-            <div class="footer__contact-item">
-              <svg class="footer__contact-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-              </svg>
-              <a href="tel:+541112345678" class="footer__contact-link">+54 11 1234-5678</a>
-            </div>
-            <div class="footer__contact-item">
-              <svg class="footer__contact-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-              </svg>
-              <a href="mailto:info@gabrielaaloise.com" class="footer__contact-link">info@aloisepropiedades.com.ar</a>
-            </div>
-            <div class="footer__contact-item">
-              <svg class="footer__contact-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-              </svg>
-              <span>Tres de Febrero 2958, Caseros<br>Buenos Aires, Argentina</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer__bottom">
-        <p class="footer__copyright">
-          &copy; 2025 Gabriela Aloise Propiedades. Martillera Pública Nº 2987. Todos los derechos reservados.
-        </p>
-        <div class="footer__legal">
-          <a href="/privacidad.html" class="footer__legal-link">Política de Privacidad</a>
-          <a href="/terminos.html" class="footer__legal-link">Términos y Condiciones</a>
-        </div>
-      </div>
-      <div style="text-align: center; padding-top: var(--space-lg); margin-top: var(--space-lg); border-top: 1px solid var(--color-gray-200); font-size: var(--font-size-sm); color: var(--color-gray-500);">
-        <p style="margin: 0;">Diseñado por</p>
-        <a href="https://www.frandoweb.com" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='var(--color-accent-dark)'" onmouseout="this.style.color='var(--color-accent)'">www.FrandoWeb.com</a>
-      </div>
-    </div>
-  </footer>
+  <!-- FOOTER COMPONENT -->
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/components/footer.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+  </script>
 
   <!-- WhatsApp Float Button -->
-  <a href="https://wa.me/5491112345678?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
+  <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
      class="whatsapp-float"
      target="_blank"
      rel="noopener noreferrer"
@@ -491,23 +416,114 @@
   <!-- JavaScript específico para home - cargar últimos ingresos -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      // Inicializar servicio de propiedades
-      const propertyService = new PropertyService(CONFIG);
-      const renderer = new PropertyRenderer();
+      // Debug del menú móvil
+      console.log('🔍 Verificando elementos del menú móvil...');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      const menu = document.querySelector('.mobile-menu');
+      
+      console.log('Toggle encontrado:', !!toggle);
+      console.log('Menu encontrado:', !!menu);
+      
+      if (toggle && menu) {
+        console.log('✅ Elementos del menú móvil encontrados correctamente');
+        
+        // Test manual del toggle
+        toggle.addEventListener('click', () => {
+          console.log('🖱️ Click en toggle detectado');
+        });
+      } else {
+        console.error('❌ Error: Elementos del menú móvil no encontrados');
+      }
 
-      // Cargar últimos ingresos dinámicamente
-      const result = await propertyService.getLatestProperties(CONFIG.xintel.searchLimits.latest);
+      // Inicializar servicio de propiedades (solo si existen las clases)
+      console.log('🔍 Verificando servicios de propiedades...');
+      console.log('PropertyService definido:', typeof PropertyService !== 'undefined');
+      console.log('CONFIG definido:', typeof CONFIG !== 'undefined');
+      console.log('PropertyRenderer definido:', typeof PropertyRenderer !== 'undefined');
 
-      if (result.success && result.data.properties) {
-        // Renderizar propiedades
-        renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid');
+      if (typeof PropertyService !== 'undefined' && typeof CONFIG !== 'undefined') {
+        try {
+          console.log('📦 Creando PropertyService...');
+          const propertyService = new PropertyService(CONFIG);
 
-        // Mostrar badge de datos de prueba si aplica
-        if (result.mock) {
-          console.log('⚠️ Mostrando datos de prueba. Configurá la API de Xintel en js/config.js');
+          console.log('🎨 Creando PropertyRenderer...');
+          const renderer = new PropertyRenderer();
+
+          console.log('🔄 Solicitando últimas propiedades de Xintel...');
+          console.log('Configuración Xintel:', CONFIG.xintel);
+
+          // Cargar últimos ingresos dinámicamente
+          const result = await propertyService.getLatestProperties(CONFIG.xintel.searchLimits.latest);
+
+          console.log('📥 Resultado de la API:', result);
+
+          if (result.success && result.data.properties) {
+            console.log(`✅ ${result.data.properties.length} propiedades recibidas`);
+
+            // Renderizar propiedades
+            renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid');
+
+            // Mostrar badge de datos de prueba si aplica
+            if (result.mock) {
+              console.log('⚠️ Mostrando datos de prueba. La API de Xintel no respondió correctamente.');
+            } else {
+              console.log('✅ Propiedades cargadas desde Xintel API');
+            }
+          } else {
+            console.error('❌ Error: No se pudieron cargar las propiedades', result.error);
+          }
+        } catch (error) {
+          console.error('❌ Error al cargar propiedades:', error);
+          console.error('Stack:', error.stack);
         }
+      } else {
+        console.error('❌ Servicios no disponibles');
+        if (typeof PropertyService === 'undefined') console.error('PropertyService no está definido');
+        if (typeof CONFIG === 'undefined') console.error('CONFIG no está definido');
+        if (typeof PropertyRenderer === 'undefined') console.error('PropertyRenderer no está definido');
       }
     });
   </script>
+  <!-- Script de emergencia para menú móvil -->
+  <script>
+    // Backup simple del menú móvil por si falla el principal
+    window.addEventListener('load', () => {
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      const menu = document.querySelector('.mobile-menu');
+      
+      if (toggle && menu && !toggle.hasAttribute('data-initialized')) {
+        console.log('🔧 Inicializando menú móvil de emergencia...');
+        
+        toggle.setAttribute('data-initialized', 'true');
+        
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('📱 Toggle menú móvil (emergencia)');
+          
+          const isActive = menu.classList.contains('active');
+          
+          if (isActive) {
+            menu.classList.remove('active');
+            toggle.classList.remove('active');
+            document.body.style.overflow = '';
+          } else {
+            menu.classList.add('active');
+            toggle.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+        
+        // Cerrar al hacer click en links
+        menu.querySelectorAll('.mobile-menu__link').forEach(link => {
+          link.addEventListener('click', () => {
+            menu.classList.remove('active');
+            toggle.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
