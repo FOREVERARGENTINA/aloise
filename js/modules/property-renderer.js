@@ -160,7 +160,6 @@ class PropertyRenderer {
       bathrooms,
       area,
       covered_area,
-      semi_covered,
       images = [],
       url,
       _xintel // Referencia original para acceder a campos de estado

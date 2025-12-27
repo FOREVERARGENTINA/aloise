@@ -77,7 +77,8 @@
 .hero__title {
   /* Usar fuente Sans Serif humanista similar a Montserrat/Open Sans */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  font-size: clamp(1.5rem, 3vw, 1.75rem);
+  /* Especificar font-size explícitamente para h1 en section (nuevo estándar browsers) */
+  font-size: clamp(1.5rem, 3vw, 1.75rem) !important;
   font-weight: var(--font-weight-normal);
   font-style: italic;
   line-height: 1.3;

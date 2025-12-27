@@ -148,7 +148,6 @@ function initHeaderScroll() {
   const header = document.querySelector('.header');
   if (!header) return;
 
-  let lastScrollTop = 0;
   let ticking = false;
 
   function updateHeader() {
@@ -161,7 +160,6 @@ function initHeaderScroll() {
       header.classList.remove('scrolled');
     }
 
-    lastScrollTop = scrollTop;
     ticking = false;
   }
 

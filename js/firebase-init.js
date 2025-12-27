@@ -17,13 +17,13 @@
 
   // Configuración de Firebase
   const firebaseConfig = {
-    apiKey: "AIzaSyCuQXi0LS6TJ1UN2-sprZWbYliX72grg-Y",
-    authDomain: "frandoweb-4c2c7.firebaseapp.com",
-    projectId: "frandoweb-4c2c7",
-    storageBucket: "frandoweb-4c2c7.firebasestorage.app",
-    messagingSenderId: "227831202965",
-    appId: "1:227831202965:web:10f9ca4f2a4f5080f7c79c",
-    measurementId: "G-1X8T159RTT"
+    apiKey: 'AIzaSyCuQXi0LS6TJ1UN2-sprZWbYliX72grg-Y',
+    authDomain: 'frandoweb-4c2c7.firebaseapp.com',
+    projectId: 'frandoweb-4c2c7',
+    storageBucket: 'frandoweb-4c2c7.firebasestorage.app',
+    messagingSenderId: '227831202965',
+    appId: '1:227831202965:web:10f9ca4f2a4f5080f7c79c',
+    measurementId: 'G-1X8T159RTT'
   };
 
   // Inicializar Firebase

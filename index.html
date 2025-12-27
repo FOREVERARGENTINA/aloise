@@ -46,18 +46,36 @@
   <!-- Preconnect para performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  
+  <!-- Preload imagen crítica del hero (LCP) -->
+  <link rel="preload" as="image" href="/images/hero/hero.webp" fetchpriority="high">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google Fonts (async para no bloquear render) -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  </noscript>
 
-  <!-- CSS - Orden correcto según guía -->
-  <link rel="stylesheet" href="/css/design-system.css">
-  <link rel="stylesheet" href="/css/global.css">
-  <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/sections/navigation.css">
-  <link rel="stylesheet" href="/css/sections/hero.css">
-  <link rel="stylesheet" href="/css/sections/services.css">
-  <link rel="stylesheet" href="/css/sections/footer.css">
+  <!-- CSS - Crítico (preload para cargar async) -->
+  <link rel="preload" href="/css/design-system.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/css/global.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/css/components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/css/sections/navigation.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- CSS - No crítico (preload + async) -->
+  <link rel="preload" href="/css/sections/hero.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/css/sections/services.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/css/sections/footer.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/sections/navigation.css">
+    <link rel="stylesheet" href="/css/sections/hero.css">
+    <link rel="stylesheet" href="/css/sections/services.css">
+    <link rel="stylesheet" href="/css/sections/footer.css">
+  </noscript>
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -306,21 +324,21 @@
     </svg>
   </a>
 
-  <!-- Firebase SDK - CDN -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+  <!-- Firebase SDK - CDN (defer para no bloquear render) -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
   <!-- Inicializar Firebase -->
-  <script src="/js/firebase-init.js"></script>
+  <script defer src="/js/firebase-init.js"></script>
 
-  <!-- JavaScript - EN ORDEN -->
-  <script src="/js/config.js"></script>
-  <script src="/js/modules/xintel-api.js"></script>
-  <script src="/js/modules/property-service.js"></script>
-  <script src="/js/modules/property-renderer.js"></script>
-  <script src="/js/main.js"></script>
+  <!-- JavaScript - EN ORDEN (defer mantiene el orden) -->
+  <script defer src="/js/config.js"></script>
+  <script defer src="/js/modules/xintel-api.js"></script>
+  <script defer src="/js/modules/property-service.js"></script>
+  <script defer src="/js/modules/property-renderer.js"></script>
+  <script defer src="/js/main.js"></script>
 
   <!-- JavaScript específico para home - cargar últimos ingresos -->
   <script>

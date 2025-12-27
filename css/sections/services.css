@@ -193,10 +193,12 @@
 /* Visual card base styles */
 .service-card {
   background: #fff;
-  padding: var(--space-lg);
+  padding: var(--space-md);
   border-radius: var(--radius-lg);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(212, 175, 55, 0.06);
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .service-card .service-image {
@@ -266,6 +268,7 @@
       "image"
       "top"
       "bottom";
+    padding: var(--space-md);
   }
 
   /* Ensure the image is always in the 'image' area on mobile, especially for image-right */
@@ -280,6 +283,17 @@
   .service-card .service-image {
     justify-self: center;
     max-width: 100%;
+    width: 100%;
+  }
+  
+  .service-card .service-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .service-card .service-top,
+  .service-card .service-bottom {
+    padding: var(--space-sm);
   }
 
   .service-card .service-content {
