@@ -14,7 +14,7 @@
 
 @media (min-width: 768px) {
   .hero {
-    min-height: 750px;
+    min-height: 800px;
   }
 }
 
@@ -30,6 +30,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .hero--image::before {
@@ -39,7 +40,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--overlay-dark);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
@@ -56,70 +57,95 @@
 }
 
 .hero__eyebrow {
-  display: inline-block;
-  font-size: var(--font-size-sm);
+  display: block;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 1.75rem);
   font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
-  color: var(--color-accent);
-  margin-bottom: var(--space-lg);
+  color: #FFFFFF;
+  margin-bottom: var(--space-2xl);
   animation: fadeIn var(--transition-slow) ease-in;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.01em;
 }
 
 @media (min-width: 768px) {
   .hero__eyebrow {
-    font-size: var(--font-size-base);
+    font-size: clamp(1.625rem, 3.5vw, 1.875rem);
   }
 }
 
 .hero__title {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--color-white);
-  margin-bottom: var(--space-lg);
+  /* Usar fuente Sans Serif humanista similar a Montserrat/Open Sans */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(1.5rem, 3vw, 1.75rem);
+  font-weight: var(--font-weight-normal);
+  font-style: italic;
+  line-height: 1.3;
+  color: #FFFFFF;
+  margin-bottom: var(--space-2xl);
   animation: slideUp 0.8s ease-out 0.2s both;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.02em;
 }
 
 @media (min-width: 768px) {
   .hero__title {
-    font-size: var(--font-size-4xl);
+    font-size: clamp(1.625rem, 3.5vw, 1.875rem);
   }
 }
 
 @media (min-width: 1024px) {
   .hero__title {
-    font-size: var(--font-size-5xl);
+    font-size: clamp(1.75rem, 4vw, 2rem);
   }
 }
 
 .hero__title-highlight {
-  font-style: italic;
-  color: var(--color-accent);
-  display: block;
+  /* Usar Arial para coincidir con el logo */
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: var(--font-weight-semibold);
+  color: #B0B7BD; /* Plateado primario */
+  display: inline;
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+/* Tamaño reducido y en su propia línea para la palabra 'Propiedades' dentro del título principal */
+.hero__title-sub {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.68em;
+  font-weight: var(--font-weight-medium);
+  display: block; /* Forzar en renglón separado */
+  margin-top: 0.15em;
+  letter-spacing: var(--letter-spacing-normal);
+  text-transform: uppercase;
 }
 
 @media (min-width: 768px) {
-  .hero__title-highlight {
-    display: inline;
-  }
+  .hero__title-sub { font-size: 0.72em; }
+}
+
+@media (min-width: 1024px) {
+  .hero__title-sub { font-size: 0.78em; }
 }
 
 .hero__subtitle {
-  font-size: var(--font-size-lg);
+  font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+  font-weight: var(--font-weight-normal);
   line-height: var(--line-height-relaxed);
-  color: var(--color-gray-100);
-  margin-bottom: var(--space-xl);
+  color: #FFFFFF;
+  margin-bottom: var(--space-3xl);
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   animation: fadeIn 1s ease-in 0.4s both;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 @media (min-width: 768px) {
   .hero__subtitle {
-    font-size: var(--font-size-xl);
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
   }
 }
 
@@ -213,13 +239,17 @@
 
 /* Hero con línea divisoria */
 .hero__divider {
-  width: 1px;
-  height: 60px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 30%;
   background: linear-gradient(
     to bottom,
-    transparent,
-    var(--color-accent),
-    transparent
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.1)
   );
-  margin: var(--space-lg) auto;
+  z-index: 3;
 }

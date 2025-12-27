@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ========== META TAGS ESENCIALES ========== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Básico -->
+  <title>Detalle de Propiedad | Gabriela Aloise Propiedades</title>
+  <meta name="description" content="Conocé todos los detalles de esta propiedad en Caseros y zona oeste.">
+  <meta name="keywords" content="propiedad, detalle, Caseros, Buenos Aires">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/ficha.html">
+
+  <!-- Author + JSON-LD (static) -->
+  <meta name="author" content="Hernán — Frandoweb">
+  <script type="application/ld+json" id="site-author-jsonld">
+  { "@context": "https://schema.org", "@type": "Person", "name": "Hernán — Frandoweb", "url": "https://www.frandoweb.com" }
+  </script>
+  <script type="application/ld+json" id="site-publisher-jsonld">
+  { "@context": "https://schema.org", "@type": "Organization", "@id": "https://aloisepropiedades.com.ar/#organization", "name": "Gabriela Aloise Propiedades", "url": "https://aloisepropiedades.com.ar/", "logo": "https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png", "contactPoint": [{ "@type": "ContactPoint", "telephone": "+54 11 2349-0070", "contactType": "customer support" }, { "@type": "ContactPoint", "email": "aloisepropiedades@gmail.com", "contactType": "customer support" }], "address": { "@type": "PostalAddress", "streetAddress": "Tres de Febrero 2958", "addressLocality": "Caseros", "addressRegion": "Buenos Aires", "postalCode": "1678", "addressCountry": "AR" } }
+  </script>
+
+  <!-- Favicons (from DATOS/favicomatic) -->
+  <link rel="icon" href="/images/favicomatic/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/images/favicomatic/favicon-196x196.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicomatic/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicomatic/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicomatic/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicomatic/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicomatic/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicomatic/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicomatic/apple-touch-icon-114x114.png">
+  <meta name="msapplication-TileColor" content="#252b3b">
+  <meta name="msapplication-TileImage" content="/images/favicomatic/mstile-150x150.png">
+  <meta name="theme-color" content="#252b3b">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS para mapas -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/sections/navigation.css">
+  <link rel="stylesheet" href="/css/sections/footer.css">
+
+  <style>
+    /* Loading state */
+    .loading-container {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--color-gray-200);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Galería */
+    .gallery {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .gallery__main {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-lg);
+      background: var(--color-gray-100);
+      cursor: pointer;
+    }
+
+    .gallery__main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery__thumbnails {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .gallery__view-all {
+      grid-column: 1 / -1;
+      padding: var(--space-md);
+      background: var(--color-primary);
+      border: none;
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(37,43,59,0.08);
+    }
+
+    .gallery__view-all:hover {
+      background: var(--color-accent);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(201,169,97,0.12);
+    }
+
+    .gallery__thumbnail {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .gallery__thumbnail:hover,
+    .gallery__thumbnail.active {
+      border-color: var(--color-primary);
+    }
+
+    .gallery__thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Modal de imagen */
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    .modal-close, .modal-nav {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 10001;
+      color: #333;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close {
+      top: 20px;
+      right: 30px;
+    }
+
+    .modal-nav {
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+    }
+
+    .modal-prev { left: 30px; }
+    .modal-next { right: 30px; }
+
+    .modal-close:hover, .modal-nav:hover {
+      background: white;
+      transform: scale(1.1);
+    }
+
+    .modal-nav:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .image-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    /* Detalles */
+    .property-header {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .property-title {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-900);
+      margin-bottom: var(--space-md);
+    }
+
+    .property-price {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .property-location {
+      font-size: var(--font-size-lg);
+      color: var(--color-gray-600);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .property-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-lg);
+      padding: var(--space-xl);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-info span {
+      display: block;
+      font-size: var(--font-size-sm);
+      color: var(--color-gray-600);
+    }
+
+    .feature-info strong {
+      font-size: var(--font-size-lg);
+      color: var(--color-gray-900);
+    }
+
+    /* Mapa */
+    .property-map {
+      width: 100%;
+      height: 400px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .property-map-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 400px;
+      background: var(--color-gray-50);
+      border-radius: var(--radius-lg);
+      color: var(--color-gray-600);
+    }
+
+    /* Contacto */
+    .contact-box {
+      position: relative;
+      top: 0;
+      background: var(--color-gray-50);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+    }
+
+    @media (max-width: 768px) {
+      .gallery__main { height: 300px; }
+      .property-title { font-size: var(--font-size-2xl); }
+      .modal-close, .modal-nav { width: 40px; height: 40px; }
+      .modal-prev { left: 10px; }
+      .modal-next { right: 10px; }
+      .contact-box { position: static; margin-top: var(--space-2xl); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
+
+  <!-- Placeholder para header que carga /components/navbar.html -->
+  <div id="navbar"></div>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+    <section class="section">
+      <div class="container">
+        <!-- Loading State -->
+        <div id="loadingContainer" class="loading-container">
+          <div class="spinner"></div>
+          <p>Cargando propiedad...</p>
+        </div>
+
+        <!-- Property Content (oculto inicialmente) -->
+        <div id="propertyContent" style="display: none;">
+          <div class="grid grid-cols-1 grid-cols-lg-3" style="gap: var(--space-2xl); max-width: 1200px; margin: 0 auto; align-items: start;">
+            <!-- Columna principal (2/3) -->
+            <div style="grid-column: span 2;">
+              <!-- Galería -->
+              <div class="gallery">
+                <div class="gallery__main" id="mainImage" onclick="propertyManager.openModal(propertyManager.currentImageIndex)">
+                  <!-- Imagen principal -->
+                </div>
+                <div class="gallery__thumbnails" id="thumbnails">
+                  <!-- Miniaturas -->
+                </div>
+              </div>
+
+              <!-- Información principal -->
+              <div class="property-header" id="propertyHeader">
+                <!-- Se carga dinámicamente -->
+              </div>
+
+              <!-- Características -->
+              <div class="property-features" id="propertyFeatures">
+                <!-- Se carga dinámicamente -->
+              </div>
+
+              <!-- DEBUG: mostrar propiedad cruda si se solicita -->
+              <pre id="propertyDebug" style="display:none; background: #0b1220; color: #cfe8ff; padding: 0.75rem; border-radius: 6px; overflow:auto; max-height: 240px; margin-top: var(--space-md);"></pre>
+
+              <!-- Descripción -->
+              <div class="card" style="margin-bottom: var(--space-2xl);">
+                <div class="card__body">
+                  <h2 style="margin-bottom: var(--space-lg);">Descripción</h2>
+                  <div id="propertyDescription" style="line-height: 1.8; color: var(--color-gray-700);">
+                    <!-- Se carga dinámicamente -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mapa -->
+              <div style="margin-bottom: 0;">
+                <h2 style="margin-bottom: var(--space-lg);">Ubicación</h2>
+                <div id="propertyMapContainer">
+                  <!-- Mapa o placeholder -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebar (1/3) -->
+            <div style="align-self: start;">
+              <div class="contact-box">
+                <h3 style="margin-bottom: var(--space-lg);">Consultá por esta propiedad</h3>
+                <p style="margin-bottom: var(--space-lg); color: var(--color-gray-600);">
+                  Dejanos tus datos y te contactaremos a la brevedad.
+                </p>
+
+                <form id="contactForm">
+                  <div class="form-group">
+                    <label for="name" class="form-label">Nombre completo</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone" class="form-label">Teléfono</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="message" class="form-label">Mensaje</label>
+                    <textarea id="message" name="message" class="form-input" rows="4" required></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Enviar consulta
+                  </button>
+                </form>
+
+                <div style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-gray-200);">
+                  <p style="font-weight: 600; margin-bottom: var(--space-md);">O contactanos directamente:</p>
+                  <a href="tel:+541123490070" class="btn btn-outline" style="width: 100%; margin-bottom: var(--space-md);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right: 8px;">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Llamar
+                  </a>
+                  <a href="https://wa.me/5491123490070" target="_blank" class="btn btn-accent" style="width: 100%;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de imagen -->
+  <div id="imageModal" class="image-modal">
+    <button class="modal-close" onclick="propertyManager.closeModal()" aria-label="Cerrar">×</button>
+    <button class="modal-nav modal-prev" onclick="propertyManager.navigateImage(-1)" aria-label="Anterior">‹</button>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Imagen de la propiedad">
+      <div id="imageCounter" class="image-counter">1 / 10</div>
+    </div>
+    <button class="modal-nav modal-next" onclick="propertyManager.navigateImage(1)" aria-label="Siguiente">›</button>
+  </div>
+
+  <!-- Placeholder para footer que carga /components/footer.html -->
+  <div id="footer"></div>
+
+  <!-- WhatsApp Float Button -->
+  <a id="whatsappFloat" href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20esta%20propiedad"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+  <!-- Leaflet JS para mapas -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Inicializar Firebase -->
+  <script src="/js/firebase-init.js"></script>
+
+  <!-- JavaScript -->
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+  <script src="/js/modules/property-service.js"></script>
+  <script src="/js/modules/property-renderer.js"></script>
+  <script src="/js/main.js"></script>
+
+  <!-- JavaScript específico de esta página -->
+  <script>
+    class PropertyManager {
+      constructor() {
+        this.property = null;
+        this.images = [];
+        this.currentImageIndex = 0;
+        this.map = null;
+      }
+
+      async init() {
+        // Obtener ID de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const fichaParam = urlParams.get('ficha');
+
+        // Debug mode (usar ?debug=1 para inspeccionar la respuesta de Xintel)
+        this.debug = urlParams.get('debug') === '1';
+
+        if (!fichaParam) {
+          this.showError('No se especificó una propiedad');
+          return;
+        }
+
+        // Extraer número de ficha (quitar prefijo GAB)
+        const fichaId = fichaParam.replace(/^GAB/i, '');
+
+        // Cargar propiedad
+        await this.loadProperty(fichaId);
+      }
+
+      async loadProperty(id) {
+        try {
+          const propertyService = new PropertyService(CONFIG);
+          const result = await propertyService.getPropertyDetail(id);
+
+          if (!result.success || !result.data) {
+            // Mostrar mensaje claro según el error
+            const err = result && result.error ? result.error.toString() : 'No se pudo cargar la propiedad';
+
+            if (err.toLowerCase().includes('xintel') || err.toLowerCase().includes('api')) {
+              this.showError('Error al cargar la propiedad', 'Xintel API no configurada o error de comunicación. Revisa la configuración en js/config.js.');
+            } else {
+              this.showError('Error al cargar la propiedad', err);
+            }
+
+            return;
+          }
+
+          this.property = result.data;
+          this.images = this.property.fotos || [];
+
+          // Actualizar whatsapp float para compartir el link de esta ficha
+          const wa = document.getElementById('whatsappFloat');
+          try {
+            if (wa) {
+              const renderer = new PropertyRenderer();
+              const normalized = renderer.normalizeXintelProperty(this.property);
+              const titleText = normalized.title || this.property.titulo || document.title || 'esta propiedad';
+              const shareText = `Hola! Quisiera más información sobre esta propiedad: ${titleText} - ${window.location.href}`;
+              wa.href = `https://wa.me/5491123490070?text=${encodeURIComponent(shareText)}`;
+            }
+          } catch (e) {
+            console.warn('No se pudo actualizar WhatsApp float URL:', e);
+          }
+
+          // Debug: mostrar en consola sólo si se solicita con ?debug=1
+          if (this.debug) {
+            console.log('🔍 PROPERTY DEBUG (Xintel raw):', JSON.parse(JSON.stringify(this.property)));
+
+            // Mostrar campos específicos de superficie para facilitar el diagnóstico
+            console.log('🔍 Campos de superficie:', {
+              in_scu: this.property.in_scu,
+              in_sto: this.property.in_sto,
+              normalized_covered: (new PropertyRenderer()).normalizeXintelProperty(this.property).covered_area,
+              normalized_area: (new PropertyRenderer()).normalizeXintelProperty(this.property).area
+            });
+
+            // Mostrar en UI el JSON reducido para inspección visual
+            const debugEl = document.getElementById('propertyDebug');
+            if (debugEl) {
+              const subset = {
+                keys: Object.keys(this.property || {}).sort(),
+                in_scu: this.property.in_scu,
+                in_sto: this.property.in_sto,
+                in_amb: this.property.in_amb,
+                cantidad_ambientes: this.property.cantidad_ambientes,
+                cantidad_dormitorios: this.property.cantidad_dormitorios,
+                fotos: this.property.fotos && this.property.fotos.length ? this.property.fotos.slice(0,6) : [],
+                titulo: this.property.titulo,
+                in_obs: this.property.in_obs,
+                caracteristicas: this.property.caracteristicas || null
+              };
+
+              debugEl.textContent = JSON.stringify(subset, null, 2);
+              debugEl.style.display = 'block';
+            }
+          }
+
+          this.render();
+        } catch (error) {
+          console.error('Error:', error);
+          this.showError('Error al cargar la propiedad', error.message || 'Ocurrió un error inesperado');
+        }
+      }
+
+      render() {
+        document.getElementById('loadingContainer').style.display = 'none';
+        document.getElementById('propertyContent').style.display = 'block';
+
+        this.renderGallery();
+        this.renderHeader();
+        this.renderFeatures();
+        this.renderDescription();
+        this.renderMap();
+        this.updateMetaTags();
+      }
+
+      renderGallery() {
+        if (this.images.length === 0) {
+          document.getElementById('mainImage').innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: var(--color-gray-100);">
+              <p>Sin imágenes disponibles</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Imagen principal
+        document.getElementById('mainImage').innerHTML = `
+          <img src="${this.images[0]}" alt="Imagen principal">
+        `;
+
+        // Mostrar solo primeras 8 miniaturas
+        const maxThumbnails = 8;
+        const displayImages = this.images.slice(0, maxThumbnails);
+        
+        const thumbnailsHTML = displayImages.map((img, index) => `
+          <div class="gallery__thumbnail ${index === 0 ? 'active' : ''}" onclick="propertyManager.changeImage(${index})">
+            <img src="${img}" alt="Imagen ${index + 1}">
+          </div>
+        `).join('');
+
+        // Agregar botón "Ver todas" si hay más fotos
+        const viewAllButton = this.images.length > maxThumbnails ? `
+          <div class="gallery__view-all" onclick="propertyManager.openModal(0)">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Ver todas las fotos (${this.images.length})
+          </div>
+        ` : '';
+
+        document.getElementById('thumbnails').innerHTML = thumbnailsHTML + viewAllButton;
+      }
+
+      changeImage(index) {
+        this.currentImageIndex = index;
+        document.getElementById('mainImage').innerHTML = `
+          <img src="${this.images[index]}" alt="Imagen ${index + 1}">
+        `;
+
+        // Actualizar thumbnail activo
+        document.querySelectorAll('.gallery__thumbnail').forEach((thumb, i) => {
+          thumb.classList.toggle('active', i === index);
+        });
+      }
+
+      renderHeader() {
+        const renderer = new PropertyRenderer();
+        const normalized = renderer.normalizeXintelProperty(this.property);
+
+        const operationType = normalized.operation_type === 'alquiler' ? 'ALQUILER' : 'VENTA';
+        const location = `${this.property.in_bar || ''}${this.property.in_bar && this.property.in_loc ? ', ' : ''}${this.property.in_loc || ''}`;
+
+        // Estado de la propiedad (ej: Reservado, Vendido, etc.)
+        const estado = this.property.estado || this.property.in_est || '';
+
+        document.getElementById('propertyHeader').innerHTML = `
+          <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
+            <span class="badge" style="background: var(--color-primary); color: white;">${operationType}</span>
+            ${estado && estado.toLowerCase() !== 'disponible' ? `<span class="property-status-badge">${estado}</span>` : ''}
+          </div>
+          <h1 class="property-title">${normalized.title}</h1>
+          <p class="property-price">${renderer.formatPrice(normalized.price, normalized.currency)}</p>
+          <p class="property-location">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2"/>
+              <circle cx="12" cy="10" r="3" stroke-width="2"/>
+            </svg>
+            ${location || 'Sin ubicación'}
+          </p>
+        `;
+      }
+
+      renderFeatures() {
+        const renderer = new PropertyRenderer();
+        const normalized = renderer.normalizeXintelProperty(this.property);
+
+        // Mostrar sólo dígitos para campos como 'Ambientes' (algunos registros traen texto/ códigos)
+        const sanitizeNumber = (val) => {
+          const cleaned = String(val || '').replace(/[^0-9]/g, '');
+          if (!cleaned) return 'N/D';
+          const trimmed = cleaned.replace(/^0+/, '');
+          return trimmed === '' ? '0' : trimmed;
+        };
+
+        const parseAreaM2 = (...candidates) => {
+          for (const candidate of candidates) {
+            if (candidate === null || candidate === undefined) continue;
+
+            const raw = String(candidate).trim();
+            if (!raw) continue;
+
+            // Normalizar formatos tipo "41", "41.5", "41,5", "41 m2"
+            const cleaned = raw.replace(',', '.').replace(/[^0-9.]/g, '');
+            if (!cleaned) continue;
+
+            const num = Number.parseFloat(cleaned);
+            if (!Number.isFinite(num) || num <= 0) continue;
+
+            // Mostrar sin decimales si es entero
+            const formatted = Number.isInteger(num) ? String(num) : String(num).replace(/0+$/, '').replace(/\.$/, '');
+            return `${formatted} m²`;
+          }
+
+          return 'N/D';
+        };
+
+        // Si no hay cubierta, intentar usar la total como fallback (como en otras integraciones)
+        // Mostrar únicamente lo que provee Xintel para Sup. Cubierta (no usar Sup. Total como fallback)
+        const computeCovered = () => {
+          return parseAreaM2(this.property.in_scu, this.property.covered_area, normalized.covered_area, normalized._xintel?.in_scu);
+        };
+
+        // Construir lista de features de forma condicional para evitar mostrar 'N/D' innecesario
+        const features = [];
+
+        // Ambientes
+        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>', label: 'Ambientes', value: sanitizeNumber(this.property.in_amb || this.property.cantidad_ambientes) });
+
+        // Dormitorios
+        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4V2M17 4V2M2 10h20"/></svg>', label: 'Dormitorios', value: this.property.ti_dor || this.property.cantidad_dormitorios || 'N/D' });
+
+        // Baños
+        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6h6M12 3v3"/><rect x="4" y="10" width="16" height="11" rx="2"/></svg>', label: 'Baños', value: this.property.in_bao || 'N/D' });
+
+        // Preferencias al estilo Furne: usar in_sto o in_sup para total; in_scu o in_cub para cubierta
+        const superficieTotalRaw = this.property.in_sto || this.property.in_sup || normalized._xintel?.in_sto || normalized.area || '';
+        const superficieCubiertaRaw = this.property.in_scu || this.property.in_cub || this.property.covered_area || normalized.covered_area || normalized._xintel?.in_scu || '';
+
+        const totalArea = parseAreaM2(superficieTotalRaw, normalized.area, normalized._xintel?.in_sto);
+        if (totalArea !== 'N/D') {
+          features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>', label: 'Sup. Total', value: `${totalArea}` });
+        }
+
+        // Sup. Cubierta (mostrar solo si Xintel proporciona, usando in_scu o in_cub como fallback)
+        const coveredVal = parseAreaM2(superficieCubiertaRaw, this.property.covered_area, normalized.covered_area, normalized._xintel?.in_scu, this.property.in_cub);
+        if (coveredVal !== 'N/D') {
+          features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', label: 'Sup. Cubierta', value: `${coveredVal}` });
+        }
+
+        // Cocheras
+        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="M6 17a3 3 0 0 0 6 0M15 17a3 3 0 0 0 6 0"/></svg>', label: 'Cocheras', value: this.property.in_gar || '0' });
+
+        const featuresHTML = features.map(feature => `
+          <div class="feature">
+            <div class="feature-icon">${feature.icon}</div>
+            <div class="feature-info">
+              <span>${feature.label}</span>
+              <strong>${feature.value}</strong>
+            </div>
+          </div>
+        `).join('');
+
+        document.getElementById('propertyFeatures').innerHTML = featuresHTML;
+      }
+
+      renderDescription() {
+        const description = this.property.in_obs || 'Sin descripción disponible';
+
+        // Limpiar HTML
+        const temp = document.createElement('div');
+        temp.innerHTML = description;
+        const cleanText = temp.textContent || temp.innerText || '';
+
+        document.getElementById('propertyDescription').innerHTML = `
+          <p>${cleanText.replace(/\n/g, '<br>')}</p>
+        `;
+      }
+
+      renderMap() {
+        const container = document.getElementById('propertyMapContainer');
+
+        // Extraer coordenadas
+        let lat, lng;
+        if (this.property.in_coo && typeof this.property.in_coo === 'string') {
+          const coords = this.property.in_coo.split(',');
+          lat = parseFloat(coords[0]);
+          lng = parseFloat(coords[1]);
+        }
+
+        // Si no hay coordenadas, mostrar placeholder
+        if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+          const location = `${this.property.in_bar || ''}${this.property.in_bar && this.property.in_loc ? ', ' : ''}${this.property.in_loc || 'Sin ubicación'}`;
+          container.innerHTML = `
+            <div class="property-map-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <p style="margin-top: var(--space-md); font-weight: 600;">Sin ubicación precisa</p>
+              <p style="color: var(--color-gray-500);">${location}</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Crear mapa
+        container.innerHTML = '<div id="propertyMap" class="property-map"></div>';
+
+        setTimeout(() => {
+          this.map = L.map('propertyMap').setView([lat, lng], 15);
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19
+          }).addTo(this.map);
+
+          L.marker([lat, lng]).addTo(this.map)
+            .bindPopup(`<strong>${this.property.titulo || 'Propiedad'}</strong>`)
+            .openPopup();
+        }, 100);
+      }
+
+      updateMetaTags() {
+        const renderer = new PropertyRenderer();
+        const normalized = renderer.normalizeXintelProperty(this.property);
+
+        document.title = `${normalized.title} | Gabriela Aloise Propiedades`;
+
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+          metaDescription.content = `${normalized.title} - ${renderer.formatPrice(normalized.price, normalized.currency)}`;
+        }
+      }
+
+      // Modal
+      openModal(index) {
+        if (this.images.length === 0) return;
+
+        this.currentImageIndex = index;
+        document.getElementById('modalImage').src = this.images[index];
+        document.getElementById('imageCounter').textContent = `${index + 1} / ${this.images.length}`;
+        document.getElementById('imageModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      closeModal() {
+        document.getElementById('imageModal').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      navigateImage(direction) {
+        if (this.images.length === 0) return;
+
+        this.currentImageIndex += direction;
+
+        if (this.currentImageIndex >= this.images.length) {
+          this.currentImageIndex = 0;
+        } else if (this.currentImageIndex < 0) {
+          this.currentImageIndex = this.images.length - 1;
+        }
+
+        document.getElementById('modalImage').src = this.images[this.currentImageIndex];
+        document.getElementById('imageCounter').textContent = `${this.currentImageIndex + 1} / ${this.images.length}`;
+      }
+
+      showError(message, details = '') {
+        const detailsHTML = details ? `<p style="color: var(--color-gray-600); margin: var(--space-sm) 0;">${details}</p>` : `<p style="color: var(--color-gray-600); margin: var(--space-sm) 0;">La propiedad que buscás no existe o fue removida.</p>`;
+
+        document.getElementById('loadingContainer').innerHTML = `
+          <div style="text-align: center;">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color: var(--color-error); margin-bottom: var(--space-lg);">
+              <circle cx="12" cy="12" r="10" stroke-width="2"/>
+              <line x1="15" y1="9" x2="9" y2="15" stroke-width="2"/>
+              <line x1="9" y1="9" x2="15" y2="15" stroke-width="2"/>
+            </svg>
+            <h2>${message}</h2>
+            ${detailsHTML}
+            <a href="/propiedades.html" class="btn btn-primary">Ver todas las propiedades</a>
+          </div>
+        `;
+      }
+    }
+
+    // Inicializar
+    const propertyManager = new PropertyManager();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      propertyManager.init();
+
+      // Teclado para modal
+      document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById('imageModal');
+        if (!modal.classList.contains('active')) return;
+
+        if (e.key === 'Escape') {
+          propertyManager.closeModal();
+        } else if (e.key === 'ArrowLeft') {
+          propertyManager.navigateImage(-1);
+        } else if (e.key === 'ArrowRight') {
+          propertyManager.navigateImage(1);
+        }
+      });
+
+      // Formulario de contacto
+      document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+
+        console.log('Consulta enviada:', data);
+        alert('¡Gracias por tu consulta! Te contactaremos a la brevedad.');
+        e.target.reset();
+      });
+    });
+  </script>
+  <!-- Components: carga navbar y footer -->
+  <script src="/js/components.js" defer></script>
+</body>
+</html>

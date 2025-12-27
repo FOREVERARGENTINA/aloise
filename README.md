@@ -64,7 +64,7 @@ aloise/
 ├── propiedades.html          # ✅ Listado de propiedades con filtros
 ├── servicios.html            # Servicios (por crear)
 ├── quienes-somos.html        # Sobre nosotros (por crear)
-├── contacto.html             # Formulario de contacto (por crear)
+├── contacto.html             # Formulario de contacto (creado)
 ├── vende-con-nosotros.html   # CTA vendedores (por crear)
 ├── robots.txt
 ├── sitemap.xml
@@ -124,23 +124,14 @@ aloise/
 
 ### Modo de Desarrollo (Sin API)
 
-El sitio funciona perfectamente **sin API de Xintel** usando datos mock:
+El sitio ya no incluye datos *mock* integrados. Para desarrollo local sin API podés:
 
-```javascript
-// En js/config.js
-development: {
-  useMockData: true,  // Activar datos de prueba
-  mockDataDelay: 1000
-}
-```
+- Crear tu propio archivo de datos de prueba (por ejemplo `js/dev-mock.js`) y exponerlo como `window.DEV_MOCK_PROPERTIES = [...]`, o
+- Probar con la API de Xintel real.
 
-**Beneficios:**
-- ✅ Desarrollo local sin cuenta de Xintel
-- ✅ Testing sin consumir cuota de API
-- ✅ Demostración del sitio funcional
-- ✅ Personalizar datos de prueba en `MOCK_PROPERTIES`
-
-**Para producción:** Cambiar a `useMockData: false` y configurar API real.
+**Notas:**
+- Los datos `MOCK_PROPERTIES` fueron eliminados del repositorio para evitar confusiones en producción.
+- Si necesitás ayuda para generar datos de prueba, te puedo dejar una plantilla para `dev-mock.js`.
 
 ## Tareas Pendientes
 
@@ -169,7 +160,7 @@ development: {
 - [x] ~~propiedades.html~~ - ✅ **Completado con filtros y API**
 - [ ] servicios.html - Detalle de cada servicio
 - [ ] quienes-somos.html - Historia y equipo
-- [ ] contacto.html - Formulario de contacto
+- [x] contacto.html - Formulario de contacto (creado)
 - [ ] vende-con-nosotros.html - Landing para vendedores
 - [ ] privacidad.html - Política de privacidad
 - [ ] terminos.html - Términos y condiciones
@@ -280,18 +271,18 @@ Buscar y reemplazar en todo el proyecto:
 - **Email**: `info@aloisepropiedades.com.ar` → [EMAIL REAL SI ES DIFERENTE]
 - **Teléfono**: `+54 11 1234-5678` → [TELÉFONO REAL]
 - **Facebook**: `gabrielaaloisepropiedades` → [USERNAME REAL DE FACEBOOK]
-- **Instagram**: `gabrielaaloisepropiedades` → [USERNAME REAL DE INSTAGRAM]
+- **Instagram**: `gabriela_aloise_propiedades` → https://www.instagram.com/gabriela_aloise_propiedades/
 
 ## Paleta de Colores
 
 - **Azul Royal**: `#0047AB` - Navegación, botones principales
-- **Dorado**: `#D4AF37` - CTAs, acentos, detalles elegantes
-- **Dorado Oscuro**: `#B8941F` - Hover states
+- **Plateado**: `#B0B7BD` - CTAs, acentos, detalles elegantes
+- **Gris oscuro**: `#8D9398` - Hover states
 - **Gris Azulado**: `#2C3E50` - Textos, headers
 
 ## Tipografía
 
-- **Headings**: Playfair Display (serif, elegante)
+- **Headings**: Inter (sin serif, moderna)
 - **Body**: Inter (sans-serif, moderna y legible)
 
 ## Licencia
@@ -306,3 +297,13 @@ Buscar y reemplazar en todo el proyecto:
 - SEO optimizado
 - Performance optimizado
 - Código semántico y modular
+
+## Favicons
+Para asegurar que los favicons se desplieguen correctamente, copia los archivos de `DATOS/favicomatic` a `images/favicomatic` usando el script proporcionado:
+
+```powershell
+.
+\scripts\copy-favicons.ps1
+```
+
+Esto crea la carpeta `images/favicomatic` y copia todos los íconos necesarios para producción.

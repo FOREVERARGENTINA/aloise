@@ -10,11 +10,14 @@
   --color-primary-dark: #1a1f2e;   /* Azul muy oscuro - hover states, gradientes */
   --color-primary-light: #2a3142;  /* Azul medio - backgrounds sutiles */
 
-  /* Dorado Elegante - Color de acento de la marca */
-  --color-accent: #C9A961;         /* Dorado principal - CTAs, destacados */
-  --color-accent-dark: #A38841;    /* Dorado oscuro - hover, sombras */
-  --color-accent-light: #E4D4A8;   /* Dorado claro - backgrounds, hover brillante */
-  --color-accent-subtle: #D4B976;  /* Dorado sutil - detalles, bordes */
+  /* Plateado elegante - Color de acento de la marca */
+  --color-accent: #B0B7BD;         /* Plateado principal - CTAs, destacados */
+  --color-accent-dark: #8D9398;    /* Gris oscuro - hover, sombras */
+  --color-accent-light: #D8DCE0;   /* Plateado claro - backgrounds, hover */
+  --color-accent-subtle: #C4C8CC;  /* Plateado sutil - detalles, bordes */
+
+  /* Color dorado original para mantener en elementos específicos */
+  --color-gold-legacy: #D4AF37;
 
   /* Secundarios */
   --color-secondary: #2C3E50;      /* Gris azulado - textos, headers */
@@ -48,20 +51,20 @@
 
   /* Familias */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-heading: var(--font-primary);
   --font-mono: 'Courier New', monospace;
 
-  /* Tamaños - Escala modular (1.250 - Major Third) */
+  /* Tamaños - Escala modular reducida */
   --font-size-xs: 0.75rem;      /* 12px */
   --font-size-sm: 0.875rem;     /* 14px */
   --font-size-base: 1rem;       /* 16px */
-  --font-size-md: 1.125rem;     /* 18px */
-  --font-size-lg: 1.25rem;      /* 20px */
-  --font-size-xl: 1.563rem;     /* 25px */
-  --font-size-2xl: 1.953rem;    /* 31px */
-  --font-size-3xl: 2.441rem;    /* 39px */
-  --font-size-4xl: 3.052rem;    /* 49px */
-  --font-size-5xl: 3.815rem;    /* 61px */
+  --font-size-md: 1.0625rem;    /* 17px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.25rem;      /* 20px */
+  --font-size-2xl: 1.5rem;      /* 24px */
+  --font-size-3xl: 1.875rem;    /* 30px */
+  --font-size-4xl: 2.25rem;     /* 36px */
+  --font-size-5xl: 3rem;        /* 48px */
 
   /* Pesos */
   --font-weight-light: 300;
@@ -165,17 +168,16 @@
 
 @media (min-width: 768px) {
   :root {
-    --font-size-base: 1.125rem;   /* 18px en tablet+ */
-    --font-size-3xl: 3rem;        /* 48px */
-    --font-size-4xl: 3.75rem;     /* 60px */
-    --font-size-5xl: 4.5rem;      /* 72px */
+    --font-size-3xl: 2.25rem;     /* 36px */
+    --font-size-4xl: 2.75rem;     /* 44px */
+    --font-size-5xl: 3.5rem;      /* 56px */
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --font-size-4xl: 4.5rem;      /* 72px en desktop */
-    --font-size-5xl: 6rem;        /* 96px */
+    --font-size-4xl: 3rem;        /* 48px en desktop */
+    --font-size-5xl: 4rem;        /* 64px */
   }
 }
 

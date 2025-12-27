@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ========== META TAGS ESENCIALES ========== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Básico -->
+  <title>404 · Página no encontrada | Gabriela Aloise Propiedades</title>
+  <meta name="description" content="No encontramos la página que buscás. Volvé al inicio para ver las propiedades disponibles en Caseros, Buenos Aires. Información de contacto y búsquedas rápidas aquí.">
+  <!-- No indexe páginas 404 pero permita seguir enlaces -->
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="404 · Página no encontrada | Gabriela Aloise Propiedades">
+  <meta property="og:description" content="La página que buscás no existe. Encontrá propiedades en Caseros, Ponte en contacto o volvé al inicio.">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
+  <meta property="og:url" content="https://aloisepropiedades.com.ar/404.html">
+  <meta property="og:locale" content="es_AR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicons (from DATOS/favicomatic) -->
+  <link rel="icon" href="/images/favicomatic/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/images/favicomatic/favicon-196x196.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicomatic/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicomatic/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicomatic/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicomatic/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicomatic/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicomatic/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicomatic/apple-touch-icon-114x114.png">
+  <meta name="msapplication-TileColor" content="#252b3b">
+  <meta name="msapplication-TileImage" content="/images/favicomatic/mstile-150x150.png">
+  <meta name="theme-color" content="#252b3b">
+
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/sections/navigation.css">
+  <link rel="stylesheet" href="/css/sections/hero.css">
+  <link rel="stylesheet" href="/css/sections/footer.css">
+
+  <style>
+    /* Hero with background image + overlay */
+    .hero-404 {
+      position: relative;
+      min-height: 80vh; /* keep same visual height */
+      display: flex;
+      align-items: center;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    .hero-404__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75); /* increased opacity for stronger overlay */
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .error-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeInUp 0.6s ease-out;
+      position: relative; /* sit above overlay */
+      z-index: 2;
+      color: #fff; /* ensure contrast on image */
+    }
+
+    .error-code {
+      font-size: 140px;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: var(--space-lg);
+      letter-spacing: -0.02em;
+    }
+
+    .error-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: var(--space-md);
+    }
+
+    .error-message {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: var(--space-2xl);
+      line-height: 1.6;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .error-suggestions {
+      margin-top: var(--space-2xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .error-links {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .error-link {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.95);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 500;
+    }
+
+    /* Botón secundario del hero: fondo casi blanco para mejor visibilidad */
+    .hero-404 .btn-outline {
+      background-color: rgba(255,255,255,0.95);
+      color: #111; /* texto oscuro para legibilidad */
+      border-color: transparent;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+      transition: background-color 150ms ease, transform 150ms ease;
+    }
+
+    .hero-404 .btn-outline:hover {
+      background-color: rgba(255,255,255,1);
+      color: #111;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.5);
+    }
+
+    .error-link:hover {
+      color: rgba(255,255,255,1);
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 100px;
+      }
+
+      .error-title {
+        font-size: 1.5rem;
+      }
+
+      .error-actions {
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .error-actions .btn {
+        width: 100%;
+      }
+
+      .error-links {
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+    }
+  </style>
+  <!-- JSON-LD - WebSite & Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://aloisepropiedades.com.ar/#website",
+        "url": "https://aloisepropiedades.com.ar/",
+        "name": "Gabriela Aloise Propiedades",
+        "description": "Martillera pública en Caseros. Listado y gestión de propiedades en zona oeste de Buenos Aires.",
+        "publisher": {
+          "@id": "https://aloisepropiedades.com.ar/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://aloisepropiedades.com.ar/propiedades.html?q={search_term}",
+          "query-input": "required name=search_term"
+        }
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://aloisepropiedades.com.ar/#organization",
+        "name": "Gabriela Aloise Propiedades",
+        "url": "https://aloisepropiedades.com.ar/",
+        "telephone": "+54 11 2349-0070",
+        "email": "aloisepropiedades@gmail.com",
+        "logo": "https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Tres de Febrero 2958",
+          "addressLocality": "Caseros",
+          "addressRegion": "Buenos Aires",
+          "postalCode": "1678",
+          "addressCountry": "AR"
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://aloisepropiedades.com.ar/",
+          "name": "Inicio"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@id": "https://aloisepropiedades.com.ar/404.html",
+          "name": "404 · Página no encontrada"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <!-- Placeholder para header que carga /components/navbar.html -->
+  <div id="navbar"></div>
+
+  <!-- Hero 404 -->
+  <section class="section hero-404" style="min-height: 80vh; display: flex; align-items: center; background-image: url('https://plus.unsplash.com/premium_photo-1663050846133-e9e746086425?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="hero-404__overlay" aria-hidden="true"></div>
+    <div class="container">
+      <div class="error-content">
+        <!-- Error Code -->
+        <div class="error-code">404</div>
+
+        <!-- Title -->
+        <h1 class="error-title">Página no encontrada</h1>
+
+        <!-- Message -->
+        <p class="error-message">
+          La página que buscás no existe o fue movida.
+        </p>
+
+        <!-- Actions -->
+        <div class="error-actions">
+          <a href="/" class="btn btn-primary">Volver al inicio</a>
+          <a href="/propiedades.html" class="btn btn-outline">Ver propiedades</a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="error-suggestions">
+          <p style="margin-bottom: var(--space-md); color: var(--color-gray-600);">Enlaces útiles:</p>
+          <div class="error-links">
+            <a href="/propiedades.html" class="error-link">Propiedades</a>
+            <a href="/servicios.html" class="error-link">Servicios</a>
+            <a href="/quienes-somos.html" class="error-link">Quiénes somos</a>
+            <a href="/contacto.html" class="error-link">Contacto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Small UA-friendly redirection helper (commented out) -->
+  <script>
+    // Opcional: Descomentar si querés redirigir automáticamente (no recomendado salvo en caso de UX controlado)
+    // setTimeout(() => { window.location.href = '/'; }, 10000);
+  </script>
+
+  <!-- Placeholder para footer que carga /components/footer.html -->
+  <div id="footer"></div>
+
+  <!-- Components: carga navbar y footer -->
+  <script src="/js/components.js" defer></script>
+</body>
+</html>

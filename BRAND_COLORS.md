@@ -24,23 +24,23 @@ El azul oscuro sofisticado que representa profesionalismo y confianza.
 
 ---
 
-### Dorado Elegante (Acento)
+### Plateado Elegante (Acento)
 
-El dorado que aporta elegancia y diferenciación premium.
+El plateado que aporta elegancia y diferenciación premium.
 
 | Nombre | HEX | RGB | Uso |
 |--------|-----|-----|-----|
-| **Accent** | `#C9A961` | `rgb(201, 169, 97)` | Botones CTA, highlights, elementos destacados |
-| **Accent Dark** | `#A38841` | `rgb(163, 136, 65)` | Hover en botones, sombras doradas |
-| **Accent Light** | `#E4D4A8` | `rgb(228, 212, 168)` | Hover brillante, backgrounds claros |
-| **Accent Subtle** | `#D4B976` | `rgb(212, 185, 118)` | Bordes, detalles sutiles, líneas |
+| **Accent** | `#B0B7BD` | `rgb(176, 183, 189)` | Botones CTA, highlights, elementos destacados (ahora plateado) |
+| **Accent Dark** | `#8D9398` | `rgb(141, 147, 152)` | Hover en botones, sombras (gris) |
+| **Accent Light** | `#D8DCE0` | `rgb(216, 220, 224)` | Plateado claro, backgrounds claros |
+| **Accent Subtle** | `#C4C8CC` | `rgb(196, 200, 204)` | Bordes, detalles sutiles, líneas (gris) |
 
 **Ejemplo visual:**
 ```
-████████  #C9A961 - Accent (Dorado principal)
-████████  #A38841 - Accent Dark
-████████  #E4D4A8 - Accent Light
-████████  #D4B976 - Accent Subtle
+████████  #B0B7BD - Accent (Plateado principal)
+████████  #8D9398 - Accent Dark
+████████  #D8DCE0 - Accent Light
+████████  #C4C8CC - Accent Subtle
 ```
 
 ---
@@ -50,43 +50,43 @@ El dorado que aporta elegancia y diferenciación premium.
 ### Navbar
 - **Fondo**: Gradiente de Primary Dark → Primary → Primary Light
 - **Texto links**: Blanco (#ffffff)
-- **Hover links**: Accent (#C9A961)
-- **Borde inferior**: Accent con transparencia (rgba(201, 169, 97, 0.15))
+- **Hover links**: Accent (#B0B7BD)
+- **Borde inferior**: Accent con transparencia (rgba(176, 183, 189, 0.15))
 - **Botón CTA**: Gradiente de Accent Dark → Accent
 
 ### Botones
 
 #### Botón Principal (CTA)
 ```css
-background: linear-gradient(135deg, #A38841, #C9A961);
+background: linear-gradient(135deg, #8D9398, #B0B7BD);
 color: #1a1f2e;
-border: 1px solid #D4B976;
+border: 1px solid #C4C8CC;
 box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
 ```
 
 #### Botón Hover
 ```css
-background: linear-gradient(135deg, #C9A961, #E4D4A8);
+background: linear-gradient(135deg, #B0B7BD, #D8DCE0);
 box-shadow: 0 6px 20px rgba(201, 169, 97, 0.5);
 ```
 
 #### Botón Outline
 ```css
-border: 2px solid #C9A961;
-color: #C9A961;
+border: 2px solid #B0B7BD;
+color: #B0B7BD;
 background: transparent;
 ```
 
 ### Hero Section
 - **Overlay**: rgba(0, 0, 0, 0.6) sobre la imagen
-- **Título**: Blanco con "Gabriela Aloise" en Accent (#C9A961)
+- **Título**: Blanco con "Gabriela Aloise" en Accent (#B0B7BD)
 - **Botones**: Accent para CTA principal, outline blanco para secundario
 
 ### Footer
 - **Fondo**: Gradiente de Primary Dark → Primary
 - **Texto**: Gris claro (#f5f5f5)
-- **Links hover**: Accent (#C9A961)
-- **Matrícula**: Accent (#C9A961) en negrita
+- **Links hover**: Accent (#B0B7BD)
+- **Matrícula**: Accent (#B0B7BD) en negrita
 
 ---
 
@@ -95,45 +95,45 @@ background: transparent;
 ### Combinación 1: Profesional y Elegante
 - Fondo: Primary (#252b3b)
 - Texto: Blanco (#ffffff)
-- Acento: Accent (#C9A961)
+- Acento: Accent (#B0B7BD)
 - **Uso**: Navbar, footer, secciones oscuras
 
 ### Combinación 2: Limpio y Luminoso
 - Fondo: Blanco (#ffffff)
 - Texto: Primary (#252b3b)
-- Acento: Accent (#C9A961)
+- Acento: Accent (#B0B7BD)
 - **Uso**: Contenido principal, cards, secciones claras
 
 ### Combinación 3: Destacado Premium
-- Fondo: Accent Light (#E4D4A8)
+- Fondo: Accent Light (#D8DCE0)
 - Texto: Primary Dark (#1a1f2e)
-- Acento: Accent Dark (#A38841)
+- Acento: Accent Dark (#8D9398)
 - **Uso**: Banners especiales, propiedades destacadas
 
 ### Combinación 4: Sutil y Sofisticado
 - Fondo: Gray 50 (#F8F9FA)
 - Texto: Primary (#252b3b)
-- Acento: Accent Subtle (#D4B976)
+- Acento: Accent Subtle (#C4C8CC)
 - **Uso**: Backgrounds alternos, secciones sutiles
 
 ---
 
 ## 🚫 No Hacer
 
-❌ No usar amarillo brillante (#FFFF00) - usar nuestros dorados
+❌ No usar amarillo brillante (#FFFF00) - usar nuestros plateados
 ❌ No usar el azul brillante anterior (#0047AB) - usar el azul corporativo
-❌ No mezclar más de 2 tonos de dorado en el mismo elemento
-❌ No usar texto dorado sobre fondo blanco sin contraste adecuado
+❌ No mezclar más de 2 tonos de plateado en el mismo elemento
+❌ No usar texto plateado sobre fondo blanco sin contraste adecuado
 
 ---
 
 ## ✅ Hacer
 
-✅ Usar gradientes dorados en botones importantes
+✅ Usar gradientes plateados en botones importantes
 ✅ Usar el azul oscuro como fondo principal para secciones importantes
-✅ Combinar el dorado con blanco para crear contraste
+✅ Combinar el plateado con blanco para crear contraste
 ✅ Usar sombras doradas sutiles para dar profundidad
-✅ Mantener consistencia: azul para estructura, dorado para acción
+✅ Mantener consistencia: azul para estructura, plateado para acción
 
 ---
 
@@ -148,8 +148,8 @@ background: transparent;
 - Primary (#252b3b): **14.5:1** ✅ AAA
 
 ### Texto sobre Accent
-- Primary Dark sobre Accent (#C9A961): **4.8:1** ✅ AA
-- Blanco sobre Accent Dark (#A38841): **4.2:1** ✅ AA
+- Primary Dark sobre Accent (#B0B7BD): **4.8:1** ✅ AA
+- Blanco sobre Accent Dark (#8D9398): **4.2:1** ✅ AA
 
 ---
 
@@ -163,11 +163,11 @@ Para usar en tu código:
 --color-primary-dark: #1a1f2e;
 --color-primary-light: #2a3142;
 
-/* Dorado Elegante */
---color-accent: #C9A961;
---color-accent-dark: #A38841;
---color-accent-light: #E4D4A8;
---color-accent-subtle: #D4B976;
+/* Plateado Elegante */
+--color-accent: #B0B7BD;
+--color-accent-dark: #8D9398;
+--color-accent-light: #D8DCE0;
+--color-accent-subtle: #C4C8CC;
 ```
 
 **Uso:**
@@ -196,11 +196,11 @@ Para usar en tu código:
 │  [Imagen de la propiedad]   │
 ├─────────────────────────────┤
 │ Título (Primary)            │
-│ Precio (Accent - Dorado)    │
+│ Precio (Accent - Plateado)   │
 │ Descripción (Gray 700)      │
 │                             │
 │ [Botón CTA - Gradiente      │
-│  Dorado]                    │
+│  Plateado]                  │
 └─────────────────────────────┘
 ```
 
@@ -210,7 +210,7 @@ Para usar en tu código:
 │  Fondo: Primary Dark con gradiente   │
 │                                       │
 │  Título: Blanco                       │
-│  Subtítulo: Accent (Dorado)          │
+│  Subtítulo: Accent (Plateado)        │
 │  Texto: Gray 100                      │
 │                                       │
 │  [Botón: Accent con gradiente]       │
@@ -223,18 +223,18 @@ Para usar en tu código:
 
 ### Web
 - Navbar: Azul corporativo con gradiente
-- Hero: Imagen con overlay oscuro + texto blanco + acento dorado
-- CTAs: Botones dorados con gradiente
+- Hero: Imagen con overlay oscuro + texto blanco + acento plateado
+- CTAs: Botones plateados con gradiente
 - Footer: Fondo azul oscuro
 
 ### Redes Sociales
 - Publicaciones: Fondo blanco o azul corporativo
-- Texto destacado: Dorado (#C9A961)
+- Texto destacado: Plateado (#B0B7BD)
 - Logo: Siempre sobre fondo que contraste
 
 ### Impresos
-- Tarjetas personales: Azul corporativo con detalles dorados
-- Folletos: Combinación blanco/azul con acentos dorados
+- Tarjetas personales: Azul corporativo con detalles plateados
+- Folletos: Combinación blanco/azul con acentos plateados
 - Banners: Fondo azul oscuro con tipografía dorada
 
 ---
@@ -253,7 +253,7 @@ Para usar en tu código:
 
 ## 📝 Notas de Diseño
 
-1. **El dorado es elegancia**: Úsalo con moderación para destacar elementos importantes
+1. **El plateado es elegancia**: Úsalo con moderación para destacar elementos importantes
 2. **El azul es confianza**: Base sólida para estructura y profesionalismo
 3. **Gradientes sutiles**: Aportan profundidad sin sobrecargar
 4. **Sombras doradas**: Añaden un toque premium a los elementos interactivos

@@ -7,17 +7,7 @@
 // import { initMobileMenu } from './modules/mobile-menu.js';
 
 // ========== CONFIGURACIÓN GLOBAL ==========
-const CONFIG = {
-  breakpoints: {
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1280,
-    xxl: 1536
-  },
-  whatsappNumber: '5491112345678', // Actualizar con número real
-  whatsappMessage: 'Hola! Quisiera más información sobre las propiedades'
-};
+// CONFIG se carga desde config.js
 
 // ========== UTILIDADES ==========
 
@@ -75,10 +65,36 @@ function initMobileMenu() {
   const menu = document.querySelector('.mobile-menu');
   const body = document.body;
 
-  if (!toggle || !menu) return;
+  if (!toggle || !menu) {
+    // Los elementos pueden cargarse de forma asíncrona (Components loader).
+    // Esperar que el navbar sea insertado y reintentar.
+    // Evitar múltiples observadores
+    if (document.body.dataset.mobileMenuWatcher) return;
+    document.body.dataset.mobileMenuWatcher = '1';
 
-  // Toggle menú
-  toggle.addEventListener('click', () => {
+    const target = document.getElementById('navbar') || document.body;
+    const observer = new MutationObserver((mutations, obs) => {
+      const newToggle = document.querySelector('.mobile-menu-toggle');
+      const newMenu = document.querySelector('.mobile-menu');
+      if (newToggle && newMenu) {
+        obs.disconnect();
+        delete document.body.dataset.mobileMenuWatcher;
+        // Reintentar inicialización
+        initMobileMenu();
+      }
+    });
+
+    observer.observe(target, { childList: true, subtree: true });
+    return;
+  }
+
+  window.__MOBILE_MENU_INIT = true;
+  toggle.setAttribute('data-initialized', 'true');
+
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     const isActive = menu.classList.contains('active');
 
     if (isActive) {
@@ -102,11 +118,19 @@ function initMobileMenu() {
     }
   });
 
+  // Cerrar al hacer click fuera del menú
+  document.addEventListener('click', (e) => {
+    if (menu.classList.contains('active') && !menu.contains(e.target) && !toggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
   function openMenu() {
     menu.classList.add('active');
     toggle.classList.add('active');
     toggle.setAttribute('aria-expanded', 'true');
-    body.style.overflow = 'hidden'; // Prevenir scroll
+    body.style.overflow = 'hidden';
+    document.body.classList.add('mobile-menu-open');
   }
 
   function closeMenu() {
@@ -114,6 +138,7 @@ function initMobileMenu() {
     toggle.classList.remove('active');
     toggle.setAttribute('aria-expanded', 'false');
     body.style.overflow = ''; // Restaurar scroll
+    document.body.classList.remove('mobile-menu-open');
   }
 }
 
@@ -350,6 +375,108 @@ function initActiveNavLinks() {
 // ========== INICIALIZACIÓN ==========
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Inyectar meta author y JSON-LD para atribución si está configurado
+  (function injectAuthorMetadata() {
+    try {
+      const seo = window.CONFIG && window.CONFIG.seo ? window.CONFIG.seo : {};
+      const authorName = seo.authorName || '';
+      const authorUrl = seo.authorUrl || '';
+
+      if (authorName) {
+        // Meta author
+        let meta = document.querySelector('meta[name="author"]');
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', 'author');
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', authorName);
+      }
+
+      // JSON-LD Person
+      if (authorName) {
+        const existing = document.getElementById('site-author-jsonld');
+        if (!existing) {
+          const script = document.createElement('script');
+          script.id = 'site-author-jsonld';
+          script.type = 'application/ld+json';
+
+          const sameAs = [];
+          if (window.CONFIG && window.CONFIG.social) {
+            const s = window.CONFIG.social;
+            if (s.facebook) sameAs.push(s.facebook);
+            if (s.instagram) sameAs.push(s.instagram);
+            if (s.linkedin) sameAs.push(s.linkedin);
+            if (s.youtube) sameAs.push(s.youtube);
+          }
+
+          const json = {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            'name': authorName
+          };
+
+          if (authorUrl) json.url = authorUrl;
+          if (sameAs.length) json.sameAs = sameAs;
+
+          script.textContent = JSON.stringify(json);
+          document.head.appendChild(script);
+        }
+      }
+
+      // JSON-LD Organization (publisher)
+      try {
+        const existingOrg = document.getElementById('site-publisher-jsonld');
+        if (!existingOrg) {
+          const orgName = (window.CONFIG && window.CONFIG.business && window.CONFIG.business.name) || seo.siteName || authorName || '';
+          const orgUrl = seo.siteUrl || authorUrl || '';
+          const logoPath = seo.defaultImage || '/images/logo/logo1.jpg';
+          let logoFull = '';
+          if (logoPath) {
+            if (logoPath.startsWith('http')) logoFull = logoPath;
+            else if (orgUrl) logoFull = orgUrl.replace(/\/$/, '') + (logoPath.startsWith('/') ? logoPath : '/' + logoPath);
+            else logoFull = logoPath;
+          }
+
+          const contact = window.CONFIG && window.CONFIG.contact ? window.CONFIG.contact : {};
+          const contactPoint = [];
+          if (contact.phone) contactPoint.push({ '@type': 'ContactPoint', 'telephone': contact.phone, 'contactType': 'customer support' });
+          if (contact.email) contactPoint.push({ '@type': 'ContactPoint', 'email': contact.email, 'contactType': 'customer support' });
+
+          const sameAsOrg = [];
+          if (window.CONFIG && window.CONFIG.social) {
+            const s = window.CONFIG.social;
+            if (s.facebook) sameAsOrg.push(s.facebook);
+            if (s.instagram) sameAsOrg.push(s.instagram);
+            if (s.linkedin) sameAsOrg.push(s.linkedin);
+            if (s.youtube) sameAsOrg.push(s.youtube);
+          }
+
+          const orgJson = {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            'name': orgName
+          };
+
+          if (orgUrl) orgJson.url = orgUrl;
+          if (logoFull) orgJson.logo = logoFull;
+          if (sameAsOrg.length) orgJson.sameAs = sameAsOrg;
+          if (contactPoint.length) orgJson.contactPoint = contactPoint;
+
+          const scriptOrg = document.createElement('script');
+          scriptOrg.id = 'site-publisher-jsonld';
+          scriptOrg.type = 'application/ld+json';
+          scriptOrg.textContent = JSON.stringify(orgJson);
+          document.head.appendChild(scriptOrg);
+        }
+      } catch (err) {
+        console.warn('No se pudo inyectar metadata de publisher:', err);
+      }
+    } catch (e) {
+      console.warn('No se pudo inyectar metadata de autor:', e);
+    }
+  })();
+
   // Detectar dispositivos táctiles
   detectTouchDevice();
 
@@ -362,8 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFormValidation();
   initModals();
   initActiveNavLinks();
-
-  console.log('✅ Gabriela Aloise Propiedades - Sitio inicializado correctamente');
 });
 
 // ========== PERFORMANCE ==========

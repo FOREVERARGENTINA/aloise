@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto | Gabriela Aloise Propiedades</title>
+  <meta name="description" content="Contacto - Gabriela Aloise Propiedades. Enviános tu consulta o visitanos en Tres de Febrero 2958, Caseros.">
+
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/sections/navigation.css">
+  <link rel="stylesheet" href="/css/sections/footer.css">
+
+  <!-- Author + JSON-LD (static) -->
+  <meta name="author" content="Hernán — Frandoweb">
+  <script type="application/ld+json" id="site-author-jsonld">
+  { "@context":"https://schema.org", "@type":"Person", "name":"Hernán — Frandoweb", "url":"https://www.frandoweb.com" }
+  </script>
+  <script type="application/ld+json" id="site-publisher-jsonld">
+  { "@context":"https://schema.org", "@type":"Organization", "@id":"https://aloisepropiedades.com.ar/#organization", "name":"Gabriela Aloise Propiedades", "url":"https://aloisepropiedades.com.ar/", "logo":"https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png", "contactPoint":[ {"@type":"ContactPoint","telephone":"+54 11 2349-0070","contactType":"customer support"},{"@type":"ContactPoint","email":"aloisepropiedades@gmail.com","contactType":"customer support"}], "address": {"@type":"PostalAddress","streetAddress":"Tres de Febrero 2958","addressLocality":"Caseros","addressRegion":"Buenos Aires","postalCode":"1678","addressCountry":"AR"} }
+  </script>
+
+  <!-- Estilos específicos para Contacto: prevenir que el mapa se superponga al footer -->
+  <style>
+    /* Asegura que el mapa tenga espacio inferior y no sea posicionado sobre el footer */
+    .contact-map { margin-bottom: var(--space-4xl); position: relative; z-index: 0; }
+    .contact-map iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+    /* Evita que los elementos del aside se estiren al contener un mapa alto */
+    .contact-aside .card { height: auto; align-self: start; max-height: none; }
+    .contact-aside .card__body { padding: var(--space-md); }
+
+    /* Garantizar que el footer esté por encima en el flujo visual */
+    .footer { position: relative; z-index: 1; }
+  </style>
+
+</head>
+<body>
+  <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
+
+  <!-- Placeholder para header que carga /components/navbar.html -->
+  <div id="navbar"></div>
+
+  <main id="main-content">
+    <section class="section" aria-labelledby="contacto-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__eyebrow">CONTACTO</span>
+          <h1 class="section-header__title" id="contacto-title">Contactanos</h1>
+          <p class="section-header__description">Completá el formulario y nos contactaremos a la brevedad. También podés escribirnos directamente a <a href="mailto:aloisepropiedades@gmail.com">aloisepropiedades@gmail.com</a> o llamarnos/WhatsApp.</p>
+        </div>
+
+        <div class="grid grid-cols-1 grid-cols-md-2 gap-lg" style="align-items: start;">
+          <!-- Formulario -->
+          <div>
+            <form id="contact-form" class="form" aria-label="Formulario de contacto" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="name">Nombre y Apellido</label>
+                <input id="name" name="name" type="text" required placeholder="Tu nombre" class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input id="email" name="email" type="email" required placeholder="tu@ejemplo.com" class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="phone">Teléfono / WhatsApp</label>
+                <input id="phone" name="phone" type="tel" placeholder="11 1234-5678" class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message">Mensaje</label>
+                <textarea id="message" name="message" rows="6" required placeholder="Contanos sobre tu consulta" class="form-textarea"></textarea>
+              </div>
+
+              <!-- Honeypot para reducir spam -->
+              <div style="display:none;" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" type="text" autocomplete="off">
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                <span id="form-status" role="status" aria-live="polite" style="margin-left:1rem;"></span>
+              </div>
+
+              <p class="muted" style="margin-top:1rem;">Al enviar, se abrirá tu cliente de correo para finalizar el envío (mail client). Si no se abre, podés enviar tu mensaje a <a href="mailto:aloisepropiedades@gmail.com">aloisepropiedades@gmail.com</a>.</p>
+            </form>
+          </div>
+
+          <!-- Info de contacto y mapa -->
+          <aside class="contact-aside">
+            <div class="card">
+              <div class="card__body">
+                <h3 style="margin-bottom: var(--space-md); font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-gray-900);">Gabriela Aloise Propiedades</h3>
+
+                <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+                  <!-- Dirección -->
+                  <div style="display: flex; gap: var(--space-sm); align-items: flex-start;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: var(--color-primary); margin-top: 2px;">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <div>
+                      <p style="margin: 0; font-weight: var(--font-weight-semibold); color: var(--color-gray-900);">Tres de Febrero 2958, Caseros</p>
+                      <p style="margin: 0; font-size: var(--font-size-sm); color: var(--color-gray-600);">Buenos Aires, Argentina</p>
+                    </div>
+                  </div>
+
+                  <!-- Teléfono -->
+                  <div style="display: flex; gap: var(--space-sm); align-items: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: var(--color-primary);">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    <a href="tel:+541123490070" style="color: var(--color-gray-900); text-decoration: none; font-weight: var(--font-weight-medium);">+54 11 2349-0070</a>
+                  </div>
+
+                  <!-- Email -->
+                  <div style="display: flex; gap: var(--space-sm); align-items: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: var(--color-primary);">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <a href="mailto:aloisepropiedades@gmail.com" style="color: var(--color-gray-900); text-decoration: none; font-weight: var(--font-weight-medium); word-break: break-all;">aloisepropiedades@gmail.com</a>
+                  </div>
+
+                  <!-- Horario -->
+                  <div style="display: flex; gap: var(--space-sm); align-items: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: var(--color-primary);">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span style="color: var(--color-gray-900); font-weight: var(--font-weight-medium);">Lun-Vie 9:00 - 18:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mapa -->
+            <div class="card" style="margin-top: var(--space-lg);">
+              <div class="card__body" style="padding: 0; overflow: hidden;">
+                <div class="contact-map" style="width: 100%; height: 350px; background: var(--color-gray-100);">
+                  <iframe
+                    src="https://www.google.com/maps?q=-34.6095178,-58.5666264&z=17&output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Ubicación de Gabriela Aloise Propiedades"></iframe>
+                </div>
+              </div>
+              <div class="card__footer">
+                <a href="https://www.google.com/maps/search/Tres+de+Febrero+2958,+Caseros/@-34.6095178,-58.5666264,17z" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="width: 100%;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  Ver en Google Maps
+                </a>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Placeholder para footer que carga /components/footer.html -->
+  <div id="footer"></div>
+
+  <!-- Scripts: componentes y lógica de formulario -->
+  <script src="/js/components.js" defer></script>
+  <script src="/js/contact.js" defer></script>
+  <script>
+    // Asegurar que el footer se renderice una vez cargados los componentes
+    document.addEventListener('DOMContentLoaded', () => {
+      // Agrega una pequeña transición al cargar el iframe para que se vea más suave
+      const iframe = document.querySelector('.contact-map iframe');
+      if (!iframe) return;
+      iframe.style.opacity = 0;
+      iframe.addEventListener('load', () => {
+        iframe.style.transition = 'opacity 400ms ease-in-out';
+        iframe.style.opacity = 1;
+      });
+    });
+  </script>
+</body>
+</html>

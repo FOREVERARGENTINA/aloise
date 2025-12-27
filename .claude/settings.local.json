@@ -4,7 +4,15 @@
       "Bash(git init:*)",
       "Bash(git remote add:*)",
       "Bash(git fetch:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(firebase --version:*)",
+      "Bash(firebase serve:*)",
+      "Bash(dir:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(copy \"images\\\\favicomatic\\\\favicon.ico\" \"favicon.ico\")",
+      "Bash(copy \"E:\\\\Aideas\\\\ALOISE PROPIEDADES\\\\DATOS\\\\Logo Gabriela Aloise \\(2\\).png\" \"E:\\\\Aideas\\\\ALOISE PROPIEDADES\\\\images\\\\logo\\\\Logo Gabriela Aloise.png\")",
+      "Bash(cp:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

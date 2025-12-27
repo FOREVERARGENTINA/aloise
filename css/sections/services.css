@@ -53,13 +53,41 @@
 /* Service Cards */
 #servicios .feature {
   background: white;
-  padding: var(--space-xl);
+  padding: 0;
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 20px rgba(0, 71, 171, 0.08);
   transition: all 0.3s ease;
   border: 1px solid rgba(212, 175, 55, 0.1);
   position: relative;
   overflow: hidden;
+}
+
+#servicios .feature__image {
+  width: 100%;
+  height: 140px; /* aumentado para mostrar mejor el icono */
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(0, 0%, 100%);
+  padding: 12px;
+}
+
+#servicios .feature__image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* mostrar el icono completo sin recortarlo */
+  object-position: center;
+  transition: transform 0.35s ease;
+}
+
+#servicios .feature:hover .feature__image img {
+  transform: scale(1.03); /* hover muy sutil */
+}
+
+#servicios .feature__content {
+  padding: var(--space-xl);
 }
 
 #servicios .feature::before {
@@ -79,8 +107,62 @@
 }
 
 #servicios .feature__icon {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
-  color: var(--color-accent);
+  background: linear-gradient(135deg, var(--color-accent-light) 0%, #fffbe6 100%);
+  color: var(--color-accent-dark);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  margin-left: var(--space-xl);
+  margin-top: var(--space-lg);
+  transition: all 0.3s ease;
+}
+
+#servicios .feature__icon svg {
+  color: var(--color-accent-dark);
+  stroke: currentColor;
+}
+
+#servicios .feature:hover .feature__icon {
+  background: linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+  color: #fff;
+}
+
+#servicios .feature:hover .feature__icon svg {
+  color: #fff;
+  stroke: currentColor;
+}
+
+#servicios .feature__title {
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  font-style: normal; /* no cursiva */
+  text-align: center;
+  font-size: 1.125rem;
+}
+
+#servicios .feature__description {
+  color: var(--color-gray-600);
+  line-height: 1.6;
+  text-align: center;
+  margin-left: var(--space-lg);
+  margin-right: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+#servicios .grid {
+  gap: var(--space-xl);
+}
+
+/* Estilos para íconos en todas las secciones de servicio */
+.feature__icon {
+  background: linear-gradient(135deg, var(--color-accent-light) 0%, #fffbe6 100%);
+  color: var(--color-accent-dark);
   width: 64px;
   height: 64px;
   display: flex;
@@ -91,21 +173,234 @@
   transition: all 0.3s ease;
 }
 
-#servicios .feature:hover .feature__icon {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: white;
+.feature__icon svg {
+  color: var(--color-accent-dark);
+  stroke: currentColor;
 }
 
-#servicios .feature__title {
-  color: var(--color-primary);
-  margin-bottom: var(--space-md);
+/* Layout responsive para servicios: mobile-first */
+/* NOTE: responsive reorder handled by .service-card grid stacking (see further down) */
+
+/* NEW: Service card grid (2x2 quadrants) */
+.service-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr; /* equal-sized quadrants */
+  gap: var(--space-lg);
+  align-items: start;
 }
 
-#servicios .feature__description {
-  color: var(--color-gray-600);
+/* Visual card base styles */
+.service-card {
+  background: #fff;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.06);
+}
+
+.service-card .service-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+}
+
+.service-card .service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.service-card .service-top,
+.service-card .service-bottom,
+.service-card .service-content {
+  padding: var(--space-md);
+}
+
+.service-top { padding: var(--space-md); }
+.service-bottom { padding: var(--space-md); }
+/* Center top content vertically in the top row */
+.service-top { display: flex; flex-direction: column; justify-content: center; }
+
+/* service-filler no longer used */
+
+/* Image-left layout: IMG in top-left, TEXT spans top-right + bottom-both */
+.service-card--image-left {
+  grid-template-areas: 
+    "image top"
+    "bottom bottom";
+}
+
+.service-card--image-left .service-image {
+  grid-area: image;
+}
+
+.service-card--image-left .service-top { grid-area: top; }
+.service-card--image-left .service-bottom { grid-area: bottom; }
+
+/* Image-right layout: TEXT spans top-left + bottom-both, IMG in top-right */
+.service-card--image-right {
+  grid-template-areas: 
+    "top image"
+    "bottom bottom";
+}
+
+.service-card--image-right .service-top { grid-area: top; }
+.service-card--image-right .service-bottom { grid-area: bottom; }
+
+.service-card--image-right .service-image {
+  grid-area: image;
+}
+
+@media (max-width: 767px) {
+  .service-card,
+  .service-card--image-left,
+  .service-card--image-right {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+      "image"
+      "top"
+      "bottom";
+  }
+
+  /* Ensure the image is always in the 'image' area on mobile, especially for image-right */
+  .service-card--image-right .service-image {
+    grid-area: image;
+  }
+  
+  .service-card--image-left .service-image {
+    grid-area: image;
+  }
+
+  .service-card .service-image {
+    justify-self: center;
+    max-width: 100%;
+  }
+
+  .service-card .service-content {
+    padding-top: var(--space-md);
+  }
+}
+/* Sección Propiedades destacadas: fondo igual al navbar */
+section[aria-labelledby="propiedades-title"] {
+  background: linear-gradient(135deg, #1a1f2e 0%, #252b3b 50%, #2a3142 100%);
+  color: #ffffff;
+}
+
+section[aria-labelledby="propiedades-title"] .section-header__title {
+  color: #ffffff;
+}
+
+section[aria-labelledby="propiedades-title"] .section-header__description {
+  color: rgba(255,255,255,0.85);
+}
+
+section[aria-labelledby="propiedades-title"] .btn-outline {
+  background-color: rgba(255,255,255,0.08);
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.15);
+}
+
+section[aria-labelledby="propiedades-title"] .properties-loading p,
+section[aria-labelledby="propiedades-title"] .properties-loading h3 {
+  color: #ffffff;
+}
+
+/* ¿Por qué elegirnos? como background */
+section[aria-labelledby="porque-title"] {
+  background-image: url('/images/porque.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  padding: var(--space-4xl) 0;
+  color: #ffffff;
+}
+
+section[aria-labelledby="porque-title"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.55) 100%);
+  z-index: 0;
+}
+
+section[aria-labelledby="porque-title"] .container {
+  position: relative;
+  z-index: 1;
+}
+
+section[aria-labelledby="porque-title"] .section-header__title {
+  color: #ffffff;
+}
+
+.porque__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .porque__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.porque__visual {
+  width: 100%;
+  height: 360px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.porque__list { list-style: none; padding: 0; margin: 0; }
+.porque__item {
+  position: relative;
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.95);
+  text-align: left;
   line-height: 1.6;
+  padding-left: 56px;
 }
 
-#servicios .grid {
-  gap: var(--space-xl);
+.porque__item::before {
+  content: '✓';
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.porque__item svg { display: none; }
+
+.porque__item:last-child { border-bottom: none; }
+
+@media (max-width: 767px) {
+  .porque__list { padding-left: 0; }
+  .porque__item { padding-left: 0; }
+  .porque__item::before { position: static; transform: none; display: inline-flex; margin-right: var(--space-sm); background: transparent; color: rgba(255,255,255,0.95); }
+}
+
+@media (max-width: 767px) {
+  section[aria-labelledby="porque-title"] .porque__visual { display: none; }
+  section[aria-labelledby="porque-title"] { padding: var(--space-3xl) 0; }
 }

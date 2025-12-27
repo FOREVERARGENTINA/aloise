@@ -1,6 +1,8 @@
 {
   "hosting": {
+    "site": "aloisepropiedades",
     "public": ".",
+    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -13,6 +15,10 @@
       "GUIA_*.md"
     ],
     "rewrites": [
+      {
+        "source": "**/*.@(html|css|js|jpg|jpeg|png|gif|svg|webp|ico|json|txt)",
+        "destination": "/:1"
+      },
       {
         "source": "**",
         "destination": "/index.html"

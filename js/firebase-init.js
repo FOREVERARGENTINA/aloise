@@ -29,7 +29,6 @@
   // Inicializar Firebase
   try {
     const app = firebase.initializeApp(firebaseConfig);
-    console.log('✅ Firebase inicializado correctamente');
 
     // Inicializar Analytics
     const analytics = firebase.analytics();
@@ -44,8 +43,6 @@
       site: 'aloisepropiedades'
     });
 
-    console.log('✅ Firebase Analytics configurado para aloisepropiedades');
-
     // Hacer Firebase disponible globalmente para facilitar el uso
     window.firebaseApp = app;
     window.firebaseAnalytics = analytics;
@@ -53,13 +50,11 @@
     // Inicializar Firestore si está disponible
     if (firebase.firestore) {
       window.firebaseDb = firebase.firestore();
-      console.log('✅ Firestore inicializado');
     }
 
     // Inicializar Storage si está disponible
     if (firebase.storage) {
       window.firebaseStorage = firebase.storage();
-      console.log('✅ Storage inicializado');
     }
 
   } catch (error) {
@@ -101,8 +96,6 @@
         site: 'aloisepropiedades',
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
-
-      console.log('✅ Consulta guardada con ID:', docRef.id);
 
       // Track evento de lead generado
       window.trackPropertyEvent('generate_lead', {
@@ -152,7 +145,5 @@
       location: filters.location || null
     });
   };
-
-  console.log('✅ Firebase utilities cargadas globalmente');
 
 })();

@@ -25,11 +25,11 @@ const CONFIG = {
     primaryDark: '#1a1f2e',
     primaryLight: '#2a3142',
 
-    // Dorado Elegante - Color de acento
-    accent: '#C9A961',
-    accentDark: '#A38841',
-    accentLight: '#E4D4A8',
-    accentSubtle: '#D4B976'
+    // Plateado elegante - Color de acento
+    accent: '#B0B7BD',
+    accentDark: '#8D9398',
+    accentLight: '#D8DCE0',
+    accentSubtle: '#C4C8CC' 
   },
 
   // ========== CONTACTO ==========
@@ -43,16 +43,17 @@ const CONFIG = {
   // ========== REDES SOCIALES ==========
   social: {
     facebook: 'https://www.facebook.com/gabrielaaloisepropiedades', // ACTUALIZAR
-    instagram: 'https://www.instagram.com/gabrielaaloisepropiedades', // ACTUALIZAR
+    instagram: 'https://www.instagram.com/gabriela_aloise_propiedades/', // ACTUALIZAR
     linkedin: '', // Opcional
     youtube: '' // Opcional
   },
 
   // ========== API XINTEL ==========
   xintel: {
-    enabled: true, // Cambiar a true cuando tengas la API key
-    apiKey: '', // AGREGAR TU API KEY DE XINTEL
-    baseURL: 'https://api.xintel.com.ar/v1', // URL base de la API
+    enabled: true,
+    empresa: 'GAB', // Código de empresa
+    apiKey: '56YOXNKF4VLYBSAPY4HUVJATV', // API Key
+    baseURL: 'https://xintelapi.com.ar/', // URL base de la API
     timeout: 10000, // Timeout en milisegundos
     cacheTimeout: 5 * 60 * 1000, // 5 minutos de cache
 
@@ -74,7 +75,7 @@ const CONFIG = {
   // ========== MODO DESARROLLO ==========
   development: {
     // Si no tienes API de Xintel, puedes usar datos de prueba
-    useMockData: true, // Cambiar a false cuando tengas API real
+    useMockData: false, // Cambiar a false cuando tengas API real
     mockDataDelay: 1000, // Simular delay de red (ms)
     enableLogs: true // Mostrar logs en consola
   },
@@ -122,142 +123,30 @@ const CONFIG = {
     defaultDescription: 'Inmobiliaria en Caseros. Martillera Pública Nº 2987. Ventas, alquileres, tasaciones y administraciones.',
     defaultImage: '/images/og-image.jpg',
     siteUrl: 'https://aloisepropiedades.com.ar',
-    twitterHandle: '' // Opcional
+    twitterHandle: '', // Opcional
+    // Autor / Atribución en el sitio (para meta author y schema)
+    authorName: 'Hernán — Frandoweb',
+    authorUrl: 'https://www.frandoweb.com'
   },
 
   // ========== MONEDAS ==========
   currencies: {
     default: 'USD',
     available: ['USD', 'ARS'],
-    exchangeRate: 0 // Se puede actualizar dinámicamente
+    // Valor por defecto para desarrollo: ARS por USD (actualizalo con la tasa real en producción)
+    exchangeRate: 350 // Se puede actualizar dinámicamente
   }
 };
 
-// ========== DATOS DE PRUEBA (MOCK) ==========
-const MOCK_PROPERTIES = [
-  {
-    id: 1,
-    title: 'Departamento moderno en Palermo',
-    description: 'Hermoso departamento de 2 ambientes con balcón, amenities y excelente ubicación. Cocina integrada, baño completo, dormitorio con placard. Edificio con portero, gimnasio y parrilla.',
-    price: 180000,
-    currency: 'USD',
-    operation_type: 'venta',
-    property_type: 'departamento',
-    location: 'Palermo, CABA',
-    bedrooms: 1,
-    bathrooms: 1,
-    rooms: 2,
-    area: 45,
-    covered_area: 45,
-    images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80'],
-    url: '/propiedades/1',
-    featured: true,
-    created_at: '2025-01-15'
-  },
-  {
-    id: 2,
-    title: 'Casa familiar en Belgrano',
-    description: 'Amplia casa de 3 dormitorios con jardín y cochera. Ideal para familias. Living comedor, cocina con office, 2 baños completos. Patio con parrilla y espacio verde.',
-    price: 350000,
-    currency: 'ARS',
-    operation_type: 'alquiler',
-    property_type: 'casa',
-    location: 'Belgrano, CABA',
-    bedrooms: 3,
-    bathrooms: 2,
-    rooms: 5,
-    area: 120,
-    covered_area: 100,
-    images: ['https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80'],
-    url: '/propiedades/2',
-    featured: true,
-    created_at: '2025-01-14'
-  },
-  {
-    id: 3,
-    title: 'PH en Caseros con patio',
-    description: 'PH de 2 dormitorios con patio y parrilla. Excelente estado, listo para habitar. Cocina comedor, baño completo, 2 dormitorios con placard. Patio con parrilla.',
-    price: 95000,
-    currency: 'USD',
-    operation_type: 'venta',
-    property_type: 'ph',
-    location: 'Caseros, Buenos Aires',
-    bedrooms: 2,
-    bathrooms: 1,
-    rooms: 3,
-    area: 70,
-    covered_area: 60,
-    images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80'],
-    url: '/propiedades/3',
-    featured: true,
-    created_at: '2025-01-13'
-  },
-  {
-    id: 4,
-    title: 'Departamento 3 ambientes Caballito',
-    description: 'Excelente departamento en Caballito, 3 ambientes con balcón. Living comedor amplio, cocina separada, 2 dormitorios, baño completo. Edificio con amenities.',
-    price: 140000,
-    currency: 'USD',
-    operation_type: 'venta',
-    property_type: 'departamento',
-    location: 'Caballito, CABA',
-    bedrooms: 2,
-    bathrooms: 1,
-    rooms: 3,
-    area: 65,
-    covered_area: 65,
-    images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80'],
-    url: '/propiedades/4',
-    featured: false,
-    created_at: '2025-01-12'
-  },
-  {
-    id: 5,
-    title: 'Local comercial en Caseros',
-    description: 'Local comercial sobre avenida principal. Excelente ubicación para comercio. Amplio salón, baño, depósito. Con vidriera y persiana metálica.',
-    price: 250000,
-    currency: 'ARS',
-    operation_type: 'alquiler',
-    property_type: 'local',
-    location: 'Caseros, Buenos Aires',
-    bedrooms: 0,
-    bathrooms: 1,
-    rooms: 1,
-    area: 50,
-    covered_area: 50,
-    images: ['https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'],
-    url: '/propiedades/5',
-    featured: false,
-    created_at: '2025-01-11'
-  },
-  {
-    id: 6,
-    title: 'Casa 4 ambientes con cochera',
-    description: 'Casa de 4 ambientes en San Martín. Living comedor, cocina, 3 dormitorios, 2 baños. Cochera cubierta, patio con parrilla. Muy buen estado.',
-    price: 165000,
-    currency: 'USD',
-    operation_type: 'venta',
-    property_type: 'casa',
-    location: 'San Martín, Buenos Aires',
-    bedrooms: 3,
-    bathrooms: 2,
-    rooms: 4,
-    area: 140,
-    covered_area: 110,
-    images: ['https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80'],
-    url: '/propiedades/6',
-    featured: false,
-    created_at: '2025-01-10'
-  }
-];
+// Datos de prueba integrados eliminados.
+// Si necesitás datos locales para desarrollo, agrega tu propio archivo de datos de prueba o activa la API de Xintel.
 
 // Hacer CONFIG disponible globalmente
 if (typeof window !== 'undefined') {
   window.CONFIG = CONFIG;
-  window.MOCK_PROPERTIES = MOCK_PROPERTIES;
 }
 
 // Exportar para Node.js
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { CONFIG, MOCK_PROPERTIES };
-}
+  module.exports = { CONFIG };
+} 

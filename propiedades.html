@@ -15,26 +15,69 @@
   <meta property="og:url" content="https://aloisepropiedades.com.ar/propiedades.html">
   <meta property="og:title" content="Propiedades | Gabriela Aloise Propiedades">
   <meta property="og:description" content="Encontrá tu propiedad ideal en Caseros y zona oeste">
-  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://aloisepropiedades.com.ar/propiedades.html">
   <meta property="twitter:title" content="Propiedades | Gabriela Aloise Propiedades">
   <meta property="twitter:description" content="Encontrá tu propiedad ideal en Caseros y zona oeste">
-  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://aloisepropiedades.com.ar/propiedades.html">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <!-- Author + Structured Data (static) -->
+  <meta name="author" content="Hernán — Frandoweb">
+  <script type="application/ld+json" id="site-author-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Hernán — Frandoweb",
+    "url": "https://www.frandoweb.com"
+  }
+  </script>
+  <script type="application/ld+json" id="site-publisher-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://aloisepropiedades.com.ar/#organization",
+    "name": "Gabriela Aloise Propiedades",
+    "url": "https://aloisepropiedades.com.ar/",
+    "logo": "https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png",
+    "contactPoint": [
+      { "@type": "ContactPoint", "telephone": "+54 11 2349-0070", "contactType": "customer support" },
+      { "@type": "ContactPoint", "email": "aloisepropiedades@gmail.com", "contactType": "customer support" }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Tres de Febrero 2958",
+      "addressLocality": "Caseros",
+      "addressRegion": "Buenos Aires",
+      "postalCode": "1678",
+      "addressCountry": "AR"
+    }
+  }
+  </script>
+
+  <!-- Favicons (from DATOS/favicomatic) -->
+  <link rel="icon" href="/images/favicomatic/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/images/favicomatic/favicon-196x196.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicomatic/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicomatic/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicomatic/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicomatic/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicomatic/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicomatic/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicomatic/apple-touch-icon-114x114.png">
+  <meta name="msapplication-TileColor" content="#252b3b">
+  <meta name="msapplication-TileImage" content="/images/favicomatic/mstile-150x150.png">
+  <meta name="theme-color" content="#252b3b">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" href="/css/design-system.css">
@@ -45,23 +88,24 @@
   <link rel="stylesheet" href="/css/sections/footer.css">
 
   <style>
-    /* Estilos específicos para filtros */
+    /* Estilos específicos para filtros (más compactos) */
     .filters {
       background-color: var(--color-gray-50);
-      padding: var(--space-xl);
+      padding: var(--space-sm);
       border-radius: var(--radius-lg);
-      margin-bottom: var(--space-2xl);
+      margin-bottom: var(--space-md);
     }
 
     .filters__grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: var(--space-lg);
+      gap: var(--space-xs);
     }
 
     @media (min-width: 640px) {
       .filters__grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
       }
     }
 
@@ -71,11 +115,26 @@
       }
     }
 
+    /* Compactar controles dentro de filtros */
+    .filters .form-group { margin-bottom: var(--space-xs); }
+    .filters .form-label { font-size: 0.88rem; margin-bottom: calc(var(--space-0xs) + 2px); display: block; }
+    .filters .form-input, .filters .form-select {
+      padding: 6px 8px;
+      height: 38px;
+      font-size: 0.95rem;
+    }
+
     .filters__actions {
       display: flex;
-      gap: var(--space-md);
-      margin-top: var(--space-lg);
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
       flex-wrap: wrap;
+    }
+
+    .filters__actions .btn {
+      padding: 8px 10px;
+      font-size: 0.95rem;
+      min-height: 36px;
     }
 
     .results-header {
@@ -103,56 +162,8 @@
   <!-- Skip to main content -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
-  <!-- HEADER - Copiado del index.html -->
-  <header class="header" role="banner">
-    <div class="container">
-      <div class="header__container">
-        <!-- Navegación izquierda -->
-        <nav class="nav nav--left" role="navigation" aria-label="Navegación izquierda">
-          <ul class="nav__list">
-            <li><a href="/" class="nav__link">Inicio</a></li>
-            <li><a href="/propiedades.html" class="nav__link active">Propiedades</a></li>
-            <li><a href="/servicios.html" class="nav__link">Servicios</a></li>
-          </ul>
-        </nav>
-
-        <!-- Logo centrado -->
-        <a href="/" class="header__logo" aria-label="Gabriela Aloise Propiedades - Inicio">
-          <img src="/images/logo/logo1.jpg" alt="Gabriela Aloise Propiedades" class="header__logo-image">
-        </a>
-
-        <!-- Navegación derecha -->
-        <nav class="nav nav--right" role="navigation" aria-label="Navegación derecha">
-          <ul class="nav__list">
-            <li><a href="/quienes-somos.html" class="nav__link">Quiénes somos</a></li>
-            <li><a href="/vende-con-nosotros.html" class="nav__link">Vendé con nosotros</a></li>
-            <li><a href="/contacto.html" class="nav__link">Contacto</a></li>
-          </ul>
-        </nav>
-
-        <!-- Botón menú móvil -->
-        <button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
-          <span class="mobile-menu-toggle__bar"></span>
-          <span class="mobile-menu-toggle__bar"></span>
-          <span class="mobile-menu-toggle__bar"></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Menú Móvil -->
-  <div class="mobile-menu" id="mobile-menu">
-    <nav role="navigation">
-      <ul class="mobile-menu__list">
-        <li class="mobile-menu__item"><a href="/" class="mobile-menu__link">Inicio</a></li>
-        <li class="mobile-menu__item"><a href="/propiedades.html" class="mobile-menu__link active">Propiedades</a></li>
-        <li class="mobile-menu__item"><a href="/servicios.html" class="mobile-menu__link">Servicios</a></li>
-        <li class="mobile-menu__item"><a href="/quienes-somos.html" class="mobile-menu__link">Quiénes somos</a></li>
-        <li class="mobile-menu__item"><a href="/vende-con-nosotros.html" class="mobile-menu__link">Vendé con nosotros</a></li>
-        <li class="mobile-menu__item"><a href="/contacto.html" class="mobile-menu__link">Contacto</a></li>
-      </ul>
-    </nav>
-  </div>
+  <!-- Placeholder para header que carga /components/navbar.html -->
+  <div id="navbar"></div>
 
   <!-- MAIN CONTENT -->
   <main id="main-content">
@@ -284,35 +295,11 @@
 
   </main>
 
-  <!-- FOOTER - Igual que index.html -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer__main">
-        <div class="footer__brand">
-          <a href="/" class="footer__logo">
-            <img src="/images/logo/logo1.jpg" alt="Gabriela Aloise Propiedades" class="footer__logo-image">
-          </a>
-          <p class="footer__description">
-            <strong>Martillera Pública Nº 2987</strong><br>
-            Equipo de profesionales con amplia experiencia en el mercado inmobiliario de Caseros y zona oeste.
-          </p>
-        </div>
-      </div>
-
-      <div class="footer__bottom">
-        <p class="footer__copyright">
-          &copy; 2025 Gabriela Aloise Propiedades. Martillera Pública Nº 2987. Todos los derechos reservados.
-        </p>
-      </div>
-      <div style="text-align: center; padding-top: var(--space-lg); margin-top: var(--space-lg); border-top: 1px solid var(--color-gray-200); font-size: var(--font-size-sm); color: var(--color-gray-500);">
-        <p style="margin: 0;">Diseñado por</p>
-        <a href="https://www.frandoweb.com" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='var(--color-accent-dark)'" onmouseout="this.style.color='var(--color-accent)'">www.FrandoWeb.com</a>
-      </div>
-    </div>
-  </footer>
+  <!-- Placeholder para footer que carga /components/footer.html -->
+  <div id="footer"></div>
 
   <!-- WhatsApp Float Button -->
-  <a href="https://wa.me/5491112345678?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
+  <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
      class="whatsapp-float"
      target="_blank"
      rel="noopener noreferrer"
@@ -399,8 +386,10 @@
           }
         }
 
-        // Scroll to top suave
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Scroll to top solo cuando cambia de página (no en carga inicial o filtros)
+        if (currentPage > 1) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }
 
       // Handler de búsqueda
@@ -439,5 +428,7 @@
       }
     });
   </script>
+  <!-- Components: carga navbar y footer -->
+  <script src="/js/components.js" defer></script>
 </body>
 </html>

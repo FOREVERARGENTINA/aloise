@@ -8,8 +8,9 @@
 class XintelAPI {
   constructor(config = {}) {
     // Configuración de la API
+    this.empresa = config.empresa || '';
     this.apiKey = config.apiKey || '';
-    this.baseURL = config.baseURL || 'https://api.xintel.com.ar/v1';
+    this.baseURL = config.baseURL || 'https://xintelapi.com.ar/';
     this.timeout = config.timeout || 10000;
 
     // Cache de propiedades (opcional, para mejorar performance)
@@ -18,47 +19,71 @@ class XintelAPI {
   }
 
   /**
-   * Realizar petición HTTP genérica
+   * Realizar petición HTTP a Xintel API (formato POST con json, inm, apiK)
+   * @param {string} endpoint - El endpoint de Xintel (ej: 'fichas.destacadas')
+   * @param {Object} params - Parámetros adicionales
    */
-  async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
+  async request(endpoint, params = {}) {
+    const url = this.baseURL;
 
-    const defaultHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.apiKey}`
-    };
+    // Formato específico de Xintel - Usar FormData (multipart/form-data)
+    const formData = new FormData();
+    formData.append('json', endpoint);
+    formData.append('inm', this.empresa);
+    formData.append('apiK', this.apiKey);
 
-    const config = {
-      method: options.method || 'GET',
-      headers: { ...defaultHeaders, ...options.headers },
-      ...options
-    };
-
-    // Si hay body y es objeto, convertir a JSON
-    if (config.body && typeof config.body === 'object') {
-      config.body = JSON.stringify(config.body);
-    }
+    // Agregar parámetros adicionales
+    Object.keys(params).forEach(key => {
+      if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
+        formData.append(key, params[key]);
+      }
+    });
 
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
+      // IMPORTANTE: No agregar Content-Type header, FormData lo hace automáticamente
       const response = await fetch(url, {
-        ...config,
+        method: 'POST',
+        body: formData,  // FormData sin header Content-Type
         signal: controller.signal
       });
 
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('❌ Xintel API Error Response:', errorText.substring(0, 500));
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText.substring(0, 100)}`);
       }
 
-      const data = await response.json();
+      // Leer la respuesta como texto primero
+      const responseText = await response.text();
+
+      // Intentar parsear como JSON
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('❌ Error parsing JSON:', parseError);
+        console.error('Raw response:', responseText);
+        throw new Error(`Invalid JSON response: ${parseError.message}`);
+      }
+
+      // Verificar si hay error en la respuesta de Xintel
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
       return { success: true, data };
 
     } catch (error) {
-      console.error('Xintel API Error:', error);
+      console.error('❌ Xintel API Error:', error);
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack
+      });
       return {
         success: false,
         error: error.message,
@@ -68,7 +93,7 @@ class XintelAPI {
   }
 
   /**
-   * Obtener listado de propiedades
+   * Obtener listado de propiedades con filtros
    * @param {Object} filters - Filtros de búsqueda
    * @returns {Promise}
    */
@@ -79,36 +104,71 @@ class XintelAPI {
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheTimeout) {
-        console.log('📦 Usando datos en cache');
         return { success: true, data: cached.data, cached: true };
       }
     }
 
-    // Construir query string
-    const queryParams = new URLSearchParams();
+    // Mapeo de códigos de Xintel
+    const operationMap = {
+      'venta': 'V',
+      'alquiler': 'A',
+      'alquiler_temporal': 'T'
+    };
 
-    if (filters.operationType) queryParams.append('operation_type', filters.operationType); // 'venta', 'alquiler'
-    if (filters.propertyType) queryParams.append('property_type', filters.propertyType); // 'casa', 'departamento', 'ph'
-    if (filters.location) queryParams.append('location', filters.location);
-    if (filters.minPrice) queryParams.append('min_price', filters.minPrice);
-    if (filters.maxPrice) queryParams.append('max_price', filters.maxPrice);
-    if (filters.minRooms) queryParams.append('min_rooms', filters.minRooms);
-    if (filters.maxRooms) queryParams.append('max_rooms', filters.maxRooms);
-    if (filters.minArea) queryParams.append('min_area', filters.minArea);
-    if (filters.maxArea) queryParams.append('max_area', filters.maxArea);
-    if (filters.page) queryParams.append('page', filters.page);
-    if (filters.limit) queryParams.append('limit', filters.limit);
-    if (filters.sort) queryParams.append('sort', filters.sort); // 'price_asc', 'price_desc', 'date_desc'
+    const typeMap = {
+      'departamento': 'D',
+      'casa': 'C',
+      'ph': 'P',
+      'terreno': 'T',
+      'local': 'L',
+      'oficina': 'O',
+      'cochera': 'G'
+    };
 
-    const endpoint = `/properties?${queryParams.toString()}`;
-    const result = await this.request(endpoint);
+    // Construir parámetros según formato de Xintel
+    const params = {
+      page: (filters.page || 1) - 1, // Xintel empieza en 0
+      rppagina: filters.limit || 12
+    };
 
-    // Guardar en cache si fue exitoso
-    if (result.success) {
+    // Mapear filtros al formato de Xintel
+    if (filters.operationType && operationMap[filters.operationType]) {
+      params.tipo_operacion = operationMap[filters.operationType];
+    }
+    if (filters.propertyType && typeMap[filters.propertyType]) {
+      params.tipo_inmueble = typeMap[filters.propertyType];
+    }
+    if (filters.location) params.barrios1 = filters.location;
+    if (filters.minPrice) params.valor_minimo = filters.minPrice;
+    if (filters.maxPrice) params.valor_maximo = filters.maxPrice;
+    if (filters.minRooms) params.Ambientes = filters.minRooms;
+
+    const result = await this.request('resultados.fichas', params);
+
+    // Normalizar respuesta
+    if (result.success && result.data.resultado) {
+      const normalizedData = this.normalizeResponse(result.data);
+      const page = (filters.page || 1);
+      const limit = filters.limit || 12;
+      const totalItems = normalizedData.properties.length;
+
+      const responseData = {
+        properties: normalizedData.properties,
+        pagination: {
+          current_page: page,
+          total_pages: Math.ceil(totalItems / limit),
+          total_items: totalItems,
+          items_per_page: limit
+        }
+      };
+
+      // Guardar en cache
       this.cache.set(cacheKey, {
-        data: result.data,
+        data: responseData,
         timestamp: Date.now()
       });
+
+      return { success: true, data: responseData };
     }
 
     return result;
@@ -116,11 +176,20 @@ class XintelAPI {
 
   /**
    * Obtener detalle de una propiedad específica
-   * @param {string|number} propertyId - ID de la propiedad
+   * IMPORTANTE: Este endpoint devuelve TODAS las fotos (único que lo hace)
+   * @param {string|number} propertyId - ID de la propiedad (número de ficha)
    * @returns {Promise}
    */
   async getPropertyDetail(propertyId) {
-    const cacheKey = `property_${propertyId}`;
+    const rawId = String(propertyId ?? '').trim();
+    const numericId = rawId.replace(/\D/g, '');
+
+    // Xintel suele esperar solo número. Aceptamos IDs con prefijos y probamos variantes.
+    const candidateIds = [];
+    if (rawId) candidateIds.push(rawId);
+    if (numericId && numericId !== rawId) candidateIds.push(numericId);
+
+    const cacheKey = `property_${candidateIds[0] || rawId || propertyId}`;
 
     // Verificar cache
     if (this.cache.has(cacheKey)) {
@@ -130,18 +199,68 @@ class XintelAPI {
       }
     }
 
-    const endpoint = `/properties/${propertyId}`;
-    const result = await this.request(endpoint);
+    // Probar candidatos y preferir la respuesta más completa
+    let bestProperty = null;
+    let bestScore = -1;
+    let lastResult = null;
 
-    // Guardar en cache
-    if (result.success) {
-      this.cache.set(cacheKey, {
-        data: result.data,
-        timestamp: Date.now()
-      });
+    for (const id of candidateIds.length ? candidateIds : [rawId]) {
+      if (!id) continue;
+
+      const result = await this.request('fichas.propiedades', { id });
+      lastResult = result;
+
+      // Normalizar respuesta (fichas.propiedades usa "ficha" singular, no "fichas" plural)
+      if (result.success && result.data && result.data.resultado) {
+        const fichas = result.data.resultado.ficha; // Singular!
+        const images = result.data.resultado.img;
+
+        if (fichas && fichas.length > 0) {
+          const property = fichas[0];
+
+          // Mapear TODAS las imágenes (este endpoint devuelve todas)
+          if (images && Array.isArray(images)) {
+            property.fotos = images;
+            property.img_princ = images[0];
+          }
+
+          // Scoring: priorizar superficies (in_scu / in_sto) y luego otras claves
+          const hasScu = property.in_scu && String(property.in_scu).trim() !== '0';
+          const hasSto = property.in_sto && String(property.in_sto).trim() !== '0';
+          const hasObs = property.in_obs && String(property.in_obs).trim() !== '';
+          const hasTitle = property.titulo && String(property.titulo).trim() !== '';
+          const hasImages = Array.isArray(property.fotos) && property.fotos.length > 0;
+
+          const score =
+            (hasScu ? 4 : 0) +
+            (hasSto ? 3 : 0) +
+            (hasImages ? 2 : 0) +
+            (hasTitle ? 1 : 0) +
+            (hasObs ? 1 : 0);
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestProperty = property;
+          }
+
+          // Si ya tenemos superficies, no hace falta seguir probando
+          if (hasScu || hasSto) {
+            bestProperty = property;
+            break;
+          }
+        }
+      }
     }
 
-    return result;
+    if (bestProperty) {
+      this.cache.set(cacheKey, {
+        data: bestProperty,
+        timestamp: Date.now()
+      });
+      return { success: true, data: bestProperty };
+    }
+
+    return lastResult || { success: false, error: 'No se pudo obtener la propiedad', data: null };
   }
 
   /**
@@ -150,8 +269,71 @@ class XintelAPI {
    * @returns {Promise}
    */
   async getFeaturedProperties(limit = 6) {
-    const endpoint = `/properties/featured?limit=${limit}`;
-    return await this.request(endpoint);
+    return await this.request('fichas.destacadas', { limit });
+  }
+
+  /**
+   * Obtener últimas propiedades ingresadas
+   * Usa resultados.fichas en lugar de fichas.ultimas porque es más confiable
+   * @param {number} limit - Cantidad de propiedades
+   * @returns {Promise}
+   */
+  async getLatestProperties(limit = 10) {
+    const cacheKey = `latest_${limit}`;
+
+    // Verificar cache
+    if (this.cache.has(cacheKey)) {
+      const cached = this.cache.get(cacheKey);
+      if (Date.now() - cached.timestamp < this.cacheTimeout) {
+        return { success: true, data: cached.data, cached: true };
+      }
+    }
+
+    // Usar resultados.fichas con límite (más confiable que fichas.ultimas)
+    const result = await this.request('resultados.fichas', {
+      rppagina: limit,
+      page: 0
+    });
+
+    // Normalizar respuesta
+    if (result.success && result.data.resultado) {
+      const normalizedData = this.normalizeResponse(result.data);
+
+      // Guardar en cache
+      this.cache.set(cacheKey, {
+        data: normalizedData,
+        timestamp: Date.now()
+      });
+
+      return { success: true, data: normalizedData };
+    }
+
+    return result;
+  }
+
+  /**
+   * Normalizar respuesta de Xintel (mapear imágenes a fichas)
+   * @param {Object} data - Respuesta cruda de Xintel
+   * @returns {Object} - Datos normalizados
+   */
+  normalizeResponse(data) {
+    if (!data.resultado || !data.resultado.fichas) {
+      return { properties: [] };
+    }
+
+    const fichas = data.resultado.fichas;
+    const images = data.resultado.img || [];
+
+    // Mapear imágenes a cada ficha
+    const properties = fichas.map((ficha, index) => {
+      if (images[index]) {
+        ficha.fotos = Array.isArray(images[index]) ? images[index] : [images[index]];
+        ficha.img_princ = ficha.fotos[0];
+      }
+      return ficha;
+    });
+
+    return { properties };
   }
 
   /**

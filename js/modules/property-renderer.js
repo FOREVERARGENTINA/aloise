@@ -9,19 +9,107 @@ class PropertyRenderer {
   }
 
   /**
+   * Normalizar propiedad de Xintel al formato esperado
+   * @param {Object} xintelProp - Propiedad en formato Xintel
+   * @returns {Object} - Propiedad en formato normalizado
+   */
+  normalizeXintelProperty(xintelProp) {
+    // Si ya tiene el formato normalizado, devolverla tal cual
+    if (xintelProp.operation_type && xintelProp.property_type) {
+      return xintelProp;
+    }
+
+    // Mapear códigos de operación de Xintel
+    const operationMap = {
+      'A': 'alquiler',
+      'V': 'venta',
+      'T': 'alquiler_temporal',
+      'M': 'venta_alquiler'
+    };
+
+    // Mapear códigos de tipo de Xintel
+    const typeMap = {
+      'D': 'departamento',
+      'C': 'casa',
+      'P': 'ph',
+      'T': 'terreno',
+      'L': 'local',
+      'O': 'oficina',
+      'G': 'cochera'
+    };
+
+    // Determinar operación y precio
+    const operation = operationMap[xintelProp.in_ope] || 'venta';
+    const isRent = xintelProp.in_ope === 'A' || xintelProp.in_ope === 'T';
+
+    // Precio y moneda según tipo de operación
+    let price = 0;
+    let currency = 'USD';
+
+    if (isRent) {
+      // ALQUILER: siempre en pesos (ARS)
+      price = parseInt(xintelProp.in_vaa) || 0;
+      currency = 'ARS';
+    } else {
+      // VENTA: siempre en dólares (USD)
+      // Preferir in_vlu (USD), si no existe usar in_val
+      price = parseInt(xintelProp.in_vlu) || parseInt(xintelProp.in_val) || 0;
+      currency = 'USD';
+    }
+
+    // Construcción del título
+    const propertyType = typeMap[xintelProp.in_tip] || xintelProp.tipo || 'Propiedad';
+    const location = xintelProp.in_bar || xintelProp.in_loc || '';
+    const ambientes = xintelProp.in_amb || xintelProp.cantidad_ambientes || '';
+
+    let title = propertyType.charAt(0).toUpperCase() + propertyType.slice(1);
+    if (location) title += ` en ${location}`;
+    if (ambientes) {
+      const numAmb = String(ambientes).replace(/[^0-9]/g, '');
+      if (numAmb) title += ` - ${numAmb} amb`;
+    }
+
+    return {
+      id: xintelProp.in_fic || xintelProp.in_num,
+      title: xintelProp.titulo || title,
+      description: xintelProp.in_obs || '',
+      price: price,
+      currency: currency,
+      operation_type: operation,
+      property_type: propertyType,
+      location: location || 'Sin ubicación',
+      rooms: parseInt(xintelProp.in_amb) || 0,
+      bedrooms: parseInt(xintelProp.ti_dor || xintelProp.cantidad_dormitorios) || 0,
+      bathrooms: parseInt(xintelProp.in_bao) || 0,
+      // Mantener decimales para superficies
+      area: (xintelProp.in_sto ? parseFloat(String(xintelProp.in_sto).replace(',', '.')) : (xintelProp.in_sto === 0 ? 0 : (xintelProp.in_scu ? parseFloat(String(xintelProp.in_scu).replace(',', '.')) : 0))) || 0,
+      covered_area: (xintelProp.in_scu ? parseFloat(String(xintelProp.in_scu).replace(',', '.')) : 0) || 0,
+      // Superficie semicubierta (varía el campo según integración)
+      semi_covered: (xintelProp.sup_semicubierta ? parseFloat(String(xintelProp.sup_semicubierta).replace(',', '.')) : (xintelProp.in_sut ? parseFloat(String(xintelProp.in_sut).replace(',', '.')) : 0)) || 0,
+      images: xintelProp.fotos || (xintelProp.img_princ ? [xintelProp.img_princ] : []),
+      url: `/ficha?ficha=GAB${xintelProp.in_num || xintelProp.in_fic}`,
+      // Mantener referencia original
+      _xintel: xintelProp
+    };
+  }
+
+  /**
    * Formatear precio
    */
   formatPrice(price, currency = 'USD') {
     if (!price) return 'Consultar';
 
-    const formatter = new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: currency,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    });
+    const num = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
 
-    return formatter.format(price);
+    // Símbolos de moneda
+    const simbolos = {
+      'USD': 'USD',  // Mostrar "USD" en lugar de "US$"
+      'ARS': '$',    // Mostrar "$" para pesos
+      'EUR': '€'
+    };
+
+    const simbolo = simbolos[currency] || 'USD';
+    return `${simbolo} ${num}`;
   }
 
   /**
@@ -72,8 +160,10 @@ class PropertyRenderer {
       bathrooms,
       area,
       covered_area,
+      semi_covered,
       images = [],
-      url
+      url,
+      _xintel // Referencia original para acceder a campos de estado
     } = property;
 
     // Imagen principal
@@ -88,9 +178,12 @@ class PropertyRenderer {
       ? 'var(--color-gray-900)'
       : 'white';
 
+    // Estado de la propiedad (ej: Reservado, Vendido, etc.)
+    const estado = _xintel ? (_xintel.estado || _xintel.in_est || '') : '';
+
     return `
       <article class="card property-card" data-property-id="${id}">
-        <div style="position: relative;">
+        <div class="property-image">
           <img
             src="${mainImage}"
             alt="${title || `${this.formatPropertyType(property_type)} en ${location}`}"
@@ -100,10 +193,25 @@ class PropertyRenderer {
           <span class="card__badge" style="background-color: ${badgeColor}; color: ${badgeTextColor};">
             ${this.formatOperationType(operation_type)}
           </span>
+          ${estado && estado.toLowerCase() !== 'disponible' ? `<span class="property-status-badge">${estado}</span>` : ''}
         </div>
         <div class="card__body">
           <p class="property-card__price">${this.formatPrice(price, currency)}</p>
-          <h3 class="card__title">${title || `${this.formatPropertyType(property_type)} en ${location}`}</h3>
+          ${(() => {
+            const base = title || `${this.formatPropertyType(property_type)} en ${location}`;
+            let cleaned = String(base).trim();
+
+            // Evitar duplicados: si el título termina en un número o en "3 amb" lo removemos
+            if (rooms) {
+              // Remover patrones como " 3 amb", " 3 ambientes" y también números sueltos al final
+              cleaned = cleaned.replace(new RegExp(`\\s+${rooms}\\s*(ambientes|amb|amb\\.)?\\s*$`, 'i'), '');
+              cleaned = cleaned.replace(/\s+\d+\s*$/, '');
+              cleaned = cleaned.trim();
+              return `<h3 class="card__title">${cleaned} <span class="property-card__amb">- ${rooms} amb</span></h3>`;
+            }
+
+            return `<h3 class="card__title">${cleaned}</h3>`;
+          })()}
           <p class="card__description">${this.truncateText(description, 120)}</p>
 
           <div class="property-card__details">
@@ -125,14 +233,44 @@ class PropertyRenderer {
               </span>
             ` : ''}
 
-            ${area || covered_area ? `
-              <span class="property-card__detail" title="${area || covered_area} m²">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2m8-16h2a2 2 0 012 2v2m-4 12h2a2 2 0 002-2v-2" />
-                </svg>
-                ${area || covered_area} m²
-              </span>
-            ` : ''}
+            ${(() => {
+              const formatArea = (n) => {
+                if (n === null || n === undefined) return null;
+                const num = Number(n);
+                if (!Number.isFinite(num) || num <= 0) return null;
+                const rounded = Math.round(num * 100) / 100;
+                return Number.isInteger(rounded) ? String(rounded) : String(rounded).replace(/\.0+$/, '').replace(/0+$/, '').replace(/\.$/, '');
+              };
+
+              const parts = [];
+
+                const covered = formatArea(covered_area);
+              const total = formatArea(area);
+
+              if (covered) {
+                parts.push(`
+                  <span class="property-card__detail" title="${covered} m²">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v10H3z" />
+                    </svg>
+                    ${covered} m² (cub.)
+                  </span>
+                `);
+              }
+
+              if (total) {
+                parts.push(`
+                  <span class="property-card__detail" title="${total} m²">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2m8-16h2a2 2 0 012 2v2m-4 12h2a2 2 0 002-2v-2" />
+                    </svg>
+                    ${total} m² (tot.)
+                  </span>
+                `);
+              }
+
+              return parts.join('\n');
+            })()}
           </div>
         </div>
         <div class="card__footer">
@@ -157,7 +295,9 @@ class PropertyRenderer {
       return;
     }
 
-    const html = properties.map(property => this.renderPropertyCard(property)).join('');
+    // Normalizar propiedades de Xintel antes de renderizar
+    const normalizedProperties = properties.map(prop => this.normalizeXintelProperty(prop));
+    const html = normalizedProperties.map(property => this.renderPropertyCard(property)).join('');
     container.innerHTML = html;
   }
 

@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS - Orden correcto según guía -->
   <link rel="stylesheet" href="/css/design-system.css">
@@ -83,14 +83,57 @@
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+54-11-XXXX-XXXX",
+      "telephone": "+54 11 2349-0070",
+      "email": "aloisepropiedades@gmail.com",
       "contactType": "customer service",
       "availableLanguage": ["es"]
     },
     "sameAs": [
       "https://www.facebook.com/gabrielaaloisepropiedades",
-      "https://www.instagram.com/gabrielaaloisepropiedades"
+      "https://www.instagram.com/gabriela_aloise_propiedades/"
     ]
+  }
+  </script>
+
+  <!-- Static author meta + JSON-LD (author + publisher) -->
+  <meta name="author" content="Hernán — Frandoweb">
+  <script type="application/ld+json" id="site-author-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Hernán — Frandoweb",
+    "url": "https://www.frandoweb.com",
+    "sameAs": [
+      "https://www.facebook.com/gabrielaaloisepropiedades",
+      "https://www.instagram.com/gabriela_aloise_propiedades/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json" id="site-publisher-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://aloisepropiedades.com.ar/#organization",
+    "name": "Gabriela Aloise Propiedades",
+    "url": "https://aloisepropiedades.com.ar/",
+    "logo": "https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png",
+    "sameAs": [
+      "https://www.facebook.com/gabrielaaloisepropiedades",
+      "https://www.instagram.com/gabriela_aloise_propiedades/"
+    ],
+    "contactPoint": [
+      { "@type": "ContactPoint", "telephone": "+54 11 2349-0070", "contactType": "customer support" },
+      { "@type": "ContactPoint", "email": "aloisepropiedades@gmail.com", "contactType": "customer support" }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Tres de Febrero 2958",
+      "addressLocality": "Caseros",
+      "addressRegion": "Buenos Aires",
+      "postalCode": "1678",
+      "addressCountry": "AR"
+    }
   }
   </script>
 </head>
@@ -99,75 +142,30 @@
   <!-- Skip to main content (accesibilidad) -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
-  <!-- ========== HEADER Y NAVEGACIÓN ========== -->
-  <header class="header" role="banner">
-    <div class="container">
-      <div class="header__container">
-        <!-- Navegación izquierda -->
-        <nav class="nav nav--left" role="navigation" aria-label="Navegación izquierda">
-          <ul class="nav__list">
-            <li><a href="/" class="nav__link active">Inicio</a></li>
-            <li><a href="/propiedades.html" class="nav__link">Propiedades</a></li>
-            <li><a href="/servicios.html" class="nav__link">Servicios</a></li>
-          </ul>
-        </nav>
-
-        <!-- Logo centrado -->
-        <a href="/" class="header__logo" aria-label="Gabriela Aloise Propiedades - Inicio">
-          <img src="/images/logo/logo1.jpg" alt="Gabriela Aloise Propiedades" class="header__logo-image">
-        </a>
-
-        <!-- Navegación derecha -->
-        <nav class="nav nav--right" role="navigation" aria-label="Navegación derecha">
-          <ul class="nav__list">
-            <li><a href="/quienes-somos.html" class="nav__link">Quiénes somos</a></li>
-            <li><a href="/vende-con-nosotros.html" class="nav__link">Vendé con nosotros</a></li>
-            <li><a href="/contacto.html" class="nav__link">Contacto</a></li>
-          </ul>
-        </nav>
-
-        <!-- Botón menú móvil -->
-        <button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobile-menu">
-          <span class="mobile-menu-toggle__bar"></span>
-          <span class="mobile-menu-toggle__bar"></span>
-          <span class="mobile-menu-toggle__bar"></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Menú Móvil -->
-  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menú de navegación móvil">
-    <nav role="navigation" aria-label="Navegación móvil">
-      <ul class="mobile-menu__list">
-        <li class="mobile-menu__item"><a href="/" class="mobile-menu__link active">Inicio</a></li>
-        <li class="mobile-menu__item"><a href="/propiedades.html" class="mobile-menu__link">Propiedades</a></li>
-        <li class="mobile-menu__item"><a href="/servicios.html" class="mobile-menu__link">Servicios</a></li>
-        <li class="mobile-menu__item"><a href="/quienes-somos.html" class="mobile-menu__link">Quiénes somos</a></li>
-        <li class="mobile-menu__item"><a href="/vende-con-nosotros.html" class="mobile-menu__link">Vendé con nosotros</a></li>
-        <li class="mobile-menu__item"><a href="/contacto.html" class="mobile-menu__link">Contacto</a></li>
-      </ul>
-    </nav>
-  </div>
+  <!-- Placeholder para header que carga /components/navbar.html -->
+  <div id="navbar"></div>
 
   <!-- ========== MAIN CONTENT ========== -->
   <main id="main-content">
 
     <!-- Hero Section -->
-    <section class="hero hero--image" style="background-image: url('https://plus.unsplash.com/premium_photo-1754211851708-019956b12300?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" aria-label="Presentación principal">
+    <section class="hero hero--image" style="background-image: url('/images/hero/hero.webp')" aria-label="Presentación principal" role="region" aria-labelledby="hero-heading">
+      <div class="hero__divider"></div>
+      
       <div class="container">
         <div class="hero__content">
-          <h1 class="hero__title">
-            <span class="hero__title-highlight">Gabriela Aloise</span> Propiedades
+          <p class="hero__eyebrow">Gabriela Aloise Propiedades</p>
+          
+          <h1 id="hero-heading" class="hero__title" role="heading" aria-level="1">
+            Un hogar es mucho más que una propiedad
           </h1>
 
           <p class="hero__subtitle">
-            Expertos en Ventas, Alquileres, Tasaciones y Administraciones.
+            Te acompañamos con honestidad, profesionalismo y compromiso en cada decisión inmobiliaria.
           </p>
 
           <div class="hero__actions">
             <a href="/propiedades.html" class="btn btn-accent btn-lg">Ver propiedades</a>
-            <a href="/contacto.html" class="btn btn-outline btn-lg" style="border-color: white; color: white;">Contactanos</a>
           </div>
         </div>
       </div>
@@ -182,66 +180,51 @@
     <section id="servicios" class="section" aria-labelledby="servicios-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-header__eyebrow">SERVICIOS</span>
-          <h2 class="section-header__title" id="servicios-title">Nuestra exclusiva selección de servicios</h2>
-          <p class="section-header__description">
-            Ofrecemos soluciones integrales para todas tus necesidades inmobiliarias
-          </p>
+          <h2 class="section-header__title" id="servicios-title">Nuestros Servicios</h2>
         </div>
 
         <div class="grid grid-cols-1 grid-cols-md-2 grid-cols-lg-4">
           <!-- Servicio: Ventas -->
           <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="feature__image">
+              <img src="/images/services/venta.jpg" alt="Venta de propiedades" loading="lazy">
             </div>
-            <h3 class="feature__title">Ventas</h3>
+            <h3 class="feature__title">Venta</h3>
             <p class="feature__description">
-              Vendemos tu propiedad al mejor precio con estrategias personalizadas de marketing
+              Vendemos tu propiedad con una estrategia pensada para destacar su valor y alcanzar el mejor resultado
             </p>
           </article>
 
           <!-- Servicio: Alquileres -->
           <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 7H3C1.89543 7 1 7.89543 1 9V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V9C23 7.89543 22.1046 7 21 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 11V17M9 14H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="feature__image">
+              <img src="/images/services/alquiler.jpg" alt="Alquiler de propiedades" loading="lazy">
             </div>
-            <h3 class="feature__title">Alquileres</h3>
+            <h3 class="feature__title">Alquiler</h3>
             <p class="feature__description">
-              Amplia cartera de propiedades en alquiler en Caseros, zona oeste y alrededores
+              Te ayudamos a encontrar el alquiler ideal en Caseros, zona oeste y alrededores
             </p>
           </article>
 
           <!-- Servicio: Administraciones -->
           <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="feature__image">
+              <img src="/images/services/administracion.jpg" alt="Administración de propiedades" loading="lazy">
             </div>
-            <h3 class="feature__title">Administraciones</h3>
+            <h3 class="feature__title">Administración</h3>
             <p class="feature__description">
-              Gestión integral de tu propiedad: cobro de alquileres, mantenimiento y más
+              Gestionamos de manera integral tu propiedad: cobro de alquileres, mantenimiento y más
             </p>
           </article>
 
           <!-- Servicio: Tasación -->
           <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="feature__image">
+              <img src="/images/services/tasacion.jpg" alt="Tasación de propiedades" loading="lazy">
             </div>
             <h3 class="feature__title">Tasación</h3>
             <p class="feature__description">
-              Valuaciones profesionales con informes detallados del mercado actual
+              Realizamos tasaciones profesionales basadas en el análisis real del mercado actual
             </p>
           </article>
         </div>
@@ -253,124 +236,55 @@
     <section class="section" aria-labelledby="propiedades-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-header__eyebrow">PROPIEDADES</span>
-          <h2 class="section-header__title" id="propiedades-title">Últimos Ingresos</h2>
-          <p class="section-header__description">
-            Descubrí las propiedades más recientes en nuestro portfolio
-          </p>
+          <h2 class="section-header__title" id="propiedades-title">Propiedades destacadas</h2>
         </div>
 
         <div class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3" id="latest-properties-grid">
-          <!-- Las propiedades se cargarán dinámicamente desde la API -->
-          <!-- Propiedades estáticas como fallback (se reemplazarán) -->
-          <!-- Propiedad 1 -->
-          <article class="card property-card">
-            <div style="position: relative;">
-              <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" alt="Departamento moderno de 2 ambientes en Palermo" class="card__image" loading="lazy">
-              <span class="card__badge">VENTA</span>
-            </div>
-            <div class="card__body">
-              <p class="property-card__price">USD 180,000</p>
-              <h3 class="card__title">Departamento en Palermo</h3>
-              <p class="card__description">Moderno 2 ambientes con balcón, amenities y parrilla. Excelente ubicación cerca de transporte y comercios.</p>
-              <div class="property-card__details">
-                <span class="property-card__detail">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  2 amb
-                </span>
-                <span class="property-card__detail">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2m8-16h2a2 2 0 012 2v2m-4 12h2a2 2 0 002-2v-2" />
-                  </svg>
-                  45 m²
-                </span>
-              </div>
-            </div>
-            <div class="card__footer">
-              <a href="/propiedades/1" class="btn btn-primary btn-sm">Ver detalles</a>
-            </div>
-          </article>
-
-          <!-- Propiedad 2 -->
-          <article class="card property-card">
-            <div style="position: relative;">
-              <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80" alt="Casa de 3 dormitorios en Belgrano con jardín" class="card__image" loading="lazy">
-              <span class="card__badge" style="background-color: var(--color-primary); color: white;">ALQUILER</span>
-            </div>
-            <div class="card__body">
-              <p class="property-card__price">$ 350,000/mes</p>
-              <h3 class="card__title">Casa en Belgrano</h3>
-              <p class="card__description">Hermosa casa de 3 dormitorios con jardín y cochera. Ideal para familias. Zona residencial tranquila.</p>
-              <div class="property-card__details">
-                <span class="property-card__detail">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  3 dorm
-                </span>
-                <span class="property-card__detail">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2m8-16h2a2 2 0 012 2v2m-4 12h2a2 2 0 002-2v-2" />
-                  </svg>
-                  120 m²
-                </span>
-              </div>
-            </div>
-            <div class="card__footer">
-              <a href="/propiedades/2" class="btn btn-primary btn-sm">Ver detalles</a>
-            </div>
-          </article>
-
-          <!-- Propiedad 3 -->
-          <article class="card property-card">
-            <div style="position: relative;">
-              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="PH de 2 dormitorios en Caseros con patio" class="card__image" loading="lazy">
-              <span class="card__badge">VENTA</span>
-            </div>
-            <div class="card__body">
-              <p class="property-card__price">USD 95,000</p>
-              <h3 class="card__title">PH en Caseros</h3>
-              <p class="card__description">PH de 2 dormitorios con patio y parrilla. Ideal para familias. Excelente estado.</p>
-              <div class="property-card__details">
-                <span class="property-card__detail">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  2 dorm
-                </span>
-                <span class="property-card__detail">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2m8-16h2a2 2 0 012 2v2m-4 12h2a2 2 0 002-2v-2" />
-                  </svg>
-                  70 m²
-                </span>
-              </div>
-            </div>
-            <div class="card__footer">
-              <a href="/propiedades/3" class="btn btn-primary btn-sm">Ver detalles</a>
-            </div>
-          </article>
+          <!-- Las propiedades se cargarán dinámicamente desde la API. -->
+          <!-- Placeholder de carga para evitar flashes de contenido estático -->
+          <div class="properties-loading" style="grid-column: 1 / -1; text-align: center; padding: var(--space-4xl); color: var(--color-gray-600);">
+            <div class="loading" style="margin: 0 auto var(--space-md);"></div>
+            <p style="margin: 0; font-weight: 600;">Cargando propiedades...</p>
+          </div>
         </div>
 
         <div class="text-center mt-xl">
-          <a href="/propiedades.html" class="btn btn-outline btn-lg">Ver más ingresos</a>
+          <a href="/propiedades.html" class="btn btn-outline btn-lg">Ver más propiedades</a>
         </div>
       </div>
     </section>
-
+    <!-- ¿Por qué elegirnos? Section -->
+    <section class="section" style="background-color: var(--color-gray-50);" aria-labelledby="porque-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-header__title" id="porque-title">¿Por qué elegirnos?</h2>
+        </div>
+        
+        <div class="porque__grid">
+          <div>
+            <ul class="porque__list">
+              <li class="porque__item">Asesoramiento Personalizado</li>
+              <li class="porque__item">Evaluación profesional sin cargo</li>
+              <li class="porque__item">Máxima exposición en todos los canales</li>
+              <li class="porque__item">Fotografía profesional y descripciones atractivas</li>
+              <li class="porque__item">Gestión integral del proceso</li>
+            </ul>
+          </div>
+          <div aria-hidden="true" class="porque__visual"></div>
+        </div>
+      </div>
+    </section>
     <!-- CTA Section -->
     <section class="section" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-header__title" style="color: white;">¿Querés vender o alquilar tu propiedad?</h2>
+          <h2 class="section-header__title" style="color: white;">¿Listo para dar el próximo paso?</h2>
           <p class="section-header__description" style="color: var(--color-gray-100);">
-            Equipo de martilleros con amplia experiencia y estrategias de marketing profesional. Vendemos tu propiedad al mejor precio y en el menor tiempo posible.
+            Estamos para asesorarte.
           </p>
           <div class="hero__actions">
             <a href="/vende-con-nosotros.html" class="btn btn-accent btn-lg">Vendé con nosotros</a>
-            <a href="/contacto.html" class="btn btn-ghost btn-lg" style="color: white; border: 2px solid white;">Solicitar tasación</a>
+            <a href="/contacto.html" class="btn btn-ghost-white btn-lg">Solicitar tasación</a>
           </div>
         </div>
       </div>
@@ -378,13 +292,8 @@
 
   </main>
 
-  <!-- FOOTER COMPONENT -->
-  <div id="footer-placeholder"></div>
-  <script>
-    fetch('/components/footer.html')
-      .then(res => res.text())
-      .then(html => document.getElementById('footer-placeholder').innerHTML = html);
-  </script>
+  <!-- Placeholder para footer que carga /components/footer.html -->
+  <div id="footer"></div>
 
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
@@ -416,61 +325,47 @@
   <!-- JavaScript específico para home - cargar últimos ingresos -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      // Debug del menú móvil
-      console.log('🔍 Verificando elementos del menú móvil...');
-      const toggle = document.querySelector('.mobile-menu-toggle');
-      const menu = document.querySelector('.mobile-menu');
-      
-      console.log('Toggle encontrado:', !!toggle);
-      console.log('Menu encontrado:', !!menu);
-      
-      if (toggle && menu) {
-        console.log('✅ Elementos del menú móvil encontrados correctamente');
-        
-        // Test manual del toggle
-        toggle.addEventListener('click', () => {
-          console.log('🖱️ Click en toggle detectado');
-        });
-      } else {
-        console.error('❌ Error: Elementos del menú móvil no encontrados');
-      }
-
-      // Inicializar servicio de propiedades (solo si existen las clases)
-      console.log('🔍 Verificando servicios de propiedades...');
-      console.log('PropertyService definido:', typeof PropertyService !== 'undefined');
-      console.log('CONFIG definido:', typeof CONFIG !== 'undefined');
-      console.log('PropertyRenderer definido:', typeof PropertyRenderer !== 'undefined');
-
+      // Inicializar servicio de propiedades
       if (typeof PropertyService !== 'undefined' && typeof CONFIG !== 'undefined') {
         try {
-          console.log('📦 Creando PropertyService...');
           const propertyService = new PropertyService(CONFIG);
-
-          console.log('🎨 Creando PropertyRenderer...');
           const renderer = new PropertyRenderer();
-
-          console.log('🔄 Solicitando últimas propiedades de Xintel...');
-          console.log('Configuración Xintel:', CONFIG.xintel);
 
           // Cargar últimos ingresos dinámicamente
           const result = await propertyService.getLatestProperties(CONFIG.xintel.searchLimits.latest);
 
-          console.log('📥 Resultado de la API:', result);
-
           if (result.success && result.data.properties) {
-            console.log(`✅ ${result.data.properties.length} propiedades recibidas`);
+            if (result.data.properties.length === 0) {
+              // No hay propiedades devueltas
+              const apiStatus = propertyService.getAPIStatus ? propertyService.getAPIStatus() : { apiConfigured: false };
 
-            // Renderizar propiedades
-            renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid');
-
-            // Mostrar badge de datos de prueba si aplica
-            if (result.mock) {
-              console.log('⚠️ Mostrando datos de prueba. La API de Xintel no respondió correctamente.');
+              if (!apiStatus.apiConfigured) {
+                document.getElementById('latest-properties-grid').innerHTML = `
+                  <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-6xl); color: var(--color-gray-600);">
+                    <h3 style="margin-bottom: var(--space-md);">Xintel API no configurada</h3>
+                    <p style="margin: 0;">Configurá <code>CONFIG.xintel</code> en <code>js/config.js</code> con tus credenciales para ver propiedades.</p>
+                  </div>
+                `;
+              } else {
+                document.getElementById('latest-properties-grid').innerHTML = `
+                  <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-4xl); color: var(--color-gray-600);">
+                    <h3 style="margin-bottom: var(--space-md);">No se encontraron propiedades</h3>
+                    <p style="margin: 0;">Intentá ajustar los filtros o revisá la disponibilidad.</p>
+                  </div>
+                `;
+              }
             } else {
-              console.log('✅ Propiedades cargadas desde Xintel API');
+              // Renderizar propiedades
+              renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid');
             }
           } else {
             console.error('❌ Error: No se pudieron cargar las propiedades', result.error);
+            document.getElementById('latest-properties-grid').innerHTML = `
+              <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-4xl); color: var(--color-error);">
+                <h3 style="margin-bottom: var(--space-md);">Error al cargar propiedades</h3>
+                <p style="margin: 0;">${result.error || 'Ocurrió un error al comunicarse con la API de Xintel.'}</p>
+              </div>
+            `;
           }
         } catch (error) {
           console.error('❌ Error al cargar propiedades:', error);
@@ -484,46 +379,8 @@
       }
     });
   </script>
-  <!-- Script de emergencia para menú móvil -->
-  <script>
-    // Backup simple del menú móvil por si falla el principal
-    window.addEventListener('load', () => {
-      const toggle = document.querySelector('.mobile-menu-toggle');
-      const menu = document.querySelector('.mobile-menu');
-      
-      if (toggle && menu && !toggle.hasAttribute('data-initialized')) {
-        console.log('🔧 Inicializando menú móvil de emergencia...');
-        
-        toggle.setAttribute('data-initialized', 'true');
-        
-        toggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          console.log('📱 Toggle menú móvil (emergencia)');
-          
-          const isActive = menu.classList.contains('active');
-          
-          if (isActive) {
-            menu.classList.remove('active');
-            toggle.classList.remove('active');
-            document.body.style.overflow = '';
-          } else {
-            menu.classList.add('active');
-            toggle.classList.add('active');
-            document.body.style.overflow = 'hidden';
-          }
-        });
-        
-        // Cerrar al hacer click en links
-        menu.querySelectorAll('.mobile-menu__link').forEach(link => {
-          link.addEventListener('click', () => {
-            menu.classList.remove('active');
-            toggle.classList.remove('active');
-            document.body.style.overflow = '';
-          });
-        });
-      }
-    });
-  </script>
+  <!-- Components: carga navbar y footer -->
+  <script src="/js/components.js" defer></script>
 
 </body>
 </html>
