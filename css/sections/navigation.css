@@ -155,7 +155,7 @@
   background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
 }
 
-/* Menú móvil toggle */
+/* Menú móvil toggle (hamburguesa) */
 .mobile-menu-toggle {
   display: flex;
   flex-direction: column;
@@ -168,7 +168,7 @@
   border-radius: 6px;
   cursor: pointer;
   padding: 0;
-  z-index: 1070 !important;
+  z-index: 5;
   transition: all 0.3s ease;
   position: relative;
 }
@@ -244,6 +244,54 @@
   padding: 5rem 2rem 2rem !important;
   transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   overflow-y: auto !important;
+}
+
+/* Botón de cierre (X) dentro del menú móvil */
+.mobile-menu-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(176, 183, 189, 0.1);
+  border: 1px solid rgba(176, 183, 189, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1040;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-close:hover {
+  background: rgba(176, 183, 189, 0.2);
+  border-color: var(--gold-primary);
+  transform: rotate(90deg);
+}
+
+.mobile-menu-close__bar {
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-primary), var(--gold-light));
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu-close__bar:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.mobile-menu-close__bar:nth-child(2) {
+  transform: rotate(-45deg);
+}
+
+.mobile-menu-close:hover .mobile-menu-close__bar {
+  background: linear-gradient(90deg, var(--gold-light), var(--gold-accent));
+  box-shadow: 0 0 8px rgba(176, 183, 189, 0.4);
 }
 
 .mobile-menu.active {

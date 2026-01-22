@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Cocheras - Debug Xintel</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #1e1e1e;
+      color: #d4d4d4;
+    }
+    h1 { color: #4ec9b0; }
+    .test-section {
+      background: #252526;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #3e3e42;
+    }
+    .property-item {
+      background: #2d2d30;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border-left: 3px solid #007acc;
+    }
+    .field {
+      margin: 5px 0;
+      padding: 5px;
+    }
+    .field-name {
+      color: #9cdcfe;
+      font-weight: bold;
+    }
+    .field-value {
+      color: #ce9178;
+    }
+    .warning {
+      background: #5a3e00;
+      border-left-color: #f39c12;
+      color: #ffd700;
+    }
+    button {
+      background: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #1177bb;
+    }
+    .loading {
+      color: #4ec9b0;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    input {
+      padding: 8px;
+      margin: 5px;
+      background: #3c3c3c;
+      border: 1px solid #3e3e42;
+      color: #d4d4d4;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚗 Test de Cocheras - Debug Xintel API</h1>
+
+  <div class="test-section" style="background: #1e3a1e; border-left-color: #4ec9b0;">
+    <h2 style="color: #4ec9b0;">✅ Campo correcto encontrado</h2>
+    <p style="color: #b5cea8;">El campo que contiene las cocheras en Xintel es <strong style="color: #4ec9b0;">in_coc</strong> (no "garage" ni "in_gar")</p>
+  </div>
+
+  <div class="test-section">
+    <h2>1. Probar una ficha específica</h2>
+    <p>Ingresá el número de ficha que sabés que tiene cochera:</p>
+    <input type="text" id="fichaId" placeholder="Ej: 123 o GAB123" style="width: 200px;">
+    <button onclick="testSingleProperty()">Probar Ficha</button>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Escanear todas las propiedades</h2>
+    <p>Esto buscará todas las propiedades y mostrará cuáles tienen cochera:</p>
+    <button onclick="testAllProperties()">Escanear Todas</button>
+  </div>
+
+  <div id="results"></div>
+
+  <!-- Scripts necesarios -->
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+  <script src="/js/modules/property-service.js"></script>
+
+  <script>
+    const resultsDiv = document.getElementById('results');
+
+    async function testSingleProperty() {
+      const fichaId = document.getElementById('fichaId').value.trim();
+
+      if (!fichaId) {
+        alert('Por favor ingresá un número de ficha');
+        return;
+      }
+
+      resultsDiv.innerHTML = '<div class="test-section loading">Cargando propiedad...</div>';
+
+      try {
+        const propertyService = new PropertyService(CONFIG);
+        const result = await propertyService.getPropertyDetail(fichaId);
+
+        if (!result.success || !result.data) {
+          resultsDiv.innerHTML = `
+            <div class="test-section warning">
+              <h3>❌ Error</h3>
+              <p>No se pudo cargar la propiedad: ${result.error || 'Error desconocido'}</p>
+            </div>
+          `;
+          return;
+        }
+
+        const property = result.data;
+
+        // Buscar TODOS los campos relacionados con cochera/garage
+        const cocheraFields = {};
+        for (const key in property) {
+          const keyLower = key.toLowerCase();
+          if (keyLower.includes('gar') || keyLower.includes('coch') || keyLower.includes('park')) {
+            cocheraFields[key] = property[key];
+          }
+        }
+
+        resultsDiv.innerHTML = `
+          <div class="test-section">
+            <h3>✅ Propiedad Cargada</h3>
+            <div class="property-item">
+              <div class="field">
+                <span class="field-name">ID:</span>
+                <span class="field-value">${property.in_num || property.in_fic || 'N/A'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">Título:</span>
+                <span class="field-value">${property.titulo || 'N/A'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">Ubicación:</span>
+                <span class="field-value">${property.in_bar || ''} ${property.in_loc || ''}</span>
+              </div>
+            </div>
+
+            <h4>🔍 Campos relacionados con cochera/garage/parking:</h4>
+            ${Object.keys(cocheraFields).length > 0 ? `
+              <div class="property-item">
+                ${Object.entries(cocheraFields).map(([key, value]) => `
+                  <div class="field">
+                    <span class="field-name">${key}:</span>
+                    <span class="field-value">${JSON.stringify(value)}</span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : '<div class="property-item warning">⚠️ No se encontraron campos con "gar", "coch" o "park"</div>'}
+
+            <h4>📋 Campos principales de la propiedad:</h4>
+            <div class="property-item">
+              <div class="field">
+                <span class="field-name">in_amb (Ambientes):</span>
+                <span class="field-value">${property.in_amb || 'N/A'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">ti_dor (Dormitorios):</span>
+                <span class="field-value">${property.ti_dor || 'N/A'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">in_bao (Baños):</span>
+                <span class="field-value">${property.in_bao || 'N/A'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">in_coc (Cocheras - CAMPO CORRECTO):</span>
+                <span class="field-value" style="font-size: 18px; font-weight: bold; color: #4ec9b0;">${property.in_coc !== undefined ? property.in_coc : '⚠️ CAMPO NO EXISTE'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">garage (Cocheras - no usado):</span>
+                <span class="field-value">${property.garage !== undefined ? property.garage : '⚠️ CAMPO NO EXISTE'}</span>
+              </div>
+              <div class="field">
+                <span class="field-name">in_gar (Cocheras - campo doc):</span>
+                <span class="field-value">${property.in_gar !== undefined ? property.in_gar : '⚠️ CAMPO NO EXISTE'}</span>
+              </div>
+            </div>
+
+            <details>
+              <summary style="cursor: pointer; padding: 10px; background: #2d2d30; margin-top: 10px;">
+                Ver todos los campos (${Object.keys(property).length} campos)
+              </summary>
+              <pre style="background: #1e1e1e; padding: 15px; overflow: auto; max-height: 400px; margin-top: 10px;">
+${JSON.stringify(property, null, 2)}
+              </pre>
+            </details>
+          </div>
+        `;
+      } catch (error) {
+        resultsDiv.innerHTML = `
+          <div class="test-section warning">
+            <h3>❌ Error</h3>
+            <p>${error.message}</p>
+            <pre>${error.stack}</pre>
+          </div>
+        `;
+      }
+    }
+
+    async function testAllProperties() {
+      resultsDiv.innerHTML = '<div class="test-section loading">Escaneando todas las propiedades...</div>';
+
+      try {
+        const propertyService = new PropertyService(CONFIG);
+        const result = await propertyService.getProperties({ limit: 100 });
+
+        if (!result.success || !result.data || !result.data.properties) {
+          resultsDiv.innerHTML = `
+            <div class="test-section warning">
+              <h3>❌ Error</h3>
+              <p>No se pudieron cargar las propiedades: ${result.error || 'Error desconocido'}</p>
+            </div>
+          `;
+          return;
+        }
+
+        const properties = result.data.properties;
+        const withGarage = [];
+        const withoutGarage = [];
+
+        properties.forEach(prop => {
+          const garageValue = parseInt(prop.in_coc || prop.garage || prop.in_gar) || 0;
+          if (garageValue > 0) {
+            withGarage.push({ ...prop, garageValue });
+          } else {
+            withoutGarage.push({ ...prop, garageValue });
+          }
+        });
+
+        resultsDiv.innerHTML = `
+          <div class="test-section">
+            <h3>📊 Resumen del Escaneo</h3>
+            <div class="field">
+              <span class="field-name">Total de propiedades:</span>
+              <span class="field-value">${properties.length}</span>
+            </div>
+            <div class="field">
+              <span class="field-name">Con cochera (in_coc > 0):</span>
+              <span class="field-value">${withGarage.length}</span>
+            </div>
+            <div class="field">
+              <span class="field-name">Sin cochera (in_coc = 0 o undefined):</span>
+              <span class="field-value">${withoutGarage.length}</span>
+            </div>
+          </div>
+
+          ${withGarage.length > 0 ? `
+            <div class="test-section">
+              <h3>✅ Propiedades CON cochera:</h3>
+              ${withGarage.map(prop => `
+                <div class="property-item">
+                  <div class="field">
+                    <span class="field-name">ID:</span>
+                    <span class="field-value">${prop.in_num || prop.in_fic}</span>
+                  </div>
+                  <div class="field">
+                    <span class="field-name">Título:</span>
+                    <span class="field-value">${prop.titulo || 'N/A'}</span>
+                  </div>
+                  <div class="field">
+                    <span class="field-name">in_coc:</span>
+                    <span class="field-value" style="font-weight: bold; color: #4ec9b0;">${prop.garageValue}</span>
+                  </div>
+                  <button onclick="document.getElementById('fichaId').value='${prop.in_num || prop.in_fic}'; testSingleProperty();">
+                    Ver Detalle
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          ${withoutGarage.length > 0 ? `
+            <div class="test-section">
+              <h3>⚠️ Primeras 10 propiedades SIN cochera:</h3>
+              ${withoutGarage.slice(0, 10).map(prop => `
+                <div class="property-item warning">
+                  <div class="field">
+                    <span class="field-name">ID:</span>
+                    <span class="field-value">${prop.in_num || prop.in_fic}</span>
+                  </div>
+                  <div class="field">
+                    <span class="field-name">Título:</span>
+                    <span class="field-value">${prop.titulo || 'N/A'}</span>
+                  </div>
+                  <div class="field">
+                    <span class="field-name">in_coc:</span>
+                    <span class="field-value">${prop.in_coc !== undefined ? prop.in_coc : 'undefined'}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        `;
+      } catch (error) {
+        resultsDiv.innerHTML = `
+          <div class="test-section warning">
+            <h3>❌ Error</h3>
+            <p>${error.message}</p>
+            <pre>${error.stack}</pre>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

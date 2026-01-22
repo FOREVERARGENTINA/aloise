@@ -29,52 +29,55 @@ class Components {
 
     const toggle = document.querySelector('.mobile-menu-toggle');
     const menu = document.querySelector('.mobile-menu');
-    
+    const closeBtn = document.querySelector('.mobile-menu-close');
+
     if (!toggle || !menu) return;
 
     // Marcar inicializado para que otros no vuelvan a registrar handlers
     window.__MOBILE_MENU_INIT = true;
-    
+
+    // Función para abrir el menú
+    const openMenu = () => {
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.classList.add('mobile-menu--open', 'active');
+      toggle.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('mobile-menu-open');
+    };
+
+    // Función para cerrar el menú
+    const closeMenu = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('mobile-menu--open', 'active');
+      toggle.classList.remove('active');
+      document.body.style.overflow = '';
+      document.body.classList.remove('mobile-menu-open');
+    };
+
+    // Toggle al hacer clic en el botón hamburguesa
     toggle.addEventListener('click', () => {
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', !isOpen);
-
-      // Cambiar clase moderna y mantener compatibilidad con la clase 'active'
-      menu.classList.toggle('mobile-menu--open');
-      menu.classList.toggle('active');
-      toggle.classList.toggle('active');
-
-      // Controlar overflow y clase en el body para poder ocultar el toggle externo
-      if (!isOpen) {
-        document.body.style.overflow = 'hidden';
-        document.body.classList.add('mobile-menu-open');
+      if (isOpen) {
+        closeMenu();
       } else {
-        document.body.style.overflow = '';
-        document.body.classList.remove('mobile-menu-open');
+        openMenu();
       }
     });
 
+    // Cerrar al hacer clic en el botón X dentro del menú
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeMenu);
+    }
+
     // Cerrar al hacer click en links dentro del menú
     menu.querySelectorAll('.mobile-menu__link').forEach(link => {
-      link.addEventListener('click', () => {
-        menu.classList.remove('mobile-menu--open');
-        menu.classList.remove('active');
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-        document.body.classList.remove('mobile-menu-open');
-      });
+      link.addEventListener('click', closeMenu);
     });
 
     // Cerrar con ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menu.classList.contains('active')) {
-        menu.classList.remove('mobile-menu--open');
-        menu.classList.remove('active');
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-        document.body.classList.remove('mobile-menu-open');
+        closeMenu();
       }
     });
   }

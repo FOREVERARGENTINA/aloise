@@ -81,6 +81,7 @@ class PropertyRenderer {
       rooms: parseInt(xintelProp.in_amb) || 0,
       bedrooms: parseInt(xintelProp.ti_dor || xintelProp.cantidad_dormitorios) || 0,
       bathrooms: parseInt(xintelProp.in_bao) || 0,
+      garages: parseInt(xintelProp.in_coc || xintelProp.garage || xintelProp.in_gar) || 0,
       // Mantener decimales para superficies
       area: (xintelProp.in_sto ? parseFloat(String(xintelProp.in_sto).replace(',', '.')) : (xintelProp.in_sto === 0 ? 0 : (xintelProp.in_scu ? parseFloat(String(xintelProp.in_scu).replace(',', '.')) : 0))) || 0,
       covered_area: (xintelProp.in_scu ? parseFloat(String(xintelProp.in_scu).replace(',', '.')) : 0) || 0,
@@ -182,18 +183,20 @@ class PropertyRenderer {
 
     return `
       <article class="card property-card" data-property-id="${id}">
-        <div class="property-image">
-          <img
-            src="${mainImage}"
-            alt="${title || `${this.formatPropertyType(property_type)} en ${location}`}"
-            class="card__image"
-            loading="lazy"
-          >
-          <span class="card__badge" style="background-color: ${badgeColor}; color: ${badgeTextColor};">
-            ${this.formatOperationType(operation_type)}
-          </span>
-          ${estado && estado.toLowerCase() !== 'disponible' ? `<span class="property-status-badge">${estado}</span>` : ''}
-        </div>
+        <a href="${url || `/propiedades/${id}`}" class="property-image-link">
+          <div class="property-image">
+            <img
+              src="${mainImage}"
+              alt="${title || `${this.formatPropertyType(property_type)} en ${location}`}"
+              class="card__image"
+              loading="lazy"
+            >
+            <span class="card__badge" style="background-color: ${badgeColor}; color: ${badgeTextColor};">
+              ${this.formatOperationType(operation_type)}
+            </span>
+            ${estado && estado.toLowerCase() !== 'disponible' ? `<span class="property-status-badge">${estado}</span>` : ''}
+          </div>
+        </a>
         <div class="card__body">
           <p class="property-card__price">${this.formatPrice(price, currency)}</p>
           ${(() => {
@@ -231,6 +234,23 @@ class PropertyRenderer {
                 ${bathrooms} ${bathrooms > 1 ? 'baños' : 'baño'}
               </span>
             ` : ''}
+
+            ${(() => {
+              // Mostrar cocheras solo si es mayor a 0 - usar campo 'in_coc'
+              const garages = property.garages || parseInt(_xintel?.in_coc) || parseInt(_xintel?.garage) || parseInt(_xintel?.in_gar) || 0;
+              if (garages > 0) {
+                return `
+                  <span class="property-card__detail" title="${garages} cochera${garages > 1 ? 's' : ''}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 17a3 3 0 0 0 6 0M15 17a3 3 0 0 0 6 0"/>
+                    </svg>
+                    ${garages} cochera${garages > 1 ? 's' : ''}
+                  </span>
+                `;
+              }
+              return '';
+            })()}
 
             ${(() => {
               const formatArea = (n) => {

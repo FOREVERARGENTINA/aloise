@@ -253,6 +253,12 @@ class XintelAPI {
     }
 
     if (bestProperty) {
+      // Log temporal para debug de cocheras
+      console.log('🚗 Debug cocheras - Campo in_coc (CORRECTO):', bestProperty.in_coc);
+      console.log('🚗 Debug cocheras - Campo garage:', bestProperty.garage);
+      console.log('🚗 Debug cocheras - Campo in_gar:', bestProperty.in_gar);
+      console.log('🔍 Todos los campos relacionados:', Object.keys(bestProperty).filter(k => k.toLowerCase().includes('gar') || k.toLowerCase().includes('coch') || k.toLowerCase().includes('park') || k === 'in_coc'));
+
       this.cache.set(cacheKey, {
         data: bestProperty,
         timestamp: Date.now()

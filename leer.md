@@ -1,411 +1,399 @@
-/**
- * MAIN.JS - Inicialización principal
- * Gabriela Aloise Propiedades
- */
+🚗 Test de Cocheras - Debug Xintel API
+1. Probar una ficha específica
+Ingresá el número de ficha que sabés que tiene cochera:
 
-// Importar módulos (cuando uses ES6 modules)
-// import { initMobileMenu } from './modules/mobile-menu.js';
+GAB18
+ Probar Ficha
+2. Escanear todas las propiedades
+Esto buscará todas las propiedades y mostrará cuáles tienen cochera:
 
-// ========== CONFIGURACIÓN GLOBAL ==========
-// CONFIG se carga desde config.js
-
-// ========== UTILIDADES ==========
-
-/**
- * Detecta si el dispositivo es táctil
- */
-function isTouchDevice() {
-  return (('ontouchstart' in window) ||
-    (navigator.maxTouchPoints > 0) ||
-    (navigator.msMaxTouchPoints > 0));
+Escanear Todas
+✅ Propiedad Cargada
+ID: 18
+Título: Departamento en venta Caseros 2 ambientes
+Ubicación: Caseros Tres de Febrero
+🔍 Campos relacionados con cochera/garage:
+garage: "0"
+in_parking: ""
+garantiaFinaer: "False"
+📋 Campos principales de la propiedad:
+in_amb (Ambientes): 2A
+ti_dor (Dormitorios): 1
+in_bao (Baños): 1
+garage (Cocheras - campo real): 0
+in_gar (Cocheras - campo doc): ⚠️ CAMPO NO EXISTE
+Ver todos los campos (341 campos)
+{
+  "in_suc": "GAB",
+  "in_num": "18",
+  "in_fic": "18",
+  "in_fec": "2026-01-06 00:00:00",
+  "in_ope": "V",
+  "in_tip": "Departamento",
+  "in_amb": "2A",
+  "cantidad_ambientes": "2",
+  "cantidad_dormitorios": "1",
+  "etiqueta_ambientes": "ambientes",
+  "in_cal": "David Magdalena",
+  "in_nro": "2842",
+  "in_mzn": "",
+  "in_lot": "",
+  "in_pis": "9",
+  "in_dto": "A",
+  "zonaCiudad": "",
+  "in_loc": "Tres de Febrero",
+  "in_bar": "Caseros",
+  "in_par": "",
+  "in_pro": "1",
+  "in_en1": "Moreno",
+  "in_en2": "La Merced",
+  "in_val": "53900",
+  "in_vaa": "0",
+  "valor_extra": "0",
+  "moneda_valor_extra": "",
+  "in_ocu": "0",
+  "in_for": "",
+  "in_due": "",
+  "in_ven": "",
+  "in_obs": "<p>Departamento 2 Ambientes CON COCHERA cub. en Caseros Centro, Tres de Febrero</p><br><p><span style="background-color: initial;">Muy buena ubicacion, Compuesto por living cocina comedort, con bajo mesada, artefacto a gas 4 hornallas, salida al balcon con amplia vista, baño completo con bañera, dormitorio con placard y COCHERA CUBIERTA. A una cuadra de Av. San Martin y 1 cuadra y media de Av. Urquiza. &nbsp;Escritura a cargo comprador</span></p><p>SUPER LUMINOSO!!!!&nbsp;<br>&nbsp;            \n            \n        <br></p>",
+  "in_obi": "",
+  "in_obm": "",
+  "in_sup": "0.00",
+  "in_cub": "35.00",
+  "in_ubi": "F",
+  "in_ori": "O",
+  "in_ant": "15",
+  "in_m01": "",
+  "in_m02": "",
+  "in_m03": "",
+  "in_m04": "1",
+  "in_m05": "INTEGRADA",
+  "in_m06": "CON PLACARD",
+  "in_m07": "",
+  "in_m08": "",
+  "in_m09": "",
+  "in_m10": "",
+  "in_m11": "",
+  "in_m12": "",
+  "in_m13": "",
+  "in_m14": "",
+  "in_m15": "SI",
+  "in_m16": "CUBIERTA",
+  "in_m17": "",
+  "in_m18": "",
+  "in_exp": "",
+  "in_apt": "",
+  "in_coc": "1",
+  "garage": "0",
+  "in_agu": "",
+  "in_bau": "",
+  "in_npi": "9",
+  "in_ale": "",
+  "in_lin": "",
+  "in_dia": "0",
+  "in_fve": "0000-00-00 00:00:00",
+  "in_npr": "1",
+  "in_fre": "0000-00-00 00:00:00",
+  "in_ore": "0",
+  "in_fin": "A",
+  "in_hab": "S",
+  "in_man": "",
+  "in_var": "0",
+  "in_vat": "0",
+  "in_lla": "0",
+  "in_gua": "",
+  "in_vis": "",
+  "in_pla": "",
+  "in_com": "",
+  "gastos_ocupacion": "0.00",
+  "in_coa": "",
+  "in_com2": "",
+  "in_coa2": "",
+  "in_doc": "",
+  "in_zon": "",
+  "in_ide": "",
+  "in_rub": "",
+  "in_imp": "",
+  "moneda_impuesto": "P",
+  "in_fot": "",
+  "in_fos": "",
+  "in_apr": "",
+  "in_dem": "",
+  "in_neg": "",
+  "in_fra": "",
+  "in_img": "",
+  "in_fta": "0000-00-00 00:00:00",
+  "in_faa": "0",
+  "in_fav": "1767795743",
+  "in_tas": "1",
+  "in_res": "False",
+  "in_str": "True",
+  "in_cad": "False",
+  "acepta_mascota": "False",
+  "in_cre": "False",
+  "in_vre": "0.00",
+  "in_fbo": "0000-00-00 00:00:00",
+  "in_fes": "0000-00-00 00:00:00",
+  "in_frs": "0000-00-00 00:00:00",
+  "in_ncl": "",
+  "in_uso": "",
+  "in_mob": "",
+  "in_fea": "0000-00-00 00:00:00",
+  "in_nop": "",
+  "in_est": "",
+  "in_clo": "",
+  "in_pav": "",
+  "in_gas": "",
+  "in_sut": "0.00",
+  "in_sul": "0.00",
+  "in_sto": "37.00",
+  "sup_semicubierta": "2.00",
+  "in_fpt": "0000-00-00 00:00:00",
+  "in_sus": "False",
+  "in_fsu": "0000-00-00",
+  "in_tqu": "",
+  "in_mt2": "0.00",
+  "fechaac": "2026-01-15 23:54:16",
+  "in_fei": "2026-01-06 18:32:00",
+  "in_amu": "",
+  "in_at1": "",
+  "in_at2": "",
+  "in_at3": "",
+  "in_av1": "",
+  "in_av2": "",
+  "in_av3": "",
+  "in_ofi": "",
+  "in_ent": "",
+  "in_prm": "",
+  "in_fba": "0000-00-00 00:00:00",
+  "in_gat": "",
+  "in_tpl": "",
+  "in_esa": "Bueno",
+  "in_alf": "0.00",
+  "in_ape": " ",
+  "in_tel": "",
+  "in_asc": "1",
+  "in_pub": "0",
+  "in_pun": "0",
+  "in_edi": "",
+  "emprendimiento_id": "0",
+  "in_arq": "",
+  "in_ac1": "",
+  "in_ac2": "",
+  "in_ac3": "",
+  "in_con": "",
+  "in_sel": "True",
+  "in_cpr": "False",
+  "in_mre": "0.00",
+  "in_int": "True",
+  "in_ban": "",
+  "in_dpi": "0",
+  "in_pil": "",
+  "in_paq": "",
+  "in_qin": "",
+  "in_rie": "",
+  "in_por": "",
+  "in_bao": "1",
+  "in_ala": "",
+  "in_car": "False",
+  "in_tpr": "",
+  "in_inm": "GAB",
+  "in_gru": "",
+  "in_cat": "",
+  "in_eco": "Buena",
+  "in_moa": "P",
+  "in_mov": "D",
+  "in_mof": "",
+  "in_mor": "",
+  "in_moe": "P",
+  "in_mot": "D",
+  "in_agr": "False",
+  "in_dec": "",
+  "in_1de": "",
+  "in_2de": "",
+  "in_ene": "",
+  "in_1en": "",
+  "in_2en": "",
+  "in_feb": "",
+  "in_1fe": "",
+  "in_2fe": "",
+  "in_mar": "",
+  "in_1ma": "",
+  "in_2ma": "",
+  "in_nog": "False",
+  "fecactdata": "0000-00-00 00:00:00",
+  "in_dep": "",
+  "in_esi": "N",
+  "in_otp": "",
+  "in_ot1": "",
+  "in_ot2": "",
+  "in_des": "False",
+  "in_blo": "False",
+  "in_vid": "False",
+  "in_zpr": "False",
+  "in_acr": "False",
+  "in_cod": "",
+  "in_pva": "M",
+  "in_ccc": "False",
+  "in_pbg": "False",
+  "in_iub": "2292",
+  "in_coo": "-34.6084993,-58.5605118",
+  "in_mpa": "False",
+  "in_anp": "False",
+  "in_ebu": "False",
+  "in_ren": "False",
+  "in_pdf": "",
+  "in_crg": "1",
+  "in_enc": "1",
+  "in_eto": "1",
+  "in_nom": "",
+  "in_pai": "Argentina",
+  "in_url": "",
+  "in_ord": "0",
+  "in_ord2": "0",
+  "in_vdi": "0",
+  "in_vdi_mon": "D",
+  "in_vse": "0",
+  "in_vse_mon": "D",
+  "in_vqu": "0",
+  "in_vqu_mon": "D",
+  "in_vme": "0",
+  "in_vme_mon": "D",
+  "in_est_min": "0",
+  "in_ext": "",
+  "in_tpa": "",
+  "in_tpi": "Departamento 2 Ambientes CON COCHERA cub. en Caseros Centro, Tres de Febrero",
+  "in_cml": ",",
+  "in_anio": "0",
+  "in_per": "False",
+  "in_apd": "False",
+  "in_apn": "False",
+  "in_apre": "False",
+  "in_aprc": "False",
+  "formaPago_valor": "",
+  "formaPago_boleto": "0.00",
+  "formaPago_cuotas": "0.00",
+  "formaPago_valorCuotas": "0.00",
+  "seguro_caucion": "False",
+  "emite_factura": "False",
+  "recibo_sueldo": "False",
+  "fecha_autorizacion": "0000-00-00 00:00:00",
+  "partida_inmobiliaria": "",
+  "matricula": "",
+  "nomenclatura_catastral": "",
+  "honorarioTemporal": "0",
+  "reservaTemporal": "0",
+  "depositoTemporal": "0",
+  "mostroInteresados": "1",
+  "envioPosiblesInteresados": "0",
+  "eliminado": "0",
+  "in_uoz": "0",
+  "in_tou": "",
+  "in_coneat": "",
+  "in_parking": "",
+  "in_valor_renta": "0",
+  "in_valor_retorno": "0.00",
+  "in_valor_precrisis": "0",
+  "valor_uva": "0.00",
+  "valor_uf": "0.00",
+  "valor_dolares": "0",
+  "in_escritorio": "False",
+  "clienteReserva_id": "0",
+  "vencimientoReserva": "",
+  "in_pco": "False",
+  "codsuc": "GAB",
+  "interes_social": "False",
+  "acepta_cripto": "False",
+  "promocion": "False",
+  "codemp": "GAB",
+  "codgru": "GAB",
+  "active": "1",
+  "in_ply": "0",
+  "ficha_referencia": "",
+  "alq_dia": "False",
+  "alq_semana": "False",
+  "alq_quincena": "False",
+  "alq_mes": "False",
+  "altura": "",
+  "id_externo": "",
+  "garantiaFinaer": "False",
+  "apto_financiacion": "False",
+  "tipo_de_cubierta": "False",
+  "tipo_medida": "",
+  "id_variation": "",
+  "created": "0000-00-00 00:00:00",
+  "unidad_idAviso": "",
+  "hora_checkout": "21:00:00",
+  "hora_checkin": "21:00:00",
+  "estadia_minima": "0",
+  "ambientes_casco": "",
+  "superficie_casco": "",
+  "forma_terreno": "",
+  "activa": "0",
+  "codigo_aviso_ag": "",
+  "disposicion_lote": "",
+  "tipo_seguridad": "",
+  "act1": "",
+  "act2": "",
+  "act3": "",
+  "ti_dor": "1",
+  "dormitorios": "1 dormitorios",
+  "ambientes": "2 ambientes",
+  "orientacion": "OESTE",
+  "ubicacion": "FRENTE",
+  "whatsapp": "",
+  "vendedor_id": "",
+  "vendedor_nombre": "",
+  "vendedor_apellido": "",
+  "vendedor_foto": "",
+  "vendedor_telefono": "",
+  "vendedor_celular": "",
+  "vendedor_correo": "",
+  "img_princ": "https://cdn-images.xintelweb.com/upload/8471cf4261952603610252eed8d0b577.jpg?1767795475",
+  "operacion": "Venta",
+  "estado": "",
+  "precio": "U$S 53.900",
+  "amigable": "-en-venta-en-caseros-ficha-gab18",
+  "titulo": "Departamento en venta Caseros 2 ambientes",
+  "latitud": "-34.6084993",
+  "longitud": "-58.5605118",
+  "moneda": "U$S",
+  "direccion": "David Magdalena  al 2800",
+  "enlace_maps": "https://www.openstreetmap.org/export#map=13/-34.5831/-58.4577",
+  "enlace_facebook": "http://www.facebook.com/sharer.php?s=100&p[title]= - Departamento en Venta&p[url]=%2Fficha%2F18%2F-pagweb-caseros-tres-de-febrero&p[images][0]=https%3A%2F%2Fcdn-images.xintelweb.com%2Fupload%2F8471cf4261952603610252eed8d0b577.jpg%3F1767795475&pa[summary]=Departamento+2+Ambientes+CON+COCHERA+cub.+en+Caseros+Centro%2C+Tres+de+FebreroMuy+buena+ubicacion%2C+Com...",
+  "enlace_twitter": "http://twitter.com/home?status=+-+Departamento+en+Venta - %2Fficha%2F18%2F-pagweb-caseros-tres-de-febrero",
+  "enlace_googlemas": "https://m.google.com/app/plus/x/?v=compose&content= - Departamento en Venta - %2Fficha%2F18%2F-pagweb-caseros-tres-de-febrero",
+  "imagen_mapa": "http://maps.googleapis.com/maps/api/staticmap?center=-34.6084993%2C-58.5605118&zoom=14&size=380x300&maptype=roadmap&markers=-34.6084993%2C-58.5605118&sensor=false",
+  "fotos": [
+    "https://cdn-images.xintelweb.com/upload/8471cf4261952603610252eed8d0b577.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/a20138402fa2f8903d9cba2ea118f656.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/9535880b624627180874c7837f42c808.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/aeb32a6f3d87fbc04953d923a121a453.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/fda275fcacbc23515aca99810a95c637.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/81431b79075d47dee6ca4d98f2c79d1c.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/e92f9c6840ce68ad15e0d2e65ddb15f3.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/1a997ab6974f4ecc06fbfd2a23a8f208.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/c14b20bd012bbae51bb4b1331064054b.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/c036adac3dfccb1e753d6c71d08e74e7.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/4f63de13593cef097e7ef881dba0b71f.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/33b3fa8d518f6de0beee5941b344ff31.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/d9db1f77b912df21ea6ee240947d2824.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/0b879e7b19c301c033a8e7d014f8d6e5.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/9c4dcffbd0fe6903b815e96a96352740.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/15f551b912772474429d68195e838e22.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/80f5576a2fa901c53e46559dce07d8f7.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/20c66a0b56e13862d32f4110fa0f5602.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/22917a0ec0cc8c0d54af10c02594e41f.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/612c1b06e96689e294f52b7a423b83ef.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/233c69ecf18ad4ae80a07e6bb947ec4d.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/d70c42b185f97bd5e799ffc3a8f79f95.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/82c11735855a048f860a65eadd6c885f.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/5f0a122158df127cb8a5508ccfeee18c.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/9c10b06c6de21af2aa28f90bd200afcc.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/79ce4a4449d9c187748665d87e1e561c.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/29ed47813513631f615d167e1e326c2d.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/f43483396e930d380201cdf4f178af7c.jpg?1767795475",
+    "https://cdn-images.xintelweb.com/upload/44c07fbf1a444d3e6a40911476002ef8.jpg?1767795475"
+  ]
 }
-
-/**
- * Agrega clase touch-device al body si aplica
- */
-function detectTouchDevice() {
-  if (isTouchDevice()) {
-    document.body.classList.add('touch-device');
-  }
-}
-
-/**
- * Smooth scroll para links internos
- */
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-
-      // Ignorar links vacíos o solo '#'
-      if (href === '#' || href === '#main-content') {
-        return;
-      }
-
-      e.preventDefault();
-      const target = document.querySelector(href);
-
-      if (target) {
-        const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-        const targetPosition = target.offsetTop - headerHeight;
-
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-}
-
-// ========== NAVEGACIÓN MÓVIL ==========
-
-function initMobileMenu() {
-  const toggle = document.querySelector('.mobile-menu-toggle');
-  const menu = document.querySelector('.mobile-menu');
-  const body = document.body;
-
-  if (!toggle || !menu) {
-    console.warn('⚠️ Elementos del menú móvil no encontrados');
-    return;
-  }
-
-  console.log('✅ Inicializando menú móvil');
-
-  // Toggle menú
-  toggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const isActive = menu.classList.contains('active');
-    console.log('🔄 Toggle menú - Estado actual:', isActive ? 'abierto' : 'cerrado');
-
-    if (isActive) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  // Cerrar al hacer click en un link
-  menu.querySelectorAll('.mobile-menu__link').forEach(link => {
-    link.addEventListener('click', () => {
-      closeMenu();
-    });
-  });
-
-  // Cerrar con ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menu.classList.contains('active')) {
-      closeMenu();
-    }
-  });
-
-  // Cerrar al hacer click fuera del menú
-  document.addEventListener('click', (e) => {
-    if (menu.classList.contains('active') && !menu.contains(e.target) && !toggle.contains(e.target)) {
-      closeMenu();
-    }
-  });
-
-  function openMenu() {
-    console.log('📱 Abriendo menú móvil');
-    menu.classList.add('active');
-    toggle.classList.add('active');
-    toggle.setAttribute('aria-expanded', 'true');
-    body.style.overflow = 'hidden'; // Prevenir scroll
-  }
-
-  function closeMenu() {
-    console.log('📱 Cerrando menú móvil');
-    menu.classList.remove('active');
-    toggle.classList.remove('active');
-    toggle.setAttribute('aria-expanded', 'false');
-    body.style.overflow = ''; // Restaurar scroll
-  }
-}
-
-// ========== HEADER SCROLL ==========
-
-function initHeaderScroll() {
-  const header = document.querySelector('.header');
-  if (!header) return;
-
-  let lastScrollTop = 0;
-  let ticking = false;
-
-  function updateHeader() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Agregar clase cuando se hace scroll
-    if (scrollTop > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-
-    lastScrollTop = scrollTop;
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  });
-}
-
-// ========== LAZY LOADING IMÁGENES ==========
-
-function initLazyLoading() {
-  // Si el navegador soporta loading="lazy", no hacer nada
-  if ('loading' in HTMLImageElement.prototype) {
-    return;
-  }
-
-  // Fallback con Intersection Observer
-  const images = document.querySelectorAll('img[loading="lazy"]');
-
-  if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src || img.src;
-          img.removeAttribute('loading');
-          observer.unobserve(img);
-        }
-      });
-    });
-
-    images.forEach(img => imageObserver.observe(img));
-  } else {
-    // Fallback: cargar todas las imágenes
-    images.forEach(img => {
-      img.src = img.dataset.src || img.src;
-    });
-  }
-}
-
-// ========== ANIMACIONES ON SCROLL ==========
-
-function initScrollAnimations() {
-  // Solo si el navegador soporta IntersectionObserver
-  if (!('IntersectionObserver' in window)) return;
-
-  const elements = document.querySelectorAll('.fade-in, .slide-up');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  elements.forEach(el => {
-    el.style.opacity = '0';
-    if (el.classList.contains('slide-up')) {
-      el.style.transform = 'translateY(40px)';
-    }
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-  });
-}
-
-// ========== FORMULARIOS ==========
-
-function initFormValidation() {
-  const forms = document.querySelectorAll('form[data-validate]');
-
-  forms.forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // Validación básica
-      const inputs = form.querySelectorAll('input[required], textarea[required]');
-      let isValid = true;
-
-      inputs.forEach(input => {
-        if (!input.value.trim()) {
-          isValid = false;
-          input.classList.add('is-invalid');
-
-          // Mostrar error si existe
-          const errorMsg = input.nextElementSibling;
-          if (errorMsg && errorMsg.classList.contains('form-error')) {
-            errorMsg.textContent = 'Este campo es requerido';
-          }
-        } else {
-          input.classList.remove('is-invalid');
-        }
-      });
-
-      // Validación de email
-      const emailInputs = form.querySelectorAll('input[type="email"]');
-      emailInputs.forEach(input => {
-        if (input.value && !isValidEmail(input.value)) {
-          isValid = false;
-          input.classList.add('is-invalid');
-          const errorMsg = input.nextElementSibling;
-          if (errorMsg && errorMsg.classList.contains('form-error')) {
-            errorMsg.textContent = 'Email inválido';
-          }
-        }
-      });
-
-      if (isValid) {
-        // Aquí iría el envío del formulario
-        console.log('Formulario válido - enviar');
-        // form.submit(); o AJAX
-      }
-    });
-
-    // Limpiar error al escribir
-    const inputs = form.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-      input.addEventListener('input', () => {
-        input.classList.remove('is-invalid');
-        const errorMsg = input.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('form-error')) {
-          errorMsg.textContent = '';
-        }
-      });
-    });
-  });
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-// ========== MODAL ==========
-
-function initModals() {
-  const modals = document.querySelectorAll('.modal');
-
-  modals.forEach(modal => {
-    const closeBtn = modal.querySelector('.modal__close');
-    const backdrop = modal.querySelector('.modal__backdrop');
-
-    // Cerrar con botón
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => closeModal(modal));
-    }
-
-    // Cerrar con backdrop
-    if (backdrop) {
-      backdrop.addEventListener('click', () => closeModal(modal));
-    }
-
-    // Cerrar con ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('is-active')) {
-        closeModal(modal);
-      }
-    });
-  });
-}
-
-function openModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.classList.add('is-active');
-    document.body.style.overflow = 'hidden';
-
-    // Focus en el primer elemento focuseable
-    const focusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    if (focusable) {
-      setTimeout(() => focusable.focus(), 100);
-    }
-  }
-}
-
-function closeModal(modal) {
-  if (modal) {
-    modal.classList.remove('is-active');
-    document.body.style.overflow = '';
-  }
-}
-
-// Exponer funciones globalmente si se necesitan
-window.openModal = openModal;
-window.closeModal = closeModal;
-
-// ========== ACTIVE LINK EN NAVEGACIÓN ==========
-
-function initActiveNavLinks() {
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav__link, .mobile-menu__link');
-
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href).pathname;
-
-    if (linkPath === currentPath ||
-        (currentPath === '/' && linkPath === '/') ||
-        (currentPath.includes(linkPath) && linkPath !== '/')) {
-      link.classList.add('active');
-    }
-  });
-}
-
-// ========== INICIALIZACIÓN ==========
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 Inicializando sitio...');
-  
-  // Detectar dispositivos táctiles
-  detectTouchDevice();
-
-  // Inicializar componentes
-  initMobileMenu();
-  initHeaderScroll();
-  initSmoothScroll();
-  initLazyLoading();
-  initScrollAnimations();
-  initFormValidation();
-  initModals();
-  initActiveNavLinks();
-
-  console.log('✅ Gabriela Aloise Propiedades - Sitio inicializado correctamente');
-});
-
-// ========== PERFORMANCE ==========
-
-// Reportar Web Vitals a consola (solo en desarrollo)
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  window.addEventListener('load', () => {
-    // Largest Contentful Paint (LCP)
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
-    }).observe({ entryTypes: ['largest-contentful-paint'] });
-
-    // First Input Delay (FID)
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      entries.forEach(entry => {
-        console.log('FID:', entry.processingStart - entry.startTime);
-      });
-    }).observe({ entryTypes: ['first-input'] });
-
-    // Cumulative Layout Shift (CLS)
-    let clsScore = 0;
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      entries.forEach(entry => {
-        if (!entry.hadRecentInput) {
-          clsScore += entry.value;
-        }
-      });
-      console.log('CLS:', clsScore);
-    }).observe({ entryTypes: ['layout-shift'] });
-  });
-}
+              

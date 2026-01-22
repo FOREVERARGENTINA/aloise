@@ -63,6 +63,7 @@ function initSmoothScroll() {
 function initMobileMenu() {
   const toggle = document.querySelector('.mobile-menu-toggle');
   const menu = document.querySelector('.mobile-menu');
+  const closeBtn = document.querySelector('.mobile-menu-close');
   const body = document.body;
 
   if (!toggle || !menu) {
@@ -94,7 +95,7 @@ function initMobileMenu() {
   toggle.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const isActive = menu.classList.contains('active');
 
     if (isActive) {
@@ -103,6 +104,15 @@ function initMobileMenu() {
       openMenu();
     }
   });
+
+  // Cerrar al hacer clic en el botón X dentro del menú
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
 
   // Cerrar al hacer click en un link
   menu.querySelectorAll('.mobile-menu__link').forEach(link => {
