@@ -1,0 +1,99 @@
+/**
+ * PAGE LOADER — Aloise Propiedades
+ *
+ * Cortina de entrada: cubre la página con el color de marca
+ * y se desliza hacia arriba al cargar, como un telón de teatro.
+ *
+ * Se carga PRIMERO (antes del resto de CSS) para que aparezca
+ * instantáneamente antes de que el resto de la página esté lista.
+ */
+
+/* ─── Overlay principal ──────────────────────────────────────────── */
+#page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: #1f2a44;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  /* Deslizamiento hacia arriba al salir */
+  will-change: transform;
+  transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+#page-loader.is-leaving {
+  transform: translateY(-100%);
+}
+
+/* Ocultar del flujo una vez removido */
+#page-loader[hidden] {
+  display: none;
+}
+
+/* ─── Logo ───────────────────────────────────────────────────────── */
+.loader__logo {
+  width: clamp(140px, 18vw, 220px);
+  height: auto;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: loaderLogoIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+@keyframes loaderLogoIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Línea de progreso ──────────────────────────────────────────── */
+.loader__progress {
+  width: clamp(80px, 14vw, 160px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+  opacity: 0;
+  animation: loaderProgressAppear 0.3s ease 0.35s forwards;
+}
+
+.loader__progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.55);
+  transform: translateX(-100%);
+  animation: loaderProgressFill 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+}
+
+@keyframes loaderProgressAppear {
+  to { opacity: 1; }
+}
+
+@keyframes loaderProgressFill {
+  to { transform: translateX(0); }
+}
+
+/* ─── Reducción de movimiento ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  #page-loader {
+    transition: opacity 0.3s ease;
+  }
+
+  #page-loader.is-leaving {
+    transform: none;
+    opacity: 0;
+  }
+
+  .loader__logo,
+  .loader__progress {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

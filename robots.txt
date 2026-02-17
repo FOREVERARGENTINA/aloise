@@ -3,12 +3,6 @@
 User-agent: *
 Allow: /
 
-# Bloquear archivos y directorios privados
-Disallow: /js/
-Disallow: /css/
-Disallow: /*.js$
-Disallow: /*.css$
-
 # Sitemap
 Sitemap: https://aloisepropiedades.com.ar/sitemap.xml
 

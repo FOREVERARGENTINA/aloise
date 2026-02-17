@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Debug Título GAB7</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; }
+    pre { background: #f5f5f5; padding: 1rem; white-space: pre-wrap; }
+    .highlight { background: yellow; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Debug Completo del Título</h1>
+  <div id="output"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+  <script src="/js/modules/property-renderer.js"></script>
+
+  <script>
+    async function debug() {
+      const api = new XintelAPI(CONFIG.xintel);
+      const renderer = new PropertyRenderer();
+
+      const result = await api.getProperties({ limit: 23 });
+
+      if (!result.success) {
+        document.getElementById('output').innerHTML = 'Error: ' + result.error;
+        return;
+      }
+
+      // Buscar GAB7
+      const gab7 = result.data.properties.find(p => (p.in_fic === '7' || p.in_num === '7'));
+
+      if (!gab7) {
+        document.getElementById('output').innerHTML = 'No se encontró GAB7';
+        return;
+      }
+
+      console.log('GAB7 RAW de API:', gab7);
+
+      // Normalizar
+      const normalized = renderer.normalizeXintelProperty(gab7);
+      console.log('GAB7 NORMALIZADO:', normalized);
+
+      let html = '<h2>Paso 1: Datos RAW de Xintel</h2><pre>';
+      html += `titulo: "<span class="highlight">${gab7.titulo}</span>"\n`;
+      html += `in_tip: "${gab7.in_tip}"\n`;
+      html += `in_ope: "${gab7.in_ope}"\n`;
+      html += `in_bar: "${gab7.in_bar}"\n`;
+      html += `in_loc: "${gab7.in_loc}"\n`;
+      html += `in_amb: "${gab7.in_amb}"\n`;
+      html += '</pre>';
+
+      html += '<h2>Paso 2: Normalización (normalizeXintelProperty)</h2><pre>';
+      html += `title: "<span class="highlight">${normalized.title}</span>"\n`;
+      html += `operation_type: "${normalized.operation_type}"\n`;
+      html += `property_type: "${normalized.property_type}"\n`;
+      html += `rooms: ${normalized.rooms}\n`;
+      html += '</pre>';
+
+      html += '<h2>Análisis:</h2>';
+      html += `<p><strong>¿Incluye tipo de operación?</strong> ${normalized.title.includes('alquiler') ? 'SÍ ✅' : 'NO ❌'}</p>`;
+      html += `<p><strong>¿Incluye "3 ambientes"?</strong> ${normalized.title.includes('3 ambientes') || normalized.title.includes('3 amb') ? 'SÍ ✅' : 'NO ❌'}</p>`;
+
+      html += '<h2>Título esperado vs real:</h2>';
+      html += `<p>Esperado: <span class="highlight">"Casa en alquiler 3 ambientes"</span></p>`;
+      html += `<p>Real: <span class="highlight">"${normalized.title}"</span></p>`;
+
+      document.getElementById('output').innerHTML = html;
+    }
+
+    window.addEventListener('load', () => setTimeout(debug, 100));
+  </script>
+</body>
+</html>

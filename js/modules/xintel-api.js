@@ -3,10 +3,15 @@
  * Manejo de llamadas a la API de Xintel
  *
  * Documentación Xintel: https://www.xintel.com.ar/
+ *
+ * VERSIÓN: 2.2.0 - Corregido loop infinito + detección de duplicados
+ * ÚLTIMA ACTUALIZACIÓN: 2026-02-12 16:00
  */
 
 class XintelAPI {
   constructor(config = {}) {
+    console.log('🚀 XintelAPI v2.2.0 - Loop infinito CORREGIDO');
+
     // Configuración de la API
     this.empresa = config.empresa || '';
     this.apiKey = config.apiKey || '';
@@ -94,6 +99,8 @@ class XintelAPI {
 
   /**
    * Obtener listado de propiedades con filtros
+   * IMPORTANTE: Xintel tiene un límite de ~20 propiedades por consulta.
+   * Este método implementa paginación automática para obtener todas las propiedades.
    * @param {Object} filters - Filtros de búsqueda
    * @returns {Promise}
    */
@@ -125,53 +132,132 @@ class XintelAPI {
       'cochera': 'G'
     };
 
-    // Construir parámetros según formato de Xintel
-    const params = {
-      page: (filters.page || 1) - 1, // Xintel empieza en 0
-      rppagina: filters.limit || 12
-    };
+    // Construir parámetros base según formato de Xintel
+    const baseParams = {};
 
     // Mapear filtros al formato de Xintel
     if (filters.operationType && operationMap[filters.operationType]) {
-      params.tipo_operacion = operationMap[filters.operationType];
+      baseParams.tipo_operacion = operationMap[filters.operationType];
     }
     if (filters.propertyType && typeMap[filters.propertyType]) {
-      params.tipo_inmueble = typeMap[filters.propertyType];
+      baseParams.tipo_inmueble = typeMap[filters.propertyType];
     }
-    if (filters.location) params.barrios1 = filters.location;
-    if (filters.minPrice) params.valor_minimo = filters.minPrice;
-    if (filters.maxPrice) params.valor_maximo = filters.maxPrice;
-    if (filters.minRooms) params.Ambientes = filters.minRooms;
+    if (filters.location) baseParams.barrios1 = filters.location;
+    if (filters.minPrice) baseParams.valor_minimo = filters.minPrice;
+    if (filters.maxPrice) baseParams.valor_maximo = filters.maxPrice;
+    if (filters.minRooms) baseParams.Ambientes = filters.minRooms;
 
-    const result = await this.request('resultados.fichas', params);
+    // PAGINACIÓN AUTOMÁTICA
+    // Xintel limita a ~20 resultados por consulta, así que necesitamos múltiples llamadas
+    const requestedLimit = filters.limit || 60;
+    const XINTEL_MAX_PER_PAGE = 20; // Límite real de Xintel
+    const allProperties = [];
+    let currentPage = 0;
+    let totalFromAPI = 0;
+    let shouldContinue = true;
 
-    // Normalizar respuesta
-    if (result.success && result.data.resultado) {
-      const normalizedData = this.normalizeResponse(result.data);
-      const page = (filters.page || 1);
-      const limit = filters.limit || 12;
-      const totalItems = normalizedData.properties.length;
+    console.log(`🔍 Solicitando hasta ${requestedLimit} propiedades de Xintel...`);
 
-      const responseData = {
-        properties: normalizedData.properties,
-        pagination: {
-          current_page: page,
-          total_pages: Math.ceil(totalItems / limit),
-          total_items: totalItems,
-          items_per_page: limit
-        }
+    while (shouldContinue && allProperties.length < requestedLimit) {
+      const params = {
+        ...baseParams,
+        page: currentPage,
+        rppagina: Math.min(XINTEL_MAX_PER_PAGE, requestedLimit - allProperties.length)
       };
 
-      // Guardar en cache
-      this.cache.set(cacheKey, {
-        data: responseData,
-        timestamp: Date.now()
+      console.log(`📄 Página ${currentPage + 1}: solicitando ${params.rppagina} propiedades...`);
+
+      const result = await this.request('resultados.fichas', params);
+
+      if (!result.success || !result.data.resultado) {
+        // Si falla alguna página, devolver lo que tenemos hasta ahora
+        console.warn(`⚠️ Error en página ${currentPage + 1}, usando ${allProperties.length} propiedades obtenidas`);
+        break;
+      }
+
+      const normalizedData = this.normalizeResponse(result.data);
+      const receivedProperties = normalizedData.properties || [];
+
+      // Actualizar total si es mayor (Xintel a veces reporta mal en la primera página)
+      const apiTotal = normalizedData.total || 0;
+      if (apiTotal > totalFromAPI) {
+        totalFromAPI = apiTotal;
+      }
+
+      console.log(`✅ Página ${currentPage + 1}: recibidas ${receivedProperties.length} propiedades (total API: ${apiTotal})`);
+
+      if (receivedProperties.length === 0) {
+        // No hay más propiedades
+        console.log('🛑 No hay más propiedades, deteniendo paginación');
+        shouldContinue = false;
+        break;
+      }
+
+      // Contar cuántas propiedades nuevas agregamos
+      let newPropertiesCount = 0;
+
+      // Agregar propiedades (evitar duplicados)
+      receivedProperties.forEach(prop => {
+        const id = prop.in_fic || prop.in_num;
+        const isDuplicate = allProperties.some(p => (p.in_fic || p.in_num) === id);
+        if (!isDuplicate) {
+          allProperties.push(prop);
+          newPropertiesCount++;
+        }
       });
 
-      return { success: true, data: responseData };
+      console.log(`➕ ${newPropertiesCount} propiedades nuevas agregadas (${receivedProperties.length - newPropertiesCount} duplicadas)`);
+
+      // CONDICIONES DE PARADA:
+
+      // 1. Si NO agregamos ninguna propiedad nueva, es porque todas eran duplicadas
+      if (newPropertiesCount === 0) {
+        console.log('🛑 Todas las propiedades recibidas eran duplicadas, deteniendo paginación');
+        shouldContinue = false;
+        break;
+      }
+
+      // 2. Si recibimos menos de lo que pedimos, es la última página
+      if (receivedProperties.length < params.rppagina) {
+        console.log(`🛑 Última página detectada (recibidas ${receivedProperties.length} < solicitadas ${params.rppagina})`);
+        shouldContinue = false;
+      }
+
+      currentPage++;
+
+      // Límite de seguridad para evitar loops infinitos
+      if (currentPage > 5) {
+        console.warn('⚠️ Límite de seguridad alcanzado (5 páginas)');
+        shouldContinue = false;
+      }
     }
 
-    return result;
+    console.log(`🎯 Total obtenido: ${allProperties.length} de ${totalFromAPI} propiedades disponibles`);
+
+    // Construir respuesta final
+    const page = filters.page || 1;
+    const limit = requestedLimit;
+    const totalItems = Math.max(totalFromAPI, allProperties.length);
+    const totalPages = totalItems > 0 ? Math.ceil(totalItems / limit) : 1;
+
+    const responseData = {
+      properties: allProperties,
+      pagination: {
+        current_page: page,
+        total_pages: totalPages,
+        total_items: totalItems,
+        items_per_page: limit,
+        fetched_items: allProperties.length
+      }
+    };
+
+    // Guardar en cache
+    this.cache.set(cacheKey, {
+      data: responseData,
+      timestamp: Date.now()
+    });
+
+    return { success: true, data: responseData };
   }
 
   /**
@@ -275,7 +361,32 @@ class XintelAPI {
    * @returns {Promise}
    */
   async getFeaturedProperties(limit = 6) {
-    return await this.request('fichas.destacadas', { limit });
+    const cacheKey = `featured_${limit}`;
+
+    // Verificar cache
+    if (this.cache.has(cacheKey)) {
+      const cached = this.cache.get(cacheKey);
+      if (Date.now() - cached.timestamp < this.cacheTimeout) {
+        return { success: true, data: cached.data, cached: true };
+      }
+    }
+
+    const result = await this.request('fichas.destacadas', { limit });
+
+    // Normalizar respuesta
+    if (result.success && result.data.resultado) {
+      const normalizedData = this.normalizeResponse(result.data);
+
+      // Guardar en cache
+      this.cache.set(cacheKey, {
+        data: normalizedData,
+        timestamp: Date.now()
+      });
+
+      return { success: true, data: normalizedData };
+    }
+
+    return result;
   }
 
   /**
@@ -323,23 +434,69 @@ class XintelAPI {
    * @returns {Object} - Datos normalizados
    */
   normalizeResponse(data) {
-    if (!data.resultado || !data.resultado.fichas) {
-      return { properties: [] };
+    const resultado = data?.resultado;
+    if (!resultado || !Array.isArray(resultado.fichas)) {
+      return { properties: [], total: 0, resultado };
     }
 
-    const fichas = data.resultado.fichas;
-    const images = data.resultado.img || [];
+    const fichas = resultado.fichas;
+    const images = Array.isArray(resultado.img) ? resultado.img : [];
 
-    // Mapear imágenes a cada ficha
+    const parseDateValue = (value) => {
+      if (!value) return null;
+      const normalized = String(value).trim().replace(/\s+/g, ' ');
+      const iso = normalized.replace(' ', 'T');
+      const timestamp = Date.parse(iso);
+      return Number.isFinite(timestamp) ? timestamp : null;
+    };
+
+    const dateCandidatesForProperty = (property) => {
+      return [
+        property?.in_fec,
+        property?.fechaac,
+        property?.created,
+        property?.fecha,
+        property?.in_fea,
+        property?.fecactdata,
+        property?.created_at,
+        property?.fecha_ingreso,
+        property?.fecha_alta
+      ]
+        .map(parseDateValue)
+        .find((value) => value !== null) || null;
+    };
+
     const properties = fichas.map((ficha, index) => {
       if (images[index]) {
         ficha.fotos = Array.isArray(images[index]) ? images[index] : [images[index]];
         ficha.img_princ = ficha.fotos[0];
       }
+      ficha.listingDate = dateCandidatesForProperty(ficha);
       return ficha;
     });
 
-    return { properties };
+    const toNumber = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : null;
+    };
+
+    const totalCandidates = [
+      data?.total,
+      data?.total_items,
+      data?.totalitems,
+      resultado?.total,
+      resultado?.total_items,
+      resultado?.totalitems,
+      resultado?.totalfichas,
+      resultado?.total_fichas,
+      resultado?.cantfichas
+    ];
+
+    const totalFromApi = totalCandidates.reduce((acc, value) => acc ?? toNumber(value), null);
+    const total = totalFromApi ?? properties.length;
+
+    return { properties, total, resultado };
   }
 
   /**

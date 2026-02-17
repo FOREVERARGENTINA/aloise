@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Test Paginación - Gabriela Aloise</title>
+  <style>
+    body {
+      font-family: system-ui;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .log {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-family: monospace;
+      font-size: 0.875rem;
+      white-space: pre-wrap;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+    h1 { color: #1f2a44; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test de Paginación Automática</h1>
+  <p>Versión: <strong id="version"></strong></p>
+  <div id="output"></div>
+
+  <!-- Forzar recarga con timestamp -->
+  <script>
+    const timestamp = new Date().getTime();
+    document.getElementById('version').textContent = timestamp;
+    console.log('🔄 Timestamp de carga:', timestamp);
+  </script>
+
+  <script src="/js/config.js?v=<?= time() ?>"></script>
+  <script src="/js/modules/xintel-api.js?v=<?= time() ?>"></script>
+
+  <script>
+    const output = document.getElementById('output');
+
+    function log(message, type = 'info') {
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = message;
+      output.appendChild(div);
+      console.log(message);
+    }
+
+    async function testPagination() {
+      try {
+        log('📋 Iniciando test de paginación...', 'info');
+
+        // Verificar CONFIG
+        if (!window.CONFIG) {
+          log('❌ ERROR: CONFIG no está disponible', 'error');
+          return;
+        }
+        log('✅ CONFIG cargado correctamente', 'success');
+
+        // Verificar XintelAPI
+        if (!window.XintelAPI) {
+          log('❌ ERROR: XintelAPI no está disponible', 'error');
+          return;
+        }
+        log('✅ XintelAPI cargado correctamente', 'success');
+
+        // Crear instancia de API
+        const api = new XintelAPI(CONFIG.xintel);
+        log('✅ Instancia de API creada', 'success');
+
+        // Verificar que el método existe
+        if (typeof api.getProperties !== 'function') {
+          log('❌ ERROR: api.getProperties no es una función', 'error');
+          return;
+        }
+        log('✅ Método getProperties disponible', 'success');
+
+        // Hacer llamada con límite alto
+        log('\n🚀 Llamando a api.getProperties({ limit: 100 })...', 'info');
+        const startTime = Date.now();
+
+        const result = await api.getProperties({ limit: 100 });
+
+        const endTime = Date.now();
+        const duration = ((endTime - startTime) / 1000).toFixed(2);
+
+        log(`⏱️ Tiempo de respuesta: ${duration}s`, 'info');
+
+        if (!result.success) {
+          log(`❌ ERROR: ${result.error}`, 'error');
+          return;
+        }
+
+        log('✅ Respuesta exitosa recibida', 'success');
+
+        const properties = result.data?.properties || [];
+        const pagination = result.data?.pagination || {};
+
+        log(`\n📊 RESULTADOS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Propiedades obtenidas: ${properties.length}
+Total disponible: ${pagination.total_items || 'N/A'}
+Límite solicitado: ${pagination.items_per_page || 100}
+Páginas totales: ${pagination.total_pages || 1}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'info');
+
+        if (properties.length > 20) {
+          log(`\n✅ ¡PAGINACIÓN FUNCIONANDO!
+Se obtuvieron ${properties.length} propiedades (más de 20).
+Esto confirma que la paginación automática está activa.`, 'success');
+        } else if (properties.length === 20) {
+          log(`\n⚠️ ATENCIÓN: Solo se obtuvieron 20 propiedades.
+La paginación automática NO se está ejecutando.
+Revisa la consola del navegador para ver los logs detallados.`, 'error');
+        } else {
+          log(`\n📌 Se obtuvieron ${properties.length} propiedades.`, 'info');
+        }
+
+        // Mostrar primeras 5 propiedades
+        log(`\n📝 Primeras 5 propiedades:`, 'info');
+        properties.slice(0, 5).forEach((prop, i) => {
+          const title = prop.titulo || `${prop.in_tip} en ${prop.in_bar || prop.in_loc}`;
+          log(`${i + 1}. ${title} (ID: ${prop.in_fic || prop.in_num})`, 'info');
+        });
+
+      } catch (error) {
+        log(`\n❌ ERROR CRÍTICO: ${error.message}`, 'error');
+        log(error.stack, 'error');
+      }
+    }
+
+    // Ejecutar test después de que todo cargue
+    window.addEventListener('load', () => {
+      setTimeout(() => testPagination(), 100);
+    });
+  </script>
+</body>
+</html>

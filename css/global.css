@@ -36,6 +36,32 @@ body {
   overflow-x: hidden;
 }
 
+/* Reservar espacio para evitar salto cuando cargan componentes */
+#navbar {
+  min-height: 90px;
+}
+
+/* Reservar espacio para navbar/footer inyectados y evitar "salto" visual */
+#navbar {
+  min-height: 90px;
+}
+
+@media (max-width: 1023px) {
+  #navbar {
+    min-height: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  #navbar {
+    min-height: 72px;
+  }
+}
+
+#footer {
+  min-height: 240px;
+}
+
 /* Mejora de renderizado de texto */
 h1, h2, h3, h4, h5, h6,
 p, li, figcaption {

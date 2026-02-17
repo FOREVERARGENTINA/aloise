@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Diagnóstico API Xintel - Gabriela Aloise</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { color: #1f2a44; margin-bottom: 1rem; }
+    h2 { color: #333; margin: 2rem 0 1rem; font-size: 1.25rem; }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    label { font-weight: 500; font-size: 0.875rem; color: #555; }
+    input, select {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      background: #1f2a44;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      align-self: flex-end;
+    }
+    button:hover { background: #2a3755; }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid #1f2a44;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0.25rem;
+    }
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1f2a44;
+    }
+    .alert {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .alert-warning {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      color: #856404;
+    }
+    .alert-error {
+      background: #f8d7da;
+      border-left: 4px solid #dc3545;
+      color: #721c24;
+    }
+    .alert-success {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+      color: #155724;
+    }
+    .loading { text-align: center; padding: 2rem; color: #666; }
+    pre {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.875rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .property-list {
+      display: grid;
+      gap: 0.5rem;
+    }
+    .property-item {
+      padding: 0.75rem;
+      background: #f8f9fa;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      display: grid;
+      grid-template-columns: 80px 1fr 100px 100px;
+      gap: 1rem;
+      align-items: center;
+    }
+    .property-item:nth-child(even) {
+      background: #e9ecef;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .badge-venta { background: #6c757d; color: white; }
+    .badge-alquiler { background: #1f2a44; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Diagnóstico API Xintel</h1>
+    <p style="color: #666; margin-bottom: 2rem;">
+      Esta página diagnostica la integración con la API de Xintel y prueba la paginación automática.
+    </p>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="limitInput">Límite de resultados:</label>
+        <input type="number" id="limitInput" value="100" min="1" max="100">
+      </div>
+      <div class="control-group">
+        <label for="pageInput">Página:</label>
+        <input type="number" id="pageInput" value="1" min="1">
+      </div>
+      <div class="control-group">
+        <label for="operationFilter">Tipo de operación:</label>
+        <select id="operationFilter">
+          <option value="">Todas</option>
+          <option value="V">Venta</option>
+          <option value="A">Alquiler</option>
+          <option value="T">Alquiler Temporal</option>
+        </select>
+      </div>
+      <button id="testBtn" onclick="runTest()">Prueba Manual API</button>
+      <button onclick="runAutoPaginationTest()" style="background: #28a745;">✨ Prueba Paginación Auto</button>
+    </div>
+
+    <div id="results"></div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+
+  <script>
+    let api;
+
+    function init() {
+      if (!CONFIG || !CONFIG.xintel) {
+        document.getElementById('results').innerHTML = `
+          <div class="alert alert-error">
+            <strong>Error:</strong> No se pudo cargar la configuración.
+          </div>
+        `;
+        return;
+      }
+
+      api = new XintelAPI(CONFIG.xintel);
+      console.log('API Xintel inicializada:', api);
+    }
+
+    async function runTest() {
+      const resultsDiv = document.getElementById('results');
+      const testBtn = document.getElementById('testBtn');
+
+      testBtn.disabled = true;
+      resultsDiv.innerHTML = '<div class="loading">⏳ Consultando API de Xintel...</div>';
+
+      try {
+        const limit = parseInt(document.getElementById('limitInput').value);
+        const page = parseInt(document.getElementById('pageInput').value) - 1; // Xintel empieza en 0
+        const operation = document.getElementById('operationFilter').value;
+
+        // Construir parámetros
+        const params = {
+          rppagina: limit,
+          page: page
+        };
+
+        if (operation) {
+          params.tipo_operacion = operation;
+        }
+
+        console.log('🚀 Parámetros enviados a Xintel:', params);
+
+        // Llamada directa a la API
+        const result = await api.request('resultados.fichas', params);
+
+        console.log('📦 Respuesta completa de Xintel:', result);
+
+        if (!result.success) {
+          resultsDiv.innerHTML = `
+            <div class="alert alert-error">
+              <strong>Error de API:</strong> ${result.error || 'Error desconocido'}
+            </div>
+          `;
+          testBtn.disabled = false;
+          return;
+        }
+
+        const data = result.data;
+        const fichas = data?.resultado?.fichas || [];
+        const totalFromAPI = data?.resultado?.total || data?.resultado?.totalitems || data?.resultado?.totalfichas || fichas.length;
+
+        // Análisis
+        let html = '';
+
+        // Estadísticas
+        html += '<div class="stats">';
+        html += `
+          <div class="stat-card">
+            <div class="stat-label">Propiedades recibidas</div>
+            <div class="stat-value">${fichas.length}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total en API</div>
+            <div class="stat-value">${totalFromAPI}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Límite solicitado</div>
+            <div class="stat-value">${limit}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Página</div>
+            <div class="stat-value">${page + 1}</div>
+          </div>
+        `;
+        html += '</div>';
+
+        // Alertas
+        if (fichas.length < totalFromAPI && fichas.length < limit) {
+          html += `
+            <div class="alert alert-warning">
+              <strong>⚠️ Posible limitación de API:</strong>
+              Se solicitaron ${limit} propiedades pero solo se recibieron ${fichas.length} de un total de ${totalFromAPI}.
+              Esto sugiere que Xintel tiene un límite máximo por consulta.
+            </div>
+          `;
+        }
+
+        if (fichas.length === 20) {
+          html += `
+            <div class="alert alert-warning">
+              <strong>⚠️ Límite detectado:</strong>
+              La API devolvió exactamente 20 propiedades. Es probable que Xintel tenga un límite máximo de 20 resultados por consulta.
+              Para obtener todas las ${totalFromAPI} propiedades, necesitarás hacer múltiples consultas usando paginación.
+            </div>
+          `;
+        }
+
+        if (fichas.length === totalFromAPI) {
+          html += `
+            <div class="alert alert-success">
+              <strong>✅ Todas las propiedades obtenidas:</strong>
+              Se recibieron todas las ${totalFromAPI} propiedades disponibles.
+            </div>
+          `;
+        }
+
+        // Listado de propiedades
+        html += '<h2>Propiedades recibidas:</h2>';
+        html += '<div class="property-list">';
+
+        fichas.forEach((prop, index) => {
+          const operationType = prop.in_ope === 'V' ? 'Venta' : (prop.in_ope === 'A' ? 'Alquiler' : 'Otro');
+          const badgeClass = prop.in_ope === 'V' ? 'badge-venta' : 'badge-alquiler';
+          const location = prop.in_bar || prop.in_loc || 'Sin ubicación';
+          const title = prop.titulo || `${prop.in_tip || 'Propiedad'} en ${location}`;
+
+          html += `
+            <div class="property-item">
+              <span><strong>#${index + 1}</strong></span>
+              <span>${title.substring(0, 60)}${title.length > 60 ? '...' : ''}</span>
+              <span class="badge ${badgeClass}">${operationType}</span>
+              <span>${prop.in_fic || prop.in_num || 'N/A'}</span>
+            </div>
+          `;
+        });
+
+        html += '</div>';
+
+        // Datos técnicos
+        html += '<h2>Respuesta técnica de la API:</h2>';
+        html += `<pre>${JSON.stringify(data?.resultado || data, null, 2)}</pre>`;
+
+        resultsDiv.innerHTML = html;
+
+      } catch (error) {
+        console.error('❌ Error en la prueba:', error);
+        resultsDiv.innerHTML = `
+          <div class="alert alert-error">
+            <strong>Error:</strong> ${error.message}
+            <br><br>
+            <pre>${error.stack}</pre>
+          </div>
+        `;
+      } finally {
+        testBtn.disabled = false;
+      }
+    }
+
+    async function runAutoPaginationTest() {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<div class="loading">⏳ Probando paginación automática...</div>';
+
+      try {
+        console.log('🚀 Iniciando prueba de paginación automática...');
+
+        // Usar el método getProperties que ahora tiene paginación automática
+        const result = await api.getProperties({ limit: 100 });
+
+        console.log('📦 Resultado de getProperties:', result);
+
+        if (!result.success) {
+          resultsDiv.innerHTML = `
+            <div class="alert alert-error">
+              <strong>Error:</strong> ${result.error || 'Error desconocido'}
+            </div>
+          `;
+          return;
+        }
+
+        const properties = result.data.properties || [];
+        const pagination = result.data.pagination || {};
+
+        let html = '';
+
+        // Estadísticas
+        html += '<div class="stats">';
+        html += `
+          <div class="stat-card">
+            <div class="stat-label">✅ Propiedades obtenidas</div>
+            <div class="stat-value">${properties.length}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">📊 Total disponible</div>
+            <div class="stat-value">${pagination.total_items || properties.length}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">🎯 Límite solicitado</div>
+            <div class="stat-value">${pagination.items_per_page || 100}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">📄 Total páginas</div>
+            <div class="stat-value">${pagination.total_pages || 1}</div>
+          </div>
+        `;
+        html += '</div>';
+
+        // Alertas
+        if (properties.length === pagination.total_items) {
+          html += `
+            <div class="alert alert-success">
+              <strong>✅ ¡Éxito! Paginación automática funcionando correctamente</strong><br>
+              Se obtuvieron todas las ${properties.length} propiedades disponibles mediante paginación automática.
+              El sistema detectó el límite de 20 por página y realizó múltiples consultas automáticamente.
+            </div>
+          `;
+        } else if (properties.length > 20) {
+          html += `
+            <div class="alert alert-success">
+              <strong>✅ Paginación funcionando</strong><br>
+              Se obtuvieron ${properties.length} propiedades (más de 20), lo que confirma que la paginación automática está activa.
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="alert alert-warning">
+              <strong>⚠️ Atención:</strong>
+              Solo se obtuvieron ${properties.length} propiedades. Verifica la consola para más detalles.
+            </div>
+          `;
+        }
+
+        // Listado de propiedades
+        html += '<h2>Propiedades obtenidas con paginación automática:</h2>';
+        html += '<div class="property-list">';
+
+        properties.forEach((prop, index) => {
+          const operationType = prop.in_ope === 'V' ? 'Venta' : (prop.in_ope === 'A' ? 'Alquiler' : 'Otro');
+          const badgeClass = prop.in_ope === 'V' ? 'badge-venta' : 'badge-alquiler';
+          const location = prop.in_bar || prop.in_loc || 'Sin ubicación';
+          const title = prop.titulo || `${prop.in_tip || 'Propiedad'} en ${location}`;
+
+          html += `
+            <div class="property-item">
+              <span><strong>#${index + 1}</strong></span>
+              <span>${title.substring(0, 60)}${title.length > 60 ? '...' : ''}</span>
+              <span class="badge ${badgeClass}">${operationType}</span>
+              <span>${prop.in_fic || prop.in_num || 'N/A'}</span>
+            </div>
+          `;
+        });
+
+        html += '</div>';
+
+        // Info de paginación
+        html += '<h2>Información de paginación:</h2>';
+        html += `<pre>${JSON.stringify(pagination, null, 2)}</pre>`;
+
+        resultsDiv.innerHTML = html;
+
+      } catch (error) {
+        console.error('❌ Error en prueba de paginación:', error);
+        resultsDiv.innerHTML = `
+          <div class="alert alert-error">
+            <strong>Error:</strong> ${error.message}
+            <br><br>
+            <pre>${error.stack}</pre>
+          </div>
+        `;
+      }
+    }
+
+    // Inicializar al cargar
+    init();
+
+    // Ejecutar prueba de paginación automática al cargar
+    setTimeout(() => runAutoPaginationTest(), 500);
+  </script>
+</body>
+</html>

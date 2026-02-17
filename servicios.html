@@ -13,21 +13,21 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://aloisepropiedades.com.ar/servicios.html">
+  <meta property="og:url" content="https://aloisepropiedades.com.ar/servicios">
   <meta property="og:title" content="Servicios Inmobiliarios | Gabriela Aloise Propiedades">
   <meta property="og:description" content="Ventas, alquileres, tasaciones y administración de propiedades. Soluciones integrales para todas tus necesidades inmobiliarias.">
-  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
   <meta property="og:locale" content="es_AR">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/servicios.html">
+  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/servicios">
   <meta property="twitter:title" content="Servicios Inmobiliarios | Gabriela Aloise Propiedades">
   <meta property="twitter:description" content="Ventas, alquileres, tasaciones y administración de propiedades en Caseros.">
-  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://aloisepropiedades.com.ar/servicios.html">
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/servicios">
 
   <!-- Favicons (from DATOS/favicomatic) -->
   <link rel="icon" href="/images/favicomatic/favicon.ico">
@@ -51,6 +51,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS - Orden correcto según guía -->
+  <!-- Loader (carga primero para evitar FOUC) -->
+  <link rel="stylesheet" href="/css/loader.css">
+
   <link rel="stylesheet" href="/css/design-system.css">
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/components.css">
@@ -122,6 +125,12 @@
 </head>
 
 <body>
+  <!-- Loader de pagina: cortina que se levanta al cargar -->
+  <div id="page-loader" role="status" aria-label="Cargando...">
+    <img src="/images/logo/Logo Gabriela Aloise.png" alt="Aloise Propiedades" class="loader__logo" width="220" height="60">
+    <div class="loader__progress"></div>
+  </div>
+
   <!-- Skip to main content (accesibilidad) -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
@@ -131,202 +140,133 @@
   <!-- ========== MAIN CONTENT ========== -->
   <main id="main-content">
 
-    <!-- Intro Section -->
-    <section class="section" style="padding-top: var(--space-3xl);" aria-labelledby="servicios-intro-title">
+    <!-- Hero Section -->
+    <section class="services-hero">
+      <div class="container">
+        <h1 class="services-hero__title">Te acompañamos en cada paso<br>de tu operación inmobiliaria</h1>
+      </div>
+    </section>
+
+    <!-- Venta de Propiedades -->
+    <section id="ventas" class="service-section">
       <div class="container container-narrow">
-        <div class="section-header text-center">
-          <span class="section-header__eyebrow">SERVICIOS</span>
-          <h1 class="section-header__title" id="servicios-intro-title">Soluciones integrales para todas tus necesidades inmobiliarias</h1>
-          <p class="section-header__description">
-            Ofrecemos servicios profesionales diseñados para acompañarte en cada etapa de tu operación inmobiliaria
+        <div class="service-header">
+          <h2 class="service-title">Venta de Propiedades</h2>
+          <p class="service-subtitle">Vendemos tu propiedad con estrategia, claridad y resultados</p>
+          <a href="/contacto" class="btn btn-primary btn-lg">Quiero vender mi propiedad</a>
+        </div>
+
+        <div class="service-highlight">
+          <p class="service-highlight__text">
+            No publicamos propiedades, las <em>posicionamos</em>
+          </p>
+          <p class="service-highlight__subtext">
+            Nuestro objetivo es claro: <strong>vender bien y en el menor tiempo posible</strong>.
           </p>
         </div>
+
       </div>
     </section>
 
-    <!-- Servicio: Ventas -->
-    <section id="ventas" class="section" style="background-color: var(--color-gray-50);" aria-labelledby="ventas-title">
-      <div class="container">
-        <div class="service-card service-card--image-left">
-          <!-- Imagen -->
-          <div class="service-image">
-            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Casa moderna en venta con jardín y fachada elegante" loading="lazy">
-          </div>
-          <!-- filler removed -->
-          <!-- Contenido TOP -->
-          <div class="service-top prose">
-            
-            <h2 id="ventas-title">Venta de Propiedades</h2>
-            <p class="lead">Vendemos tu propiedad al mejor precio con estrategias personalizadas de marketing digital y tradicional.</p>
-            <h3>¿Por qué elegirnos?</h3>
-            <p>Contamos con una red consolidada de contactos, presencia digital optimizada y experiencia comprobada en el mercado de Caseros y zona oeste. Nuestro objetivo es vender tu propiedad en el menor tiempo posible al mejor precio del mercado.</p>
-          </div>
-          <!-- Contenido BOTTOM -->
-          <div class="service-bottom prose">
-            <h3>Qué incluye nuestro servicio de ventas:</h3>
-            <ul>
-              <li><strong>Tasación profesional gratuita:</strong> Evaluamos tu propiedad con análisis de mercado actualizado</li>
-              <li><strong>Marketing 360°:</strong> Fotografía profesional, videos, recorridos virtuales y publicación en portales inmobiliarios</li>
-              <li><strong>Asesoramiento legal:</strong> Te acompañamos en toda la documentación y trámites</li>
-              <li><strong>Calificación de compradores:</strong> Verificamos antecedentes y capacidad de pago</li>
-              <li><strong>Negociación profesional:</strong> Nuestro equipo trabaja para conseguir el mejor precio</li>
-              <li><strong>Seguimiento post-venta:</strong> Te asistimos hasta la escrituración final</li>
+    <!-- Alquiler de Propiedades -->
+    <section id="alquileres" class="service-section service-section--gray">
+      <div class="container container-narrow">
+        <div class="service-header">
+          <h2 class="service-title">Alquiler de Propiedades</h2>
+          <p class="service-subtitle">Gestión clara y confiable para propietarios e inquilinos</p>
+        </div>
+
+        <div class="service-columns">
+          <div class="service-column">
+            <h3 class="service-column__title">Para propietarios</h3>
+            <p class="service-column__intro">Gestionamos tu alquiler para que estés tranquilo</p>
+            <ul class="service-checklist">
+              <li>Inquilinos verificados</li>
+              <li>Contratos claros y actualizados</li>
+              <li>Seguimiento de pagos</li>
+              <li>Mantenimiento y emergencias</li>
             </ul>
-            <div class="hero__actions" style="margin-top: var(--space-xl);">
-              <a href="/vende-con-nosotros" class="btn btn-primary btn-lg">Quiero vender mi propiedad</a>
-              <a href="/contacto" class="btn btn-outline btn-lg">Solicitar tasación</a>
-            </div>
+            <a href="/contacto" class="btn btn-primary">Quiero poner en alquiler</a>
+          </div>
+
+          <div class="service-column">
+            <h3 class="service-column__title">Para inquilinos</h3>
+            <p class="service-column__intro">Te ayudamos a encontrar tu próximo hogar</p>
+            <ul class="service-checklist">
+              <li>Búsqueda personalizada</li>
+              <li>Acompañamiento paso a paso</li>
+              <li>Opciones de garantía flexibles</li>
+              <li>Soporte durante el contrato</li>
+            </ul>
+            <a href="/propiedades" class="btn btn-primary">Quiero alquilar</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Servicio: Alquileres -->
-    <section id="alquileres" class="section" aria-labelledby="alquileres-title">
-      <div class="container">
-        <div class="service-card service-card--image-right">
-          <!-- Contenido TOP -->
-          <div class="service-top prose">
-            
-            <h2 id="alquileres-title">Alquileres</h2>
-            <p class="lead">Amplia cartera de propiedades en alquiler en Caseros, zona oeste y alrededores. Encontramos el hogar ideal para vos.</p>
-            <h3>Para propietarios:</h3>
-            <ul>
-              <li><strong>Inquilinos verificados:</strong> Realizamos análisis exhaustivo de antecedentes y garantías</li>
-              <li><strong>Contratos profesionales:</strong> Documentación legal completa y actualizada</li>
-            </ul>
-          </div>
-          <!-- Contenido BOTTOM -->
-          <div class="service-bottom prose">
-
-            <ul>
-              <li><strong>Cobro garantizado:</strong> Seguimiento de pagos y gestión de cobranzas</li>
-              <li><strong>Mantenimiento coordinado:</strong> Atendemos reparaciones y emergencias</li>
-            </ul>
-            <h3>Para inquilinos:</h3>
-            <ul>
-              <li><strong>Búsqueda personalizada:</strong> Te ayudamos a encontrar la propiedad que se ajuste a tus necesidades</li>
-              <li><strong>Asesoramiento integral:</strong> Te explicamos todo el proceso paso a paso</li>
-              <li><strong>Flexibilidad de garantías:</strong> Trabajamos con diferentes opciones de garantía</li>
-              <li><strong>Soporte continuo:</strong> Estamos disponibles para consultas durante todo el contrato</li>
-            </ul>
-            <div class="hero__actions" style="margin-top: var(--space-xl);">
-              <a href="/propiedades" class="btn btn-primary btn-lg">Ver propiedades en alquiler</a>
-              <a href="/contacto" class="btn btn-outline btn-lg">Consultar disponibilidad</a>
-            </div>
-          </div>
-          <!-- filler removed -->
-          <!-- Imagen -->
-          <div class="service-image">
-            <img src="https://plus.unsplash.com/premium_photo-1712083524480-b508a0e4f956?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Departamento moderno disponible para alquiler con vista amplia" loading="lazy">
-          </div>
+    <!-- Tasación de Propiedades -->
+    <section id="tasaciones" class="service-section">
+      <div class="container container-narrow">
+        <div class="service-header">
+          <h2 class="service-title">Tasación de Propiedades</h2>
+          <p class="service-subtitle">
+            Conocé el <strong>valor real de tu propiedad</strong> a través de un análisis profesional, actualizado y alineado al mercado actual. Te brindamos información clara, confiable y estratégica para que tomes decisiones con seguridad.
+          </p>
+          <a href="/contacto" class="btn btn-primary btn-lg">Quiero tasar mi propiedad</a>
         </div>
       </div>
     </section>
 
-    <!-- Servicio: Tasaciones -->
-    <section id="tasaciones" class="section" style="background-color: var(--color-gray-50);" aria-labelledby="tasaciones-title">
-      <div class="container">
-        <div class="service-card service-card--image-left">
-          <!-- Imagen -->
-          <div class="service-image">
-            <img src="https://plus.unsplash.com/premium_photo-1661310266794-d22f44774abf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profesional inmobiliario realizando tasación de propiedad con tablet y documentos" loading="lazy">
-          </div>
-          <!-- filler removed -->
-          <!-- Contenido TOP -->
-          <div class="service-top prose">
-            
-            <h2 id="tasaciones-title">Tasaciones Profesionales</h2>
-            <p class="lead">Valuaciones precisas con informes detallados del mercado actual. Conocé el valor real de tu propiedad.</p>
-            <h3>¿Cuándo necesitás una tasación?</h3>
-            <ul>
-              <li>Venta de propiedad</li>
-              <li>Trámites bancarios o hipotecarios</li>
-              <li>Sucesiones y herencias</li>
-            </ul>
-          </div>
-          <!-- Contenido BOTTOM -->
-          <div class="service-bottom prose">
-            <h3>Nuestro proceso de tasación incluye:</h3>
-            <ul>
-              <li><strong>Visita técnica profesional:</strong> Relevamiento completo de la propiedad</li>
-              <li><strong>Análisis de mercado:</strong> Comparación con propiedades similares en la zona</li>
-              <li><strong>Evaluación del estado:</strong> Consideramos mejoras, conservación y características especiales</li>
-              <li><strong>Ubicación y servicios:</strong> Analizamos todos los factores que influyen en el valor</li>
-              <li><strong>Informe detallado:</strong> Documento profesional con fundamentos y recomendaciones</li>
-              <li><strong>Asesoramiento post-tasación:</strong> Te orientamos sobre el mejor momento para vender</li>
-            </ul>
-            <ul>
-              <li>Divorcios y separación de bienes</li>
-              <li>Seguros de hogar</li>
-              <li>Actualización patrimonial</li>
-            </ul>
-            <div class="hero__actions" style="margin-top: var(--space-xl);">
-              <a href="/contacto" class="btn btn-primary btn-lg">Solicitar tasación</a>
-            </div>
-          </div>
+    <!-- Administración Integral -->
+    <section id="administracion" class="service-section service-section--gray">
+      <div class="container container-narrow">
+        <div class="service-header">
+          <h2 class="service-title">Administración Integral de Propiedades</h2>
+          <p class="service-subtitle">
+            Nos ocupamos de todo para que vos <strong>no tengas que preocuparte por nada</strong>.
+          </p>
+          <p class="service-subtitle">Gestión profesional, transparente y con seguimiento constante.</p>
         </div>
-      </div>
-    </section>
 
-    <!-- Servicio: Administraciones -->
-    <section id="administraciones" class="section" aria-labelledby="administraciones-title">
-      <div class="container">
-        <div class="service-card service-card--image-right">
-          <!-- Contenido TOP -->
-          <div class="service-top prose">
-            
-            <h2 id="administraciones-title">Administración Integral de Propiedades</h2>
-            <p class="lead">Gestión completa de tu propiedad sin complicaciones. Nos ocupamos de todo para que vos no tengas que preocuparte.</p>
-            <h3>Ventajas de nuestro servicio:</h3>
-            <ul>
-              <li>Ahorrás tiempo y evitás dolores de cabeza</li>
-              <li>Tu propiedad siempre cuidada y en buen estado</li>
+        <div class="service-columns">
+          <div class="service-column">
+            <h3 class="service-column__title">¿Por qué elegirnos?</h3>
+            <ul class="service-checklist">
+              <li>Ahorrás tiempo y evitás gestiones innecesarias</li>
+              <li>Tu propiedad siempre bien cuidada</li>
+              <li>Información clara y seguimiento permanente</li>
               <li>Tranquilidad total, estés donde estés</li>
             </ul>
           </div>
-          <!-- Contenido BOTTOM -->
-          <div class="service-bottom prose">
-            <h3>Servicios de administración:</h3>
-            <ul>
-              <li><strong>Cobro de alquileres:</strong> Gestión puntual y seguimiento de pagos mensuales</li>
-              <li><strong>Pago de expensas y servicios:</strong> Nos encargamos de todos los pagos en tiempo y forma</li>
-              <li><strong>Mantenimiento preventivo:</strong> Inspecciones periódicas del estado de la propiedad</li>
-              <li><strong>Atención de emergencias:</strong> Disponibilidad para resolver problemas urgentes</li>
-              <li><strong>Coordinación de reparaciones:</strong> Red de profesionales de confianza</li>
-              <li><strong>Liquidaciones mensuales:</strong> Informes detallados de todos los movimientos</li>
-              <li><strong>Gestión de contratos:</strong> Renovaciones, actualizaciones y rescisiones</li>
-              <li><strong>Comunicación con inquilinos:</strong> Atención de consultas y solicitudes</li>
+
+          <div class="service-column">
+            <h3 class="service-column__title">¿Qué incluye?</h3>
+            <ul class="service-checklist">
+              <li>Cobro y seguimiento de alquileres</li>
+              <li>Gestión de contratos</li>
+              <li>Comunicación con inquilinos</li>
             </ul>
-            <ul>
-              <li>Informes transparentes y detallados</li>
-              <li>Atención profesional y personalizada</li>
-            </ul>
-            <div class="hero__actions" style="margin-top: var(--space-xl);">
-              <a href="/contacto" class="btn btn-primary btn-lg">Consultar por administración</a>
-            </div>
           </div>
-          <!-- filler removed -->
-          <!-- Imagen -->
-          <div class="service-image">
-            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="Gestión y administración profesional de propiedades con documentación y planificación" loading="lazy">
-          </div>
+        </div>
+
+        <div class="service-cta-center">
+          <a href="/contacto" class="btn btn-primary btn-lg">Quiero asesoramiento</a>
         </div>
       </div>
     </section>
 
     <!-- CTA Final -->
-    <section class="section" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);">
+    <section class="section cta-section">
       <div class="container">
         <div class="section-header text-center">
-          <h2 class="section-header__title" style="color: white;">¿Necesitás más información sobre nuestros servicios?</h2>
+          <h2 class="section-header__title" style="color: white;">¿Listo para dar el próximo paso?</h2>
           <p class="section-header__description" style="color: var(--color-gray-100);">
-            Nuestro equipo de profesionales está listo para asesorarte y brindarte la mejor solución para tu propiedad.
+            Estamos para asesorarte.
           </p>
           <div class="hero__actions">
-            <a href="/contacto" class="btn btn-accent btn-lg">Contactanos ahora</a>
+            <a href="/contacto" class="btn btn-accent btn-lg">Contactanos</a>
             <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20los%20servicios"
-               class="btn btn-ghost btn-lg"
+               class="btn btn-ghost btn-lg btn-whatsapp-ghost"
                style="color: white; border: 2px solid white;"
                target="_blank"
                rel="noopener noreferrer">WhatsApp</a>
@@ -339,6 +279,13 @@
 
   <!-- Placeholder para footer que carga /components/footer.html -->
   <div id="footer"></div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
 
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20los%20servicios"
@@ -357,5 +304,19 @@
   <!-- Components: carga navbar y footer -->
   <script src="/js/components.js" defer></script>
 
+
+  <!-- Scroll to top: muestra el botón al hacer scroll -->
+  <script>
+    (function () {
+      var btn = document.querySelector('.scroll-top');
+      if (!btn) return;
+      window.addEventListener('scroll', function () {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+      }, { passive: true });
+    })();
+  </script>
+  <!-- Loader: descarta el overlay -->
+  <script src="/js/loader.js"></script>
 </body>
 </html>
+

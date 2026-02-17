@@ -1,0 +1,112 @@
+/* ==============================================
+   QUIENES SOMOS PAGE
+   ============================================== */
+
+/* Intro Section con Grid */
+.quienes-intro {
+  padding: var(--space-4xl) 0;
+}
+
+.quienes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .quienes-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl);
+  }
+}
+
+.quienes-content {
+  max-width: 600px;
+}
+
+.quienes-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xl);
+  line-height: 1.2;
+}
+
+.quienes-content p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--color-gray-700);
+  margin-bottom: var(--space-lg);
+}
+
+.quienes-content p:last-child {
+  margin-bottom: 0;
+}
+
+.quienes-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quienes-image img {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 991px) {
+  .quienes-image {
+    order: -1;
+  }
+}
+
+/* Valores Section */
+.quienes-valores {
+  background-color: var(--color-gray-50);
+  padding: var(--space-4xl) 0;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3xl);
+}
+
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3xl);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 991px) {
+  .valores-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
+.valor-item {
+  text-align: center;
+}
+
+.valor-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-md);
+}
+
+.valor-item p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-gray-700);
+}

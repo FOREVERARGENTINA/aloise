@@ -60,7 +60,7 @@ const CONFIG = {
     // Configuración de listados
     defaultFilters: {
       page: 1,
-      limit: 12, // Propiedades por página
+      limit: 60, // Propiedades por página
       sort: 'date_desc' // Ordenar por fecha, más recientes primero
     },
 
@@ -134,7 +134,7 @@ const CONFIG = {
     default: 'USD',
     available: ['USD', 'ARS'],
     // Valor por defecto para desarrollo: ARS por USD (actualizalo con la tasa real en producción)
-    exchangeRate: 350 // Se puede actualizar dinámicamente
+    exchangeRate: 1500 // Se puede actualizar dinámicamente
   }
 };
 

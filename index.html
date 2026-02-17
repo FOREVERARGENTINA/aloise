@@ -16,7 +16,7 @@
   <meta property="og:url" content="https://aloisepropiedades.com.ar/">
   <meta property="og:title" content="Gabriela Aloise Propiedades | Inmobiliaria en Caseros">
   <meta property="og:description" content="Inmobiliaria en Caseros. Martillera Pública Nº 2987. Ventas, alquileres, tasaciones y administraciones.">
-  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
   <meta property="og:locale" content="es_AR">
 
   <!-- Twitter -->
@@ -24,7 +24,7 @@
   <meta property="twitter:url" content="https://aloisepropiedades.com.ar/">
   <meta property="twitter:title" content="Gabriela Aloise Propiedades | Inmobiliaria en Caseros">
   <meta property="twitter:description" content="Inmobiliaria en Caseros. Ventas, alquileres, tasaciones y administraciones.">
-  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/logo1.jpg">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://aloisepropiedades.com.ar/">
@@ -47,35 +47,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+
+  <!-- Iconos (Material Symbols Outlined) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0">
   
   <!-- Preload imagen crítica del hero (LCP) -->
-  <link rel="preload" as="image" href="/images/hero/hero.webp" fetchpriority="high">
+  <link rel="preload" as="video" href="/DATOS/hero.webm" type="video/webm" fetchpriority="high">
 
-  <!-- Google Fonts (async para no bloquear render) -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </noscript>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
 
-  <!-- CSS - Crítico (preload para cargar async) -->
-  <link rel="preload" href="/css/design-system.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/css/global.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/css/components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/css/sections/navigation.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <!-- CSS - No crítico (preload + async) -->
-  <link rel="preload" href="/css/sections/hero.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/css/sections/services.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/css/sections/footer.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/css/design-system.css">
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/sections/navigation.css">
-    <link rel="stylesheet" href="/css/sections/hero.css">
-    <link rel="stylesheet" href="/css/sections/services.css">
-    <link rel="stylesheet" href="/css/sections/footer.css">
-  </noscript>
+  <!-- Loader (carga primero para evitar FOUC) -->
+  <link rel="stylesheet" href="/css/loader.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/sections/navigation.css">
+  <link rel="stylesheet" href="/css/sections/hero.css">
+  <link rel="stylesheet" href="/css/sections/services.css">
+  <link rel="stylesheet" href="/css/sections/footer.css">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -114,7 +107,6 @@
   </script>
 
   <!-- Static author meta + JSON-LD (author + publisher) -->
-  <meta name="author" content="Hernán — Frandoweb">
   <script type="application/ld+json" id="site-author-jsonld">
   {
     "@context": "https://schema.org",
@@ -157,6 +149,12 @@
 </head>
 
 <body>
+  <!-- Loader de página: cortina que se levanta al cargar -->
+  <div id="page-loader" role="status" aria-label="Cargando...">
+    <img src="/images/logo/Logo Gabriela Aloise.png" alt="Aloise Propiedades" class="loader__logo" width="220" height="60">
+    <div class="loader__progress"></div>
+  </div>
+
   <!-- Skip to main content (accesibilidad) -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
@@ -167,7 +165,17 @@
   <main id="main-content">
 
     <!-- Hero Section -->
-    <section class="hero hero--image" style="background-image: url('/images/hero/hero.webp')" aria-label="Presentación principal" role="region" aria-labelledby="hero-heading">
+    <section class="hero hero--video" aria-label="Presentación principal" role="region" aria-labelledby="hero-heading">
+      <video class="hero__media"
+             autoplay
+             muted
+             loop
+             playsinline
+             preload="auto"
+             aria-hidden="true">
+        <source src="/DATOS/hero.webm" type="video/webm">
+        Tu navegador no soporta este video.
+      </video>
       <div class="hero__divider"></div>
       
       <div class="container">
@@ -251,13 +259,13 @@
 
 
     <!-- Últimos Ingresos / Propiedades -->
-    <section class="section" aria-labelledby="propiedades-title">
+    <section class="section section--featured" aria-labelledby="propiedades-title">
       <div class="container">
         <div class="section-header">
           <h2 class="section-header__title" id="propiedades-title">Propiedades destacadas</h2>
         </div>
 
-        <div class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3" id="latest-properties-grid">
+        <div class="featured-grid" id="latest-properties-grid">
           <!-- Las propiedades se cargarán dinámicamente desde la API. -->
           <!-- Placeholder de carga para evitar flashes de contenido estático -->
           <div class="properties-loading" style="grid-column: 1 / -1; text-align: center; padding: var(--space-4xl); color: var(--color-gray-600);">
@@ -266,13 +274,23 @@
           </div>
         </div>
 
-        <div class="text-center mt-xl">
-          <a href="/propiedades" class="btn btn-outline btn-lg">Ver más propiedades</a>
+        <div class="featured-more">
+          <a href="/propiedades" class="featured-more__link">Ver más propiedades</a>
         </div>
       </div>
     </section>
     <!-- ¿Por qué elegirnos? Section -->
-    <section class="section" style="background-color: var(--color-gray-50);" aria-labelledby="porque-title">
+    <section class="section section--porque" aria-labelledby="porque-title">
+      <video class="section__media"
+             autoplay
+             muted
+             loop
+             playsinline
+             preload="auto"
+             poster="/images/porque.webp"
+             aria-hidden="true">
+        <source src="/DATOS/por-que.webm" type="video/webm">
+      </video>
       <div class="container">
         <div class="section-header">
           <h2 class="section-header__title" id="porque-title">¿Por qué elegirnos?</h2>
@@ -288,7 +306,6 @@
               <li class="porque__item">Gestión integral del proceso</li>
             </ul>
           </div>
-          <div aria-hidden="true" class="porque__visual"></div>
         </div>
       </div>
     </section>
@@ -312,6 +329,13 @@
 
   <!-- Placeholder para footer que carga /components/footer.html -->
   <div id="footer"></div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
 
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
@@ -349,8 +373,8 @@
           const propertyService = new PropertyService(CONFIG);
           const renderer = new PropertyRenderer();
 
-          // Cargar últimos ingresos dinámicamente
-          const result = await propertyService.getLatestProperties(CONFIG.xintel.searchLimits.latest);
+          // Cargar propiedades destacadas dinámicamente
+          const result = await propertyService.getFeaturedProperties(3);
 
           if (result.success && result.data.properties) {
             if (result.data.properties.length === 0) {
@@ -377,11 +401,12 @@
               renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid');
             }
           } else {
-            console.error('❌ Error: No se pudieron cargar las propiedades', result.error);
+            const errorMsg = result?.error || 'Ocurrió un error al comunicarse con la API de Xintel.';
+            console.error('❌ Error: No se pudieron cargar las propiedades', errorMsg);
             document.getElementById('latest-properties-grid').innerHTML = `
               <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-4xl); color: var(--color-error);">
                 <h3 style="margin-bottom: var(--space-md);">Error al cargar propiedades</h3>
-                <p style="margin: 0;">${result.error || 'Ocurrió un error al comunicarse con la API de Xintel.'}</p>
+                <p style="margin: 0;">${errorMsg}</p>
               </div>
             `;
           }
@@ -399,6 +424,8 @@
   </script>
   <!-- Components: carga navbar y footer -->
   <script src="/js/components.js" defer></script>
+  <!-- Loader: descarta el overlay al completar la carga -->
+  <script src="/js/loader.js"></script>
 
 </body>
 </html>

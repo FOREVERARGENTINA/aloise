@@ -13,21 +13,21 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://aloisepropiedades.com.ar/vende-con-nosotros.html">
+  <meta property="og:url" content="https://aloisepropiedades.com.ar/vende-con-nosotros">
   <meta property="og:title" content="Vendé tu Propiedad con Nosotros | Gabriela Aloise Propiedades">
   <meta property="og:description" content="Vendé tu propiedad al mejor precio con asesoramiento personalizado y gestión integral.">
-  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
   <meta property="og:locale" content="es_AR">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/vende-con-nosotros.html">
+  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/vende-con-nosotros">
   <meta property="twitter:title" content="Vendé tu Propiedad con Nosotros | Gabriela Aloise Propiedades">
   <meta property="twitter:description" content="Asesoramiento personalizado y gestión integral para vender tu propiedad.">
-  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://aloisepropiedades.com.ar/vende-con-nosotros.html">
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/vende-con-nosotros">
 
   <!-- Favicons (from DATOS/favicomatic) -->
   <link rel="icon" href="/images/favicomatic/favicon.ico">
@@ -45,6 +45,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS - Orden correcto según guía -->
+  <!-- Loader (carga primero para evitar FOUC) -->
+  <link rel="stylesheet" href="/css/loader.css">
+
   <link rel="stylesheet" href="/css/design-system.css">
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/components.css">
@@ -67,6 +70,12 @@
 </head>
 
 <body>
+  <!-- Loader de pagina: cortina que se levanta al cargar -->
+  <div id="page-loader" role="status" aria-label="Cargando...">
+    <img src="/images/logo/Logo Gabriela Aloise.png" alt="Aloise Propiedades" class="loader__logo" width="220" height="60">
+    <div class="loader__progress"></div>
+  </div>
+
   <!-- Skip to main content (accesibilidad) -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
@@ -310,6 +319,13 @@
   <!-- Placeholder para footer que carga /components/footer.html -->
   <div id="footer"></div>
 
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/5491123490070?text=Hola!%20Quiero%20vender%20mi%20propiedad"
      class="whatsapp-float"
@@ -327,5 +343,19 @@
   <!-- Components: carga navbar y footer -->
   <script src="/js/components.js" defer></script>
 
+
+  <!-- Scroll to top: muestra el botón al hacer scroll -->
+  <script>
+    (function () {
+      var btn = document.querySelector('.scroll-top');
+      if (!btn) return;
+      window.addEventListener('scroll', function () {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+      }, { passive: true });
+    })();
+  </script>
+  <!-- Loader: descarta el overlay -->
+  <script src="/js/loader.js"></script>
 </body>
 </html>
+

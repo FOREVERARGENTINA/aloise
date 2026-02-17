@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Debug Property</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; }
+    pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; }
+    .property { margin-bottom: 2rem; border: 1px solid #ddd; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Debug de Propiedades</h1>
+  <div id="output"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+  <script src="/js/modules/property-renderer.js"></script>
+
+  <script>
+    async function debug() {
+      const api = new XintelAPI(CONFIG.xintel);
+      const renderer = new PropertyRenderer();
+
+      // Obtener propiedades
+      const result = await api.getProperties({ limit: 23 });
+
+      if (!result.success) {
+        document.getElementById('output').innerHTML = 'Error: ' + result.error;
+        return;
+      }
+
+      const properties = result.data.properties;
+
+      // Buscar la propiedad con título incompleto
+      const problematicProps = properties.filter(prop => {
+        const title = prop.titulo || '';
+        return title.trim().match(/^Casa en\s*$/i) ||
+               title.trim().match(/\sen\s*$/i);
+      });
+
+      let html = '';
+
+      html += `<h2>Propiedades con título incompleto: ${problematicProps.length}</h2>`;
+
+      problematicProps.forEach((prop, index) => {
+        const normalized = renderer.normalizeXintelProperty(prop);
+
+        html += `
+          <div class="property">
+            <h3>Propiedad #${index + 1}</h3>
+
+            <h4>Datos RAW de Xintel:</h4>
+            <pre>
+titulo: "${prop.titulo}"
+in_bar: "${prop.in_bar}"
+in_loc: "${prop.in_loc}"
+in_cal: "${prop.in_cal}"
+in_tip: "${prop.in_tip}"
+in_ope: "${prop.in_ope}"
+in_amb: "${prop.in_amb}"
+in_fic: "${prop.in_fic}"
+            </pre>
+
+            <h4>Datos NORMALIZADOS:</h4>
+            <pre>
+title: "${normalized.title}"
+location: "${normalized.location}"
+property_type: "${normalized.property_type}"
+operation_type: "${normalized.operation_type}"
+            </pre>
+          </div>
+        `;
+      });
+
+      document.getElementById('output').innerHTML = html;
+      console.log('Propiedades problemáticas:', problematicProps);
+    }
+
+    window.addEventListener('load', () => setTimeout(debug, 100));
+  </script>
+</body>
+</html>

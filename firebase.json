@@ -12,7 +12,10 @@
       "FIREBASE_*.md",
       "XINTEL_*.md",
       "COMO_*.md",
-      "GUIA_*.md"
+      "GUIA_*.md",
+      "debug-*.html",
+      "test-*.html",
+      "diagnostico-*.html"
     ],
     "rewrites": [
       {

@@ -1,5 +1,297 @@
 /* ==============================================
-   SERVICES SECTION - ELEGANT DESIGN
+   SERVICES PAGE - NEW DESIGN
+   ============================================== */
+
+/* Hero Section */
+.services-hero {
+  background: var(--color-primary);
+  background: linear-gradient(135deg, #1a1f2e 0%, #252b3b 50%, #2a3142 100%);
+  padding: var(--space-4xl) 0;
+  text-align: center;
+  color: white;
+}
+
+.services-hero__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: white;
+  margin: 0;
+}
+
+/* Service Section */
+.service-section {
+  padding: var(--space-3xl) 0;
+}
+
+.service-section--gray {
+  background-color: var(--color-gray-50);
+}
+
+/* Service Header */
+.service-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.service-title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.service-subtitle {
+  font-size: 1.125rem;
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+}
+
+.service-header .btn {
+  margin-top: var(--space-md);
+}
+
+/* Service Highlight - Frase destacada */
+.service-highlight {
+  text-align: center;
+  margin: var(--space-2xl) 0 0;
+  padding: var(--space-2xl) var(--space-2xl);
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: none;
+}
+
+.service-highlight__text {
+  font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.service-highlight__text em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.service-highlight__subtext {
+  font-size: 1.125rem;
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+/* Service Content */
+.service-content {
+  margin-top: var(--space-4xl);
+}
+
+.service-content__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xl);
+}
+
+/* Service List - Texto simple */
+.service-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.service-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: 0 0 0 var(--space-lg);
+  background: transparent;
+  border: none;
+  transition: none;
+  position: relative;
+}
+
+.service-list__item::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-gray-600);
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.service-section--gray .service-list__item {
+  background: transparent;
+}
+
+.service-list__item:hover {
+  border: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.service-list__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.service-list__content {
+  flex: 1;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.service-list__content strong {
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+/* Service Columns - Layout de dos columnas */
+.service-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4xl);
+  margin-top: var(--space-3xl);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 767px) {
+  .service-columns {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.service-column {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-section--gray .service-column {
+  background: transparent;
+}
+
+.service-column .btn {
+  margin-top: auto;
+}
+
+.service-column__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-lg);
+  display: block;
+}
+
+.service-column__icon {
+  display: none;
+}
+
+.service-column__intro {
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-xl);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Service Checklist */
+.service-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-xl) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.service-checklist li {
+  position: relative;
+  padding-left: var(--space-lg);
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.service-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-gray-600);
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+/* CTA centrado */
+.service-cta-center {
+  text-align: center;
+  margin-top: var(--space-3xl);
+}
+
+/* CTA Final Section */
+.cta-section {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: var(--space-4xl) 0;
+}
+
+.cta-tagline {
+  font-size: 1.125rem;
+  color: var(--color-gray-100);
+  margin-bottom: var(--space-lg);
+  font-style: normal;
+}
+
+.cta-tagline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .services-hero {
+    padding: var(--space-3xl) 0;
+  }
+
+  .service-section {
+    padding: var(--space-3xl) 0;
+  }
+
+  .service-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .service-highlight {
+    padding: var(--space-xl);
+    margin: var(--space-2xl) 0;
+  }
+
+  .service-content {
+    margin-top: var(--space-2xl);
+  }
+
+  .service-list__item {
+    padding: var(--space-md);
+  }
+
+  .service-column {
+    padding: var(--space-xl);
+  }
+}
+
+
+/* ==============================================
+   OLD STYLES - Kept for backward compatibility
    ============================================== */
 
 #servicios {
@@ -64,7 +356,7 @@
 
 #servicios .feature__image {
   width: 100%;
-  height: 140px; /* aumentado para mostrar mejor el icono */
+  height: 140px;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -77,13 +369,13 @@
 #servicios .feature__image img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* mostrar el icono completo sin recortarlo */
+  object-fit: contain;
   object-position: center;
   transition: transform 0.35s ease;
 }
 
 #servicios .feature:hover .feature__image img {
-  transform: scale(1.03); /* hover muy sutil */
+  transform: scale(1.03);
 }
 
 #servicios .feature__content {
@@ -141,7 +433,7 @@
   margin-bottom: var(--space-md);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 600;
-  font-style: normal; /* no cursiva */
+  font-style: normal;
   text-align: center;
   font-size: 1.125rem;
 }
@@ -179,13 +471,10 @@
 }
 
 /* Layout responsive para servicios: mobile-first */
-/* NOTE: responsive reorder handled by .service-card grid stacking (see further down) */
-
-/* NEW: Service card grid (2x2 quadrants) */
 .service-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr; /* equal-sized quadrants */
+  grid-template-rows: 1fr 1fr;
   gap: var(--space-lg);
   align-items: start;
 }
@@ -225,14 +514,11 @@
 
 .service-top { padding: var(--space-md); }
 .service-bottom { padding: var(--space-md); }
-/* Center top content vertically in the top row */
 .service-top { display: flex; flex-direction: column; justify-content: center; }
 
-/* service-filler no longer used */
-
-/* Image-left layout: IMG in top-left, TEXT spans top-right + bottom-both */
+/* Image-left layout */
 .service-card--image-left {
-  grid-template-areas: 
+  grid-template-areas:
     "image top"
     "bottom bottom";
 }
@@ -244,9 +530,9 @@
 .service-card--image-left .service-top { grid-area: top; }
 .service-card--image-left .service-bottom { grid-area: bottom; }
 
-/* Image-right layout: TEXT spans top-left + bottom-both, IMG in top-right */
+/* Image-right layout */
 .service-card--image-right {
-  grid-template-areas: 
+  grid-template-areas:
     "top image"
     "bottom bottom";
 }
@@ -264,18 +550,17 @@
   .service-card--image-right {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-    grid-template-areas: 
+    grid-template-areas:
       "image"
       "top"
       "bottom";
     padding: var(--space-md);
   }
 
-  /* Ensure the image is always in the 'image' area on mobile, especially for image-right */
   .service-card--image-right .service-image {
     grid-area: image;
   }
-  
+
   .service-card--image-left .service-image {
     grid-area: image;
   }
@@ -285,7 +570,7 @@
     max-width: 100%;
     width: 100%;
   }
-  
+
   .service-card .service-image img {
     width: 100%;
     height: auto;
@@ -300,7 +585,8 @@
     padding-top: var(--space-md);
   }
 }
-/* Sección Propiedades destacadas: fondo igual al navbar */
+
+/* Sección Propiedades destacadas */
 section[aria-labelledby="propiedades-title"] {
   background: linear-gradient(135deg, #1a1f2e 0%, #252b3b 50%, #2a3142 100%);
   color: #ffffff;
@@ -325,30 +611,6 @@ section[aria-labelledby="propiedades-title"] .properties-loading h3 {
   color: #ffffff;
 }
 
-/* ¿Por qué elegirnos? como background */
-section[aria-labelledby="porque-title"] {
-  background-image: url('/images/porque.webp');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  position: relative;
-  padding: var(--space-4xl) 0;
-  color: #ffffff;
-}
-
-section[aria-labelledby="porque-title"]::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.55) 100%);
-  z-index: 0;
-}
-
-section[aria-labelledby="porque-title"] .container {
-  position: relative;
-  z-index: 1;
-}
-
 section[aria-labelledby="porque-title"] .section-header__title {
   color: #ffffff;
 }
@@ -364,13 +626,6 @@ section[aria-labelledby="porque-title"] .section-header__title {
   .porque__grid {
     grid-template-columns: 1fr;
   }
-}
-
-.porque__visual {
-  width: 100%;
-  height: 360px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
 }
 
 .porque__list { list-style: none; padding: 0; margin: 0; }
@@ -415,6 +670,5 @@ section[aria-labelledby="porque-title"] .section-header__title {
 }
 
 @media (max-width: 767px) {
-  section[aria-labelledby="porque-title"] .porque__visual { display: none; }
   section[aria-labelledby="porque-title"] { padding: var(--space-3xl) 0; }
 }

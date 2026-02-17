@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Test TODAS las Propiedades - Gabriela Aloise</title>
+  <style>
+    body {
+      font-family: system-ui;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .log {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-family: monospace;
+      font-size: 0.875rem;
+      white-space: pre-wrap;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+    .warning { background: #fff3cd; color: #856404; }
+    h1 { color: #1f2a44; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #1f2a44;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+    .badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .badge-disponible { background: #28a745; color: white; }
+    .badge-reservado { background: #ffc107; color: #000; }
+    .badge-vendido { background: #dc3545; color: white; }
+    .badge-otro { background: #6c757d; color: white; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Test TODAS las Propiedades (incluye reservadas/vendidas)</h1>
+  <div id="output"></div>
+  <div id="table"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/modules/xintel-api.js"></script>
+
+  <script>
+    const output = document.getElementById('output');
+    const tableDiv = document.getElementById('table');
+
+    function log(message, type = 'info') {
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = message;
+      output.appendChild(div);
+      console.log(message);
+    }
+
+    async function testAllProperties() {
+      try {
+        log('🚀 Iniciando test completo...', 'info');
+
+        const api = new XintelAPI(CONFIG.xintel);
+
+        // Hacer llamada DIRECTA a la API sin el wrapper de getProperties
+        // para ver TODAS las propiedades sin filtros
+        log('\n📡 Llamada DIRECTA a Xintel API (página 0)...', 'info');
+
+        const result1 = await api.request('resultados.fichas', {
+          page: 0,
+          rppagina: 20
+        });
+
+        log('\n📡 Llamada DIRECTA a Xintel API (página 1)...', 'info');
+
+        const result2 = await api.request('resultados.fichas', {
+          page: 1,
+          rppagina: 20
+        });
+
+        if (!result1.success || !result2.success) {
+          log('❌ Error en las llamadas a la API', 'error');
+          return;
+        }
+
+        const fichas1 = result1.data?.resultado?.fichas || [];
+        const fichas2 = result2.data?.resultado?.fichas || [];
+        const total1 = result1.data?.resultado?.total || result1.data?.resultado?.totalitems || 0;
+        const total2 = result2.data?.resultado?.total || result2.data?.resultado?.totalitems || 0;
+
+        log(`\n📊 RESULTADOS PÁGINA 0:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Propiedades recibidas: ${fichas1.length}
+Total reportado por API: ${total1}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'info');
+
+        log(`\n📊 RESULTADOS PÁGINA 1:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Propiedades recibidas: ${fichas2.length}
+Total reportado por API: ${total2}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'info');
+
+        const allProperties = [...fichas1, ...fichas2];
+
+        log(`\n🎯 TOTAL COMBINADO: ${allProperties.length} propiedades`, allProperties.length >= 23 ? 'success' : 'warning');
+
+        if (allProperties.length < 23) {
+          log(`\n⚠️ ATENCIÓN: Se esperaban 23 propiedades pero solo se obtuvieron ${allProperties.length}.
+Las propiedades faltantes probablemente están:
+- En un estado diferente a "disponible"
+- Filtradas por la API de Xintel
+- O simplemente no existen en la API`, 'warning');
+        }
+
+        // Crear tabla con todas las propiedades y su estado
+        let html = '<h2>📋 Listado Completo de Propiedades</h2>';
+        html += '<table>';
+        html += '<tr><th>#</th><th>ID</th><th>Título</th><th>Operación</th><th>Estado</th><th>Ubicación</th></tr>';
+
+        allProperties.forEach((prop, index) => {
+          const estado = (prop.estado || prop.in_est || 'disponible').toLowerCase();
+          const badgeClass = estado.includes('reserv') ? 'badge-reservado' :
+                            estado.includes('vend') ? 'badge-vendido' :
+                            estado === 'disponible' ? 'badge-disponible' : 'badge-otro';
+
+          const operationType = prop.in_ope === 'V' ? 'Venta' : (prop.in_ope === 'A' ? 'Alquiler' : 'Otro');
+          const location = prop.in_bar || prop.in_loc || 'Sin ubicación';
+          const title = prop.titulo || `${prop.in_tip || 'Propiedad'} en ${location}`;
+
+          html += `
+            <tr>
+              <td><strong>${index + 1}</strong></td>
+              <td>${prop.in_fic || prop.in_num || 'N/A'}</td>
+              <td>${title.substring(0, 50)}${title.length > 50 ? '...' : ''}</td>
+              <td>${operationType}</td>
+              <td><span class="badge ${badgeClass}">${estado.toUpperCase()}</span></td>
+              <td>${location}</td>
+            </tr>
+          `;
+        });
+
+        html += '</table>';
+        tableDiv.innerHTML = html;
+
+        // Agrupar por estado
+        const porEstado = allProperties.reduce((acc, prop) => {
+          const estado = (prop.estado || prop.in_est || 'disponible').toLowerCase();
+          acc[estado] = (acc[estado] || 0) + 1;
+          return acc;
+        }, {});
+
+        log(`\n📈 PROPIEDADES POR ESTADO:
+${Object.entries(porEstado).map(([estado, count]) => `  ${estado}: ${count}`).join('\n')}`, 'info');
+
+        // Log de la respuesta cruda para debug
+        console.log('📦 Respuesta cruda página 0:', result1.data);
+        console.log('📦 Respuesta cruda página 1:', result2.data);
+
+      } catch (error) {
+        log(`\n❌ ERROR: ${error.message}`, 'error');
+        console.error(error);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => testAllProperties(), 100);
+    });
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <!-- ========== META TAGS ESENCIALES ========== -->
@@ -10,8 +10,23 @@
   <meta name="description" content="Conocé todos los detalles de esta propiedad en Caseros y zona oeste.">
   <meta name="keywords" content="propiedad, detalle, Caseros, Buenos Aires">
 
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aloisepropiedades.com.ar/ficha">
+  <meta property="og:title" content="Detalle de Propiedad | Gabriela Aloise Propiedades">
+  <meta property="og:description" content="Conocé todos los detalles de esta propiedad en Caseros y zona oeste.">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
+  <meta property="og:locale" content="es_AR">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/ficha">
+  <meta property="twitter:title" content="Detalle de Propiedad | Gabriela Aloise Propiedades">
+  <meta property="twitter:description" content="Conocé todos los detalles de esta propiedad en Caseros y zona oeste.">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
+
   <!-- Canonical -->
-  <link rel="canonical" href="https://aloisepropiedades.com.ar/ficha.html">
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/ficha">
 
   <!-- Author + JSON-LD (static) -->
   <meta name="author" content="Hernán — Frandoweb">
@@ -40,11 +55,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
 
   <!-- Leaflet CSS para mapas -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Swiper CSS para galería -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- CSS -->
+  <!-- Loader (carga primero para evitar FOUC) -->
+  <link rel="stylesheet" href="/css/loader.css">
+
   <link rel="stylesheet" href="/css/design-system.css">
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/components.css">
@@ -76,155 +100,342 @@
     }
 
     /* Galería */
-    .gallery {
+    .property-gallery {
       margin-bottom: var(--space-2xl);
+      min-width: 0;
     }
 
-    .gallery__main {
-      position: relative;
+    .gallery-swiper-main {
       width: 100%;
-      height: 500px;
+      max-width: 100%;
+      aspect-ratio: 4 / 3;
       border-radius: var(--radius-lg);
       overflow: hidden;
-      margin-bottom: var(--space-lg);
-      background: var(--color-gray-100);
+      background-color: var(--color-gray-100);
+      margin-bottom: var(--space-sm);
+      position: relative;
       cursor: pointer;
     }
 
-    .gallery__main img {
+    .gallery-swiper-main .swiper-wrapper,
+    .gallery-swiper-main .swiper-slide {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .gallery-slide-inner {
+      width: 100%;
+      height: 100%;
+    }
+
+    .gallery-slide-inner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
     }
 
-    .gallery__thumbnails {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: var(--space-md);
+    .gallery-swiper-main .swiper-slide:hover .gallery-slide-inner img {
+      transform: scale(1.02);
     }
 
-    .gallery__view-all {
-      grid-column: 1 / -1;
-      padding: var(--space-md);
-      background: var(--color-primary);
-      border: none;
-      border-radius: var(--radius-md);
-      text-align: center;
+    .gallery-swiper-main .swiper-button-prev,
+    .gallery-swiper-main .swiper-button-next {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 50%;
+      color: var(--color-primary);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .gallery-swiper-main .swiper-button-prev::after,
+    .gallery-swiper-main .swiper-button-next::after {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .gallery-swiper-main .swiper-button-prev:hover,
+    .gallery-swiper-main .swiper-button-next:hover {
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .property-gallery.is-single-image .swiper-button-prev,
+    .property-gallery.is-single-image .swiper-button-next {
+      display: none;
+    }
+
+    .gallery-overlay-counter {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: var(--font-size-sm);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+      letter-spacing: 0.3px;
+    }
+
+    .gallery-expand-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       cursor: pointer;
-      transition: all 0.3s ease;
-      color: #fff;
-      font-weight: 600;
-      box-shadow: 0 2px 8px rgba(37,43,59,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s ease, transform 0.2s ease;
+      padding: 0;
     }
 
-    .gallery__view-all:hover {
-      background: var(--color-accent);
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(201,169,97,0.12);
+    .gallery-expand-btn:hover {
+      background: rgba(0, 0, 0, 0.82);
+      transform: scale(1.08);
     }
 
-    .gallery__thumbnail {
-      position: relative;
-      width: 100%;
-      height: 100px;
+    .gallery-swiper-thumbs {
+      height: 76px;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .gallery-thumb-slide {
+      width: 108px !important;
+      height: 76px;
       border-radius: var(--radius-md);
       overflow: hidden;
       cursor: pointer;
+      opacity: 0.5;
       border: 2px solid transparent;
-      transition: all 0.3s ease;
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+      flex-shrink: 0;
     }
 
-    .gallery__thumbnail:hover,
-    .gallery__thumbnail.active {
+    .gallery-thumb-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-thumb-slide:hover {
+      opacity: 0.75;
+    }
+
+    .gallery-thumb-slide.swiper-slide-thumb-active {
+      opacity: 1;
       border-color: var(--color-primary);
     }
 
-    .gallery__thumbnail img {
+    .gallery-placeholder {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-lg);
+      color: var(--color-gray-500);
+      text-align: center;
+      padding: var(--space-lg);
+    }
+
+    .gallery-placeholder svg {
+      margin-bottom: var(--space-md);
     }
 
     /* Modal de imagen */
     .image-modal {
       display: none;
       position: fixed;
-      top: 0;
+      z-index: 10000;
       left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.97);
+      flex-direction: column;
+      animation: fadeIn 0.22s ease;
     }
 
     .image-modal.active {
       display: flex;
     }
 
-    .modal-content {
-      position: relative;
-      max-width: 90%;
-      max-height: 90vh;
+    .image-modal-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      flex-shrink: 0;
     }
 
-    .modal-content img {
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
+    .image-modal-counter {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: var(--font-size-sm);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.5px;
     }
 
-    .modal-close, .modal-nav {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.9);
-      border: none;
-      width: 50px;
-      height: 50px;
+    .image-modal-close {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      font-size: 28px;
       cursor: pointer;
-      z-index: 10001;
-      color: #333;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.25s ease, transform 0.2s ease;
+      flex-shrink: 0;
+      padding: 0;
     }
 
-    .modal-close {
-      top: 20px;
-      right: 30px;
+    .image-modal-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: scale(1.08);
     }
 
-    .modal-nav {
+    .image-modal-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 64px;
+      min-height: 0;
+    }
+
+    .image-modal-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      animation: zoomIn 0.22s ease;
+      user-select: none;
+      display: block;
+    }
+
+    .image-modal-nav {
+      position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, transform 0.2s ease;
+      z-index: 1;
+      flex-shrink: 0;
+      padding: 0;
     }
 
-    .modal-prev { left: 30px; }
-    .modal-next { right: 30px; }
-
-    .modal-close:hover, .modal-nav:hover {
-      background: white;
-      transform: scale(1.1);
-    }
-
-    .modal-nav:hover {
+    .image-modal-nav:hover {
+      background: rgba(255, 255, 255, 0.2);
       transform: translateY(-50%) scale(1.1);
     }
 
-    .image-counter {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
+    .image-modal-prev {
+      left: 10px;
+    }
+
+    .image-modal-next {
+      right: 10px;
+    }
+
+    .image-modal-filmstrip {
+      display: flex;
+      gap: 5px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      justify-content: center;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    }
+
+    .image-modal-filmstrip::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .image-modal-filmstrip::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .image-modal-filmstrip::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 2px;
+    }
+
+    .filmstrip-thumb {
+      flex-shrink: 0;
+      width: 62px;
+      height: 46px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.4;
+      border: 2px solid transparent;
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .filmstrip-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .filmstrip-thumb:hover {
+      opacity: 0.72;
+    }
+
+    .filmstrip-thumb.active {
+      opacity: 1;
+      border-color: var(--color-primary);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.93); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     /* Detalles */
@@ -322,17 +533,39 @@
     }
 
     @media (max-width: 768px) {
-      .gallery__main { height: 300px; }
       .property-title { font-size: var(--font-size-2xl); }
-      .modal-close, .modal-nav { width: 40px; height: 40px; }
-      .modal-prev { left: 10px; }
-      .modal-next { right: 10px; }
+      .gallery-swiper-thumbs {
+        height: 60px;
+      }
+      .gallery-thumb-slide {
+        width: 84px !important;
+        height: 60px;
+      }
+      .image-modal-stage {
+        padding: 0 48px;
+      }
+      .image-modal-nav {
+        width: 38px;
+        height: 38px;
+      }
+      .image-modal-prev { left: 6px; }
+      .image-modal-next { right: 6px; }
+      .filmstrip-thumb {
+        width: 50px;
+        height: 38px;
+      }
       .contact-box { position: static; margin-top: var(--space-2xl); }
     }
   </style>
 </head>
 
 <body>
+  <!-- Loader de pagina: cortina que se levanta al cargar -->
+  <div id="page-loader" role="status" aria-label="Cargando...">
+    <img src="/images/logo/Logo Gabriela Aloise.png" alt="Aloise Propiedades" class="loader__logo" width="220" height="60">
+    <div class="loader__progress"></div>
+  </div>
+
   <!-- Skip to main content -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
@@ -355,14 +588,7 @@
             <!-- Columna principal (2/3) -->
             <div style="grid-column: span 2;">
               <!-- Galería -->
-              <div class="gallery">
-                <div class="gallery__main" id="mainImage" onclick="propertyManager.openModal(propertyManager.currentImageIndex)">
-                  <!-- Imagen principal -->
-                </div>
-                <div class="gallery__thumbnails" id="thumbnails">
-                  <!-- Miniaturas -->
-                </div>
-              </div>
+              <div class="gallery property-gallery" id="propertyGallery"></div>
 
               <!-- Información principal -->
               <div class="property-header" id="propertyHeader">
@@ -432,16 +658,12 @@
 
                 <div style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--color-gray-200);">
                   <p style="font-weight: 600; margin-bottom: var(--space-md);">O contactanos directamente:</p>
-                  <a href="tel:+541123490070" class="btn btn-outline" style="width: 100%; margin-bottom: var(--space-md);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right: 8px;">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                  <a href="tel:+541123490070" class="btn btn-outline" style="width: 100%; margin-bottom: var(--space-md); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i data-lucide="phone" style="width: 20px; height: 20px;"></i>
                     Llamar
                   </a>
-                  <a href="https://wa.me/5491123490070" target="_blank" class="btn btn-accent" style="width: 100%;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                    </svg>
+                  <a href="https://wa.me/5491123490070" target="_blank" class="btn btn-accent" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i data-lucide="message-circle" style="width: 20px; height: 20px;"></i>
                     WhatsApp
                   </a>
                 </div>
@@ -452,20 +674,41 @@
       </div>
     </section>
   </main>
-
   <!-- Modal de imagen -->
   <div id="imageModal" class="image-modal">
-    <button class="modal-close" onclick="propertyManager.closeModal()" aria-label="Cerrar">×</button>
-    <button class="modal-nav modal-prev" onclick="propertyManager.navigateImage(-1)" aria-label="Anterior">‹</button>
-    <div class="modal-content">
-      <img id="modalImage" src="" alt="Imagen de la propiedad">
-      <div id="imageCounter" class="image-counter">1 / 10</div>
+    <div class="image-modal-topbar">
+      <span class="image-modal-counter" id="imageCounter"></span>
+      <button class="image-modal-close" onclick="propertyManager.closeModal()" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
-    <button class="modal-nav modal-next" onclick="propertyManager.navigateImage(1)" aria-label="Siguiente">›</button>
+    <div class="image-modal-stage">
+      <button id="modalPrevBtn" class="image-modal-nav image-modal-prev" onclick="propertyManager.navigateImage(-1)" aria-label="Anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <img class="image-modal-image" id="modalImage" src="" alt="Imagen de la propiedad">
+      <button id="modalNextBtn" class="image-modal-nav image-modal-next" onclick="propertyManager.navigateImage(1)" aria-label="Siguiente">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+    <div class="image-modal-filmstrip" id="modalFilmstrip"></div>
   </div>
-
   <!-- Placeholder para footer que carga /components/footer.html -->
   <div id="footer"></div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
 
   <!-- WhatsApp Float Button -->
   <a id="whatsappFloat" href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20esta%20propiedad"
@@ -486,6 +729,8 @@
 
   <!-- Leaflet JS para mapas -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Swiper JS para galería -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <!-- Inicializar Firebase -->
   <script src="/js/firebase-init.js"></script>
@@ -505,6 +750,9 @@
         this.images = [];
         this.currentImageIndex = 0;
         this.map = null;
+        this.mainSwiper = null;
+        this.thumbsSwiper = null;
+        this.modalListenersReady = false;
       }
 
       async init() {
@@ -522,6 +770,8 @@
 
         // Extraer número de ficha (quitar prefijo GAB)
         const fichaId = fichaParam.replace(/^GAB/i, '');
+
+        this.setupModalListeners();
 
         // Cargar propiedad
         await this.loadProperty(fichaId);
@@ -546,7 +796,7 @@
           }
 
           this.property = result.data;
-          this.images = this.property.fotos || [];
+          this.images = this.getImages(this.property);
 
           // Actualizar whatsapp float para compartir el link de esta ficha
           const wa = document.getElementById('whatsappFloat');
@@ -564,10 +814,10 @@
 
           // Debug: mostrar en consola sólo si se solicita con ?debug=1
           if (this.debug) {
-            console.log('🔍 PROPERTY DEBUG (Xintel raw):', JSON.parse(JSON.stringify(this.property)));
+            console.log('PROPERTY DEBUG (Xintel raw):', JSON.parse(JSON.stringify(this.property)));
 
             // Mostrar campos específicos de superficie para facilitar el diagnóstico
-            console.log('🔍 Campos de superficie:', {
+            console.log('Campos de superficie:', {
               in_scu: this.property.in_scu,
               in_sto: this.property.in_sto,
               normalized_covered: (new PropertyRenderer()).normalizeXintelProperty(this.property).covered_area,
@@ -615,54 +865,170 @@
       }
 
       renderGallery() {
+        const galleryContainer = document.getElementById('propertyGallery');
+        if (!galleryContainer) return;
+
+        if (this.mainSwiper) {
+          this.mainSwiper.destroy(true, true);
+          this.mainSwiper = null;
+        }
+        if (this.thumbsSwiper) {
+          this.thumbsSwiper.destroy(true, true);
+          this.thumbsSwiper = null;
+        }
+
+        this.currentImageIndex = 0;
+
         if (this.images.length === 0) {
-          document.getElementById('mainImage').innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: var(--color-gray-100);">
+          galleryContainer.classList.remove('is-single-image');
+          galleryContainer.innerHTML = `
+            <div class="gallery-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
               <p>Sin imágenes disponibles</p>
             </div>
           `;
+          this.renderModalFilmstrip();
           return;
         }
 
-        // Imagen principal
-        document.getElementById('mainImage').innerHTML = `
-          <img src="${this.images[0]}" alt="Imagen principal">
+        galleryContainer.classList.toggle('is-single-image', this.images.length === 1);
+        galleryContainer.innerHTML = `
+          <div class="swiper gallery-swiper-main" id="galleryMain">
+            <div class="swiper-wrapper">
+              ${this.images.map((img, index) => `
+                <div class="swiper-slide">
+                  <div class="gallery-slide-inner">
+                    <img src="${img}" alt="Imagen ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            ${this.images.length > 1 ? `
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            ` : ''}
+            <div class="gallery-overlay-counter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+              <span id="gallerySwiperCounter">1 / ${this.images.length}</span>
+            </div>
+            <button class="gallery-expand-btn" onclick="propertyManager.openModal(propertyManager.currentImageIndex || 0)" title="Ver en pantalla completa" aria-label="Ver en pantalla completa">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+            </button>
+          </div>
+          ${this.images.length > 1 ? `
+            <div class="swiper gallery-swiper-thumbs" id="galleryThumbs">
+              <div class="swiper-wrapper">
+                ${this.images.map((img, index) => `
+                  <div class="swiper-slide gallery-thumb-slide">
+                    <img src="${img}" alt="Miniatura ${index + 1}" loading="lazy">
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
         `;
 
-        // Mostrar solo primeras 8 miniaturas
-        const maxThumbnails = 8;
-        const displayImages = this.images.slice(0, maxThumbnails);
-        
-        const thumbnailsHTML = displayImages.map((img, index) => `
-          <div class="gallery__thumbnail ${index === 0 ? 'active' : ''}" onclick="propertyManager.changeImage(${index})">
-            <img src="${img}" alt="Imagen ${index + 1}">
-          </div>
-        `).join('');
-
-        // Agregar botón "Ver todas" si hay más fotos
-        const viewAllButton = this.images.length > maxThumbnails ? `
-          <div class="gallery__view-all" onclick="propertyManager.openModal(0)">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-            Ver todas las fotos (${this.images.length})
-          </div>
-        ` : '';
-
-        document.getElementById('thumbnails').innerHTML = thumbnailsHTML + viewAllButton;
+        this.initGallerySwiper();
+        this.renderModalFilmstrip();
       }
 
       changeImage(index) {
-        this.currentImageIndex = index;
-        document.getElementById('mainImage').innerHTML = `
-          <img src="${this.images[index]}" alt="Imagen ${index + 1}">
-        `;
+        this.goToImage(index);
+      }
 
-        // Actualizar thumbnail activo
-        document.querySelectorAll('.gallery__thumbnail').forEach((thumb, i) => {
-          thumb.classList.toggle('active', i === index);
+      getImages(propiedad) {
+        const images = [];
+
+        if (propiedad && Array.isArray(propiedad.fotos) && propiedad.fotos.length > 0) {
+          propiedad.fotos.forEach((foto) => {
+            const url = typeof foto === 'string' ? foto : (foto && foto.url ? foto.url : foto);
+            if (url && !images.includes(url)) images.push(url);
+          });
+        }
+
+        if (images.length === 0 && propiedad && propiedad.img_princ) {
+          images.push(propiedad.img_princ);
+        }
+
+        if (images.length === 0 && propiedad) {
+          for (let i = 1; i <= 20; i++) {
+            const key = `img_${i}`;
+            if (propiedad[key] && !images.includes(propiedad[key])) {
+              images.push(propiedad[key]);
+            }
+          }
+        }
+
+        return images;
+      }
+
+      initGallerySwiper() {
+        if (typeof Swiper === 'undefined' || this.images.length === 0) return;
+
+        requestAnimationFrame(() => {
+          if (this.images.length > 1 && document.getElementById('galleryThumbs')) {
+            this.thumbsSwiper = new Swiper('#galleryThumbs', {
+              spaceBetween: 8,
+              slidesPerView: 'auto',
+              freeMode: true,
+              watchSlidesProgress: true,
+              observer: true,
+              observeParents: true
+            });
+          }
+
+          this.mainSwiper = new Swiper('#galleryMain', {
+            spaceBetween: 0,
+            allowTouchMove: true,
+            observer: true,
+            observeParents: true,
+            navigation: this.images.length > 1 ? {
+              nextEl: '#galleryMain .swiper-button-next',
+              prevEl: '#galleryMain .swiper-button-prev'
+            } : undefined,
+            thumbs: this.thumbsSwiper ? { swiper: this.thumbsSwiper } : undefined,
+            on: {
+              slideChange: (swiper) => {
+                this.currentImageIndex = swiper.activeIndex;
+                const counter = document.getElementById('gallerySwiperCounter');
+                if (counter) counter.textContent = `${swiper.activeIndex + 1} / ${this.images.length}`;
+              },
+              click: (swiper, event) => {
+                const target = event && event.target;
+                if (target && typeof target.closest === 'function' &&
+                    target.closest('.swiper-button-next, .swiper-button-prev, .gallery-expand-btn')) {
+                  return;
+                }
+                this.openModal(swiper.activeIndex);
+              }
+            }
+          });
+
+          const refreshSwipers = () => {
+            if (this.mainSwiper) this.mainSwiper.update();
+            if (this.thumbsSwiper) this.thumbsSwiper.update();
+          };
+
+          requestAnimationFrame(refreshSwipers);
+
+          const mainImages = document.querySelectorAll('#galleryMain img');
+          mainImages.forEach((img) => {
+            if (img.complete) return;
+            img.addEventListener('load', refreshSwipers, { once: true });
+            img.addEventListener('error', refreshSwipers, { once: true });
+          });
         });
       }
 
@@ -737,13 +1103,13 @@
         const features = [];
 
         // Ambientes
-        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>', label: 'Ambientes', value: sanitizeNumber(this.property.in_amb || this.property.cantidad_ambientes) });
+        features.push({ icon: 'home', label: 'Ambientes', value: sanitizeNumber(this.property.in_amb || this.property.cantidad_ambientes) });
 
         // Dormitorios
-        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4V2M17 4V2M2 10h20"/></svg>', label: 'Dormitorios', value: this.property.ti_dor || this.property.cantidad_dormitorios || 'N/D' });
+        features.push({ icon: 'bed', label: 'Dormitorios', value: this.property.ti_dor || this.property.cantidad_dormitorios || 'N/D' });
 
         // Baños
-        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6h6M12 3v3"/><rect x="4" y="10" width="16" height="11" rx="2"/></svg>', label: 'Baños', value: this.property.in_bao || 'N/D' });
+        features.push({ icon: 'bath', label: 'Baños', value: this.property.in_bao || 'N/D' });
 
         // Preferencias al estilo Furne: usar in_sto o in_sup para total; in_scu o in_cub para cubierta
         const superficieTotalRaw = this.property.in_sto || this.property.in_sup || normalized._xintel?.in_sto || normalized.area || '';
@@ -751,22 +1117,22 @@
 
         const totalArea = parseAreaM2(superficieTotalRaw, normalized.area, normalized._xintel?.in_sto);
         if (totalArea !== 'N/D') {
-          features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>', label: 'Sup. Total', value: `${totalArea}` });
+          features.push({ icon: 'maximize-2', label: 'Sup. Total', value: `${totalArea}` });
         }
 
         // Sup. Cubierta (mostrar solo si Xintel proporciona, usando in_scu o in_cub como fallback)
         const coveredVal = parseAreaM2(superficieCubiertaRaw, this.property.covered_area, normalized.covered_area, normalized._xintel?.in_scu, this.property.in_cub);
         if (coveredVal !== 'N/D') {
-          features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', label: 'Sup. Cubierta', value: `${coveredVal}` });
+          features.push({ icon: 'home', label: 'Sup. Cubierta', value: `${coveredVal}` });
         }
 
         // Cocheras - usar el campo correcto 'in_coc'
         const cocherasValue = parseInt(this.property.in_coc || this.property.garage || this.property.in_gar) || parseInt(normalized.garages) || 0;
-        features.push({ icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="M6 17a3 3 0 0 0 6 0M15 17a3 3 0 0 0 6 0"/></svg>', label: 'Cocheras', value: cocherasValue });
+        features.push({ icon: 'car', label: 'Cocheras', value: cocherasValue });
 
         const featuresHTML = features.map(feature => `
           <div class="feature">
-            <div class="feature-icon">${feature.icon}</div>
+            <div class="feature-icon"><i data-lucide="${feature.icon}" style="width: 24px; height: 24px;"></i></div>
             <div class="feature-info">
               <span>${feature.label}</span>
               <strong>${feature.value}</strong>
@@ -775,6 +1141,11 @@
         `).join('');
 
         document.getElementById('propertyFeatures').innerHTML = featuresHTML;
+        
+        // Inicializar iconos Lucide después de renderizar
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
       }
 
       renderDescription() {
@@ -846,35 +1217,116 @@
         }
       }
 
-      // Modal
       openModal(index) {
         if (this.images.length === 0) return;
 
+        const modal = document.getElementById('imageModal');
+        if (!modal) return;
+
         this.currentImageIndex = index;
-        document.getElementById('modalImage').src = this.images[index];
-        document.getElementById('imageCounter').textContent = `${index + 1} / ${this.images.length}`;
-        document.getElementById('imageModal').classList.add('active');
+        this.goToImage(index);
+        modal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
 
       closeModal() {
-        document.getElementById('imageModal').classList.remove('active');
+        const modal = document.getElementById('imageModal');
+        if (modal) modal.classList.remove('active');
         document.body.style.overflow = '';
       }
 
       navigateImage(direction) {
         if (this.images.length === 0) return;
 
-        this.currentImageIndex += direction;
+        let nextIndex = this.currentImageIndex + direction;
+        if (nextIndex < 0) nextIndex = this.images.length - 1;
+        if (nextIndex >= this.images.length) nextIndex = 0;
+        this.goToImage(nextIndex);
+      }
 
-        if (this.currentImageIndex >= this.images.length) {
-          this.currentImageIndex = 0;
-        } else if (this.currentImageIndex < 0) {
-          this.currentImageIndex = this.images.length - 1;
+      goToImage(index) {
+        if (!this.images || this.images.length === 0) return;
+        if (index < 0 || index >= this.images.length) return;
+
+        this.currentImageIndex = index;
+
+        const modalImage = document.getElementById('modalImage');
+        if (modalImage) modalImage.src = this.images[index];
+
+        this.updateImageCounter();
+        this.syncFilmstrip(index);
+
+        if (this.mainSwiper && this.mainSwiper.activeIndex !== index) {
+          this.mainSwiper.slideTo(index);
+        }
+      }
+
+      updateImageCounter() {
+        const counter = document.getElementById('imageCounter');
+        if (counter && this.images) {
+          counter.textContent = `${this.currentImageIndex + 1} / ${this.images.length}`;
+        }
+      }
+
+      renderModalFilmstrip() {
+        const filmstrip = document.getElementById('modalFilmstrip');
+        const prevBtn = document.getElementById('modalPrevBtn');
+        const nextBtn = document.getElementById('modalNextBtn');
+        if (!filmstrip || !prevBtn || !nextBtn) return;
+
+        if (!this.images || this.images.length <= 1) {
+          filmstrip.innerHTML = '';
+          filmstrip.style.display = 'none';
+          prevBtn.style.display = 'none';
+          nextBtn.style.display = 'none';
+          return;
         }
 
-        document.getElementById('modalImage').src = this.images[this.currentImageIndex];
-        document.getElementById('imageCounter').textContent = `${this.currentImageIndex + 1} / ${this.images.length}`;
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+        filmstrip.style.display = 'flex';
+        filmstrip.innerHTML = this.images.map((img, idx) => `
+          <div class="filmstrip-thumb ${idx === this.currentImageIndex ? 'active' : ''}" onclick="propertyManager.goToImage(${idx})">
+            <img src="${img}" alt="Miniatura ${idx + 1}" loading="lazy">
+          </div>
+        `).join('');
+      }
+
+      syncFilmstrip(index) {
+        const thumbs = document.querySelectorAll('.filmstrip-thumb');
+        thumbs.forEach((thumb, i) => {
+          thumb.classList.toggle('active', i === index);
+        });
+
+        const activeThumb = thumbs[index];
+        if (activeThumb) {
+          activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+
+      setupModalListeners() {
+        if (this.modalListenersReady) return;
+        this.modalListenersReady = true;
+
+        document.addEventListener('keydown', (e) => {
+          const modal = document.getElementById('imageModal');
+          if (!modal || !modal.classList.contains('active')) return;
+
+          if (e.key === 'Escape') {
+            this.closeModal();
+          } else if (e.key === 'ArrowLeft') {
+            this.navigateImage(-1);
+          } else if (e.key === 'ArrowRight') {
+            this.navigateImage(1);
+          }
+        });
+
+        const modal = document.getElementById('imageModal');
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) this.closeModal();
+          });
+        }
       }
 
       showError(message, details = '') {
@@ -900,20 +1352,11 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       propertyManager.init();
-
-      // Teclado para modal
-      document.addEventListener('keydown', (e) => {
-        const modal = document.getElementById('imageModal');
-        if (!modal.classList.contains('active')) return;
-
-        if (e.key === 'Escape') {
-          propertyManager.closeModal();
-        } else if (e.key === 'ArrowLeft') {
-          propertyManager.navigateImage(-1);
-        } else if (e.key === 'ArrowRight') {
-          propertyManager.navigateImage(1);
-        }
-      });
+      
+      // Inicializar Lucide icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
 
       // Formulario de contacto
       document.getElementById('contactForm').addEventListener('submit', async (e) => {
@@ -930,5 +1373,19 @@
   </script>
   <!-- Components: carga navbar y footer -->
   <script src="/js/components.js" defer></script>
+  <!-- Scroll to top: muestra el botón al hacer scroll -->
+  <script>
+    (function () {
+      var btn = document.querySelector('.scroll-top');
+      if (!btn) return;
+      window.addEventListener('scroll', function () {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+      }, { passive: true });
+    })();
+  </script>
+  <!-- Loader: descarta el overlay -->
+  <script src="/js/loader.js"></script>
 </body>
 </html>
+
+

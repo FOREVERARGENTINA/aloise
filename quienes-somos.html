@@ -13,21 +13,21 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://aloisepropiedades.com.ar/quienes-somos.html">
+  <meta property="og:url" content="https://aloisepropiedades.com.ar/quienes-somos">
   <meta property="og:title" content="Quiénes Somos | Gabriela Aloise Propiedades">
   <meta property="og:description" content="Conocé a Gabriela Aloise Propiedades, una inmobiliaria moderna en Caseros con años de experiencia.">
-  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
+  <meta property="og:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
   <meta property="og:locale" content="es_AR">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/quienes-somos.html">
+  <meta property="twitter:url" content="https://aloisepropiedades.com.ar/quienes-somos">
   <meta property="twitter:title" content="Quiénes Somos | Gabriela Aloise Propiedades">
   <meta property="twitter:description" content="Conocé a Gabriela Aloise Propiedades, una inmobiliaria moderna en Caseros con años de experiencia.">
-  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/Logo Gabriela Aloise.png">
+  <meta property="twitter:image" content="https://aloisepropiedades.com.ar/images/logo/og-image.jpg">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://aloisepropiedades.com.ar/quienes-somos.html">
+  <link rel="canonical" href="https://aloisepropiedades.com.ar/quienes-somos">
 
   <!-- Favicons (from DATOS/favicomatic) -->
   <link rel="icon" href="/images/favicomatic/favicon.ico">
@@ -51,15 +51,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS - Orden correcto según guía -->
+  <!-- Loader (carga primero para evitar FOUC) -->
+  <link rel="stylesheet" href="/css/loader.css">
+
   <link rel="stylesheet" href="/css/design-system.css">
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/sections/navigation.css">
+  <link rel="stylesheet" href="/css/sections/quienes.css">
   <link rel="stylesheet" href="/css/sections/footer.css">
 
 </head>
 
 <body>
+  <!-- Loader de pagina: cortina que se levanta al cargar -->
+  <div id="page-loader" role="status" aria-label="Cargando...">
+    <img src="/images/logo/Logo Gabriela Aloise.png" alt="Aloise Propiedades" class="loader__logo" width="220" height="60">
+    <div class="loader__progress"></div>
+  </div>
+
   <!-- Skip to main content (accesibilidad) -->
   <a href="#main-content" class="skip-to-main">Saltar al contenido principal</a>
 
@@ -69,38 +79,55 @@
   <!-- ========== MAIN CONTENT ========== -->
   <main id="main-content">
 
-    <section class="section" aria-labelledby="quienes-somos-title">
-        <div class="container container-narrow">
-            <div class="section-header text-center">
-                <span class="section-header__eyebrow">QUIÉNES SOMOS</span>
-                <h2 class="section-header__title" id="quienes-somos-title">Una inmobiliaria moderna en Caseros</h2>
-            </div>
-            <div class="prose">
-                <p>Gabriela Aloise Propiedades, con años de experiencia en la zona y alrededores, dedicada a acompañar a cada cliente en un momento importante de su vida: elegir, vender o alquilar un hogar.</p>
-                
-                <h3>Nos guiamos por tres pilares:</h3>
-                <ul>
-                    <li><strong>Honestidad:</strong> para brindarte información real y transparente.</li>
-                    <li><strong>Eficacia:</strong> para lograr resultados rápidos y bien hechos.</li>
-                    <li><strong>Empatía:</strong> para entender tu necesidad y acompañarte de verdad.</li>
-                </ul>
-
-                <h3>Qué Hacemos</h3>
-                <ul>
-                    <li>Tasaciones precisas basadas en el mercado real.</li>
-                    <li>Ventas y alquileres con estrategias profesionales.</li>
-                    <li>Administración de propiedades sin complicaciones.</li>
-                    <li>Búsqueda personalizada del inmueble ideal.</li>
-                </ul>
-                <p><strong>Gabriela Aloise Propiedades,</strong> tu aliado confiable en Caseros y alrededores.</p>
-            </div>
+    <!-- Intro con foto -->
+    <section class="section quienes-intro" aria-labelledby="quienes-somos-title">
+      <div class="container">
+        <div class="quienes-grid">
+          <div class="quienes-content">
+            <h1 class="quienes-title" id="quienes-somos-title">Una inmobiliaria cercana en Caseros</h1>
+            <p>Soy Gabriela Aloise, martillera y corredora inmobiliaria, con experiencia en Caseros y alrededores.</p>
+            <p>Acompaño a cada cliente en uno de los momentos más importantes de su vida: elegir, vender o alquilar un hogar, con información clara, trato humano y compromiso real.</p>
+            <p>Creo que detrás de cada propiedad hay una historia, y mi trabajo es ayudarte a transitar ese proceso con tranquilidad, confianza y sin vueltas.</p>
+          </div>
+          <div class="quienes-image">
+            <img src="/DATOS/quienes.webp" alt="Gabriela Aloise y equipo" loading="lazy">
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Valores -->
+    <section class="section quienes-valores">
+      <div class="container">
+        <h2 class="section-title text-center">Nuestros valores</h2>
+        <div class="valores-grid">
+          <div class="valor-item">
+            <h3 class="valor-title">Honestidad</h3>
+            <p>Información clara y real, para que tomes decisiones seguras y sin sorpresas.</p>
+          </div>
+          <div class="valor-item">
+            <h3 class="valor-title">Eficacia</h3>
+            <p>Procesos ordenados, respuestas rápidas y gestiones bien hechas.</p>
+          </div>
+          <div class="valor-item">
+            <h3 class="valor-title">Empatía</h3>
+            <p>Escuchar, entender tu necesidad y acompañarte en cada etapa, de verdad.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
 
   <!-- Placeholder para footer que carga /components/footer.html -->
   <div id="footer"></div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
 
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/5491123490070?text=Hola!%20Quisiera%20más%20información%20sobre%20las%20propiedades"
@@ -131,5 +158,19 @@
   <!-- Components: carga navbar y footer -->
   <script src="/js/components.js" defer></script>
 
+
+  <!-- Scroll to top: muestra el botón al hacer scroll -->
+  <script>
+    (function () {
+      var btn = document.querySelector('.scroll-top');
+      if (!btn) return;
+      window.addEventListener('scroll', function () {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+      }, { passive: true });
+    })();
+  </script>
+  <!-- Loader: descarta el overlay -->
+  <script src="/js/loader.js"></script>
 </body>
 </html>
+

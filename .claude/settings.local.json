@@ -12,7 +12,16 @@
       "Bash(copy \"images\\\\favicomatic\\\\favicon.ico\" \"favicon.ico\")",
       "Bash(copy \"E:\\\\Aideas\\\\ALOISE PROPIEDADES\\\\DATOS\\\\Logo Gabriela Aloise \\(2\\).png\" \"E:\\\\Aideas\\\\ALOISE PROPIEDADES\\\\images\\\\logo\\\\Logo Gabriela Aloise.png\")",
       "Bash(cp:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(identify:*)",
+      "Bash(magick identify:*)",
+      "Bash(python:*)",
+      "Skill(frontend-design)",
+      "Bash(done)",
+      "Bash(python3:*)",
+      "Bash(where:*)",
+      "Bash(node --version:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
