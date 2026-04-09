@@ -158,6 +158,7 @@ class PropertyRenderer {
       covered_area: (xintelProp.in_scu ? parseFloat(String(xintelProp.in_scu).replace(',', '.')) : 0) || 0,
       // Superficie semicubierta (varía el campo según integración)
       semi_covered: (xintelProp.sup_semicubierta ? parseFloat(String(xintelProp.sup_semicubierta).replace(',', '.')) : (xintelProp.in_sut ? parseFloat(String(xintelProp.in_sut).replace(',', '.')) : 0)) || 0,
+      expenses: isRent ? (parseInt(xintelProp.in_exp) || 0) : 0,
       images: xintelProp.fotos || (xintelProp.img_princ ? [xintelProp.img_princ] : []),
       url: `/ficha?ficha=GAB${xintelProp.in_num || xintelProp.in_fic}`,
       // Mantener referencia original
@@ -310,6 +311,13 @@ class PropertyRenderer {
 
     const featuresHtml = features.join('<span class="property-feature__divider">-</span>');
 
+    // Expensas (solo para alquileres)
+    const isRentCard = operation_type === 'alquiler' || operation_type === 'alquiler_temporal';
+    const expenses = property.expenses || 0;
+    const expensesHtml = isRentCard
+      ? `<div class="property-expenses-overlay">${expenses > 0 ? `Expensas: ${this.formatPrice(expenses, 'ARS')}` : 'Sin expensas'}</div>`
+      : '';
+
     return `
       <article class="property-card property-card--featured" data-property-id="${id}">
         <a href="${url || `/propiedades/${id}`}" class="property-image-link">
@@ -322,7 +330,7 @@ class PropertyRenderer {
             >
             <span class="property-badge property-badge--operation ${operationBadgeClass}">${this.formatOperationType(operation_type)}</span>
             ${showEstado ? `<span class="property-badge ${statusBadgeClass}">${estado}</span>` : ''}
-            <div class="property-price-overlay">${this.formatPrice(price, currency)}</div>
+            <div class="property-price-overlay">${this.formatPrice(price, currency)}${expensesHtml}</div>
           </div>
         </a>
         <div class="card__body">

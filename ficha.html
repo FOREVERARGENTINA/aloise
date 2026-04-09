@@ -454,6 +454,12 @@
       font-size: var(--font-size-2xl);
       font-weight: var(--font-weight-bold);
       color: var(--color-primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .property-expenses {
+      font-size: var(--font-size-base);
+      color: var(--color-gray-600);
       margin-bottom: var(--space-md);
     }
 
@@ -1049,6 +1055,7 @@
           </div>
           <h1 class="property-title">${normalized.title}</h1>
           <p class="property-price">${renderer.formatPrice(normalized.price, normalized.currency)}</p>
+          ${normalized.operation_type === 'alquiler' || normalized.operation_type === 'alquiler_temporal' ? `<p class="property-expenses">${normalized.expenses > 0 ? 'Expensas: ' + renderer.formatPrice(normalized.expenses, 'ARS') : 'Sin expensas'}</p>` : ''}
           <p class="property-location">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2"/>
@@ -1129,6 +1136,11 @@
         // Cocheras - usar el campo correcto 'in_coc'
         const cocherasValue = parseInt(this.property.in_coc || this.property.garage || this.property.in_gar) || parseInt(normalized.garages) || 0;
         features.push({ icon: 'car', label: 'Cocheras', value: cocherasValue });
+
+        // Expensas (solo para alquileres)
+        if (normalized.operation_type === 'alquiler' || normalized.operation_type === 'alquiler_temporal') {
+          features.push({ icon: 'receipt', label: 'Expensas', value: normalized.expenses > 0 ? renderer.formatPrice(normalized.expenses, 'ARS') : 'Sin expensas' });
+        }
 
         const featuresHTML = features.map(feature => `
           <div class="feature">

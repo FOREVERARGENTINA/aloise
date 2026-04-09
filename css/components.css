@@ -404,6 +404,13 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
+.property-expenses-overlay {
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 2px;
+}
+
 .property-card__city {
   margin: 0 0 var(--space-2xs);
   font-weight: var(--font-weight-semibold);
