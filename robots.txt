@@ -1,7 +1,8 @@
-# robots.txt para Gabriela Aloise Propiedades
+﻿# robots.txt para Gabriela Aloise Propiedades
 
 User-agent: *
 Allow: /
+Allow: /llms.txt
 
 # Sitemap
 Sitemap: https://aloisepropiedades.com.ar/sitemap.xml
