@@ -21,7 +21,9 @@
       "Bash(python3:*)",
       "Bash(where:*)",
       "Bash(node --version:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(curl -s -X POST \"https://xintelapi.com.ar/\" -F \"json=fichas.destacadas\" -F \"inm=GAB\" -F \"apiK=56YOXNKF4VLYBSAPY4HUVJATV\" -F \"limit=6\")",
+      "Bash(curl -v -X POST \"https://xintelapi.com.ar/\" -F \"json=fichas.destacadas\" -F \"inm=GAB\" -F \"apiK=56YOXNKF4VLYBSAPY4HUVJATV\" -F \"limit=6\")"
     ],
     "deny": [],
     "ask": []

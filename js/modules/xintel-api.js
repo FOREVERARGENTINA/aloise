@@ -145,7 +145,9 @@ class XintelAPI {
     if (filters.location) baseParams.barrios1 = filters.location;
     if (filters.minPrice) baseParams.valor_minimo = filters.minPrice;
     if (filters.maxPrice) baseParams.valor_maximo = filters.maxPrice;
-    if (filters.minRooms) baseParams.Ambientes = filters.minRooms;
+    // No enviamos dormitorios a Xintel desde aca porque en este proyecto
+    // el dato confiable llega en la ficha (`ti_dor` / `cantidad_dormitorios`)
+    // y el filtro anterior estaba impactando Ambientes por error.
 
     // PAGINACIÓN AUTOMÁTICA
     // Xintel limita a ~20 resultados por consulta, así que necesitamos múltiples llamadas
@@ -157,6 +159,8 @@ class XintelAPI {
     let shouldContinue = true;
 
     console.log(`🔍 Solicitando hasta ${requestedLimit} propiedades de Xintel...`);
+
+    const maxPages = Math.max(6, Math.ceil(requestedLimit / XINTEL_MAX_PER_PAGE) + 1);
 
     while (shouldContinue && allProperties.length < requestedLimit) {
       const params = {
@@ -226,8 +230,8 @@ class XintelAPI {
       currentPage++;
 
       // Límite de seguridad para evitar loops infinitos
-      if (currentPage > 5) {
-        console.warn('⚠️ Límite de seguridad alcanzado (5 páginas)');
+      if (currentPage >= maxPages) {
+        console.warn(`⚠️ Límite de seguridad alcanzado (${maxPages} páginas)`);
         shouldContinue = false;
       }
     }

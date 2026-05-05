@@ -328,13 +328,15 @@
 
                 <!-- Dormitorios -->
                 <div class="form-group">
-                  <label for="minRooms" class="form-label">Dormitorios mínimos</label>
-                  <select id="minRooms" name="minRooms" class="form-select">
-                    <option value="">Cualquiera</option>
-                    <option value="1">1+</option>
-                    <option value="2">2+</option>
-                    <option value="3">3+</option>
-                    <option value="4">4+</option>
+                  <label for="bedrooms" class="form-label">Dormitorios</label>
+                  <select id="bedrooms" name="bedrooms" class="form-select">
+                    <option value="">Indistinto</option>
+                    <option value="0">Monoambiente</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5plus">+5</option>
                   </select>
                 </div>
               </div>
@@ -641,6 +643,30 @@
         return candidates.some((text) => text.includes(q)) || q.includes('tres de febrero') && candidates.some((text) => text.includes('3 de febrero'));
       };
 
+      const parseBedrooms = (property) => {
+        const rawValue =
+          property?.bedrooms ??
+          property?._xintel?.ti_dor ??
+          property?._xintel?.cantidad_dormitorios ??
+          property?.ti_dor ??
+          property?.cantidad_dormitorios;
+
+        const numeric = parseInt(String(rawValue ?? '').replace(/[^\d]/g, ''), 10);
+        return Number.isFinite(numeric) ? numeric : 0;
+      };
+
+      const matchesBedrooms = (property, selectedValue) => {
+        if (!selectedValue) return true;
+
+        const bedrooms = parseBedrooms(property);
+
+        if (selectedValue === '0') return bedrooms === 0;
+        if (selectedValue === '5plus') return bedrooms >= 5;
+
+        const expectedBedrooms = Number(selectedValue);
+        return Number.isFinite(expectedBedrooms) ? bedrooms === expectedBedrooms : true;
+      };
+
       const sortProperties = (items = [], sortKey = 'date_desc') => {
         const sorted = [...items];
         const exchangeRate = CONFIG?.currencies?.exchangeRate || 1500;
@@ -726,10 +752,10 @@
           operationType: formData.get('operationType') || undefined,
           propertyType: formData.get('propertyType') || undefined,
           location: normalizedLocation || undefined,
-          minRooms: formData.get('minRooms') ? parseInt(formData.get('minRooms')) : undefined,
+          bedrooms: formData.get('bedrooms') || undefined,
           sort: document.getElementById('sortBy').value || 'date_desc',
           page: currentPage,
-          limit: CONFIG.xintel.defaultFilters.limit
+          limit: formData.get('bedrooms') ? 120 : CONFIG.xintel.defaultFilters.limit
         };
 
         // Obtener propiedades (primero con filtro directo)
@@ -761,11 +787,13 @@
           }
         }
 
-        const filteredByLocation = normalizedLocation
-          ? properties.filter((item) => matchesLocation(item, normalizedLocation))
-          : properties;
-        const normalizedProperties = filteredByLocation.map((item) => renderer.normalizeXintelProperty(item));
-        const sortedProperties = sortProperties(normalizedProperties, currentFilters.sort);
+        const normalizedProperties = properties.map((item) => renderer.normalizeXintelProperty(item));
+        const filteredProperties = normalizedProperties.filter((item) => {
+          const matchesSelectedLocation = normalizedLocation ? matchesLocation(item, normalizedLocation) : true;
+          const matchesSelectedBedrooms = matchesBedrooms(item, currentFilters.bedrooms);
+          return matchesSelectedLocation && matchesSelectedBedrooms;
+        });
+        const sortedProperties = sortProperties(filteredProperties, currentFilters.sort);
 
         // Renderizar propiedades
         renderer.renderPropertiesGrid(sortedProperties, '#propertiesGrid');
@@ -773,16 +801,26 @@
         // Actualizar contador de resultados
         const resultsCount = document.getElementById('resultsCount');
         if (pagination) {
+          const usingLocalExactFilters = Boolean(normalizedLocation || currentFilters.bedrooms);
+          const effectivePagination = usingLocalExactFilters
+            ? {
+                current_page: 1,
+                total_pages: 1,
+                total_items: sortedProperties.length,
+                items_per_page: sortedProperties.length || 0
+              }
+            : pagination;
+
           resultsCount.innerHTML = `
-            Mostrando <strong>${sortedProperties.length}</strong> de <strong>${pagination.total_items}</strong> propiedades
+            Mostrando <strong>${sortedProperties.length}</strong> de <strong>${effectivePagination.total_items}</strong> propiedades
             ${result.mock ? '<span style="color: var(--color-warning); margin-left: 8px;">(Datos de prueba)</span>' : ''}
           `;
 
           // Renderizar paginación
-          if (pagination.total_pages > 1) {
+          if (effectivePagination.total_pages > 1) {
             const paginationHTML = renderer.renderPagination(
-              pagination.current_page,
-              pagination.total_pages,
+              effectivePagination.current_page,
+              effectivePagination.total_pages,
               'goToPage'
             );
             document.getElementById('pagination').innerHTML = paginationHTML;
@@ -857,4 +895,3 @@
   <script src="/js/loader.js"></script>
 </body>
 </html>
-

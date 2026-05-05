@@ -12,6 +12,20 @@ class PropertyRenderer {
     this.defaultImage = '/images/properties/placeholder.jpg';
   }
 
+  formatRoomsLabel(rooms) {
+    const numericRooms = parseInt(String(rooms ?? '').replace(/[^\d]/g, ''), 10);
+    if (!Number.isFinite(numericRooms)) return '';
+    if (numericRooms === 1) return 'Monoambiente';
+    return `${numericRooms} ambientes`;
+  }
+
+  formatRoundedStreetNumber(value) {
+    const numericStreetNumber = parseInt(String(value ?? '').replace(/[^\d]/g, ''), 10);
+    if (!Number.isFinite(numericStreetNumber) || numericStreetNumber <= 0) return '';
+    if (numericStreetNumber < 100) return String(numericStreetNumber);
+    return String(Math.floor(numericStreetNumber / 100) * 100);
+  }
+
   /**
    * Normalizar propiedad de Xintel al formato esperado
    * @param {Object} xintelProp - Propiedad en formato Xintel
@@ -85,8 +99,8 @@ class PropertyRenderer {
 
     // Agregar ambientes
     if (ambientes) {
-      const numAmb = String(ambientes).replace(/[^0-9]/g, '');
-      if (numAmb) constructedTitle += ` ${numAmb} ambientes`;
+      const roomsLabel = this.formatRoomsLabel(ambientes);
+      if (roomsLabel) constructedTitle += ` ${roomsLabel}`;
     }
 
     // Usar título de Xintel solo si está completo
@@ -114,6 +128,9 @@ class PropertyRenderer {
       looksLikeMissingOperation; // "Casa en 3 ambientes"
 
     let finalTitle = (xintelTitle && !isIncomplete) ? xintelTitle : constructedTitle;
+
+    // Xintel suele mandar "1 ambiente(s)" para monoambientes.
+    finalTitle = finalTitle.replace(/\b1\s*amb(?:\.|iente|ientes?)\b/gi, 'Monoambiente');
 
     // Limpiar espacios dobles
     finalTitle = finalTitle.replace(/\s+/g, ' ').trim();
@@ -253,6 +270,10 @@ class PropertyRenderer {
     const city = (_xintel?.in_loc || _xintel?.localidad || location || '').trim();
     const barrio = (_xintel?.in_bar || _xintel?.barrio || '').trim();
     const street = (_xintel?.in_cal || _xintel?.calle || '').trim();
+    const roundedStreetNumber = this.formatRoundedStreetNumber(_xintel?.in_nro || _xintel?.numero || '');
+    const streetLabel = street
+      ? [street, roundedStreetNumber].filter(Boolean).join(' ')
+      : '';
 
     // El título ya viene normalizado y completo desde normalizeXintelProperty
     // NO limpiar ambientes porque el título ya está bien formado
@@ -336,7 +357,7 @@ class PropertyRenderer {
         <div class="card__body">
           <p class="property-card__city">${city || location || 'Ubicación a confirmar'}</p>
           <h3 class="property-card__title property-card__title--featured">${cleanedTitle}</h3>
-          ${street ? `<p class="property-card__street">${street}</p>` : (barrio ? `<p class="property-card__street">${barrio}</p>` : '')}
+          ${streetLabel ? `<p class="property-card__street">${streetLabel}</p>` : (barrio ? `<p class="property-card__street">${barrio}</p>` : '')}
 
           <div class="property-card__details property-card__details--featured">
             ${featuresHtml || '<span class="property-feature">Características a confirmar</span>'}
