@@ -144,15 +144,16 @@ class PropertyRenderer {
     };
 
     const dateCandidates = [
-      xintelProp.in_fec,
-      xintelProp.fechaac,
+      xintelProp.fechaac_inmueble,
       xintelProp.created,
-      xintelProp.fecha,
-      xintelProp.in_fea,
-      xintelProp.fecactdata,
       xintelProp.created_at,
       xintelProp.fecha_ingreso,
-      xintelProp.fecha_alta
+      xintelProp.fecha_alta,
+      xintelProp.in_fea,
+      xintelProp.fechaac,
+      xintelProp.fecactdata,
+      xintelProp.fecha,
+      xintelProp.in_fec
     ];
 
     const listingDate = dateCandidates.map(parseDateValue).find((value) => value !== null) || null;
@@ -180,7 +181,8 @@ class PropertyRenderer {
       url: `/ficha?ficha=GAB${xintelProp.in_num || xintelProp.in_fic}`,
       // Mantener referencia original
       _xintel: xintelProp,
-      listingDate
+      listingDate,
+      _apiOrder: xintelProp._apiOrder ?? null
     };
   }
 

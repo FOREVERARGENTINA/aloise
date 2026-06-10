@@ -729,7 +729,14 @@
           return raw;
         };
 
-        const getDate = (item) => (Number.isFinite(item.listingDate) ? item.listingDate : 0);
+        const getDate = (item) => {
+          const d = item.listingDate ?? item._xintel?.listingDate ?? null;
+          return Number.isFinite(d) ? d : null;
+        };
+        const getApiOrder = (item) => {
+          const o = item._apiOrder ?? item._xintel?._apiOrder ?? null;
+          return Number.isFinite(o) ? o : 9999;
+        };
 
         switch (sortKey) {
           case 'price_asc':
@@ -740,7 +747,16 @@
             break;
           case 'date_desc':
           default:
-            sorted.sort((a, b) => getDate(b) - getDate(a));
+            sorted.sort((a, b) => {
+              const dA = getDate(a), dB = getDate(b);
+              // Both have dates: sort descending
+              if (dA !== null && dB !== null) return dB - dA;
+              // Only one has date: dated ones first
+              if (dA !== null) return -1;
+              if (dB !== null) return 1;
+              // Neither has date: preserve API order (ascending index = more recent)
+              return getApiOrder(a) - getApiOrder(b);
+            });
             break;
         }
 
@@ -803,6 +819,8 @@
           return matchesSelectedLocation && matchesSelectedBedrooms;
         });
         const sortedProperties = sortProperties(filteredProperties, currentFilters.sort);
+
+        // Renderizar propiedades
 
         // Renderizar propiedades
         renderer.renderPropertiesGrid(sortedProperties, '#propertiesGrid');

@@ -456,15 +456,16 @@ class XintelAPI {
 
     const dateCandidatesForProperty = (property) => {
       return [
-        property?.in_fec,
-        property?.fechaac,
+        property?.fechaac_inmueble,
         property?.created,
-        property?.fecha,
-        property?.in_fea,
-        property?.fecactdata,
         property?.created_at,
         property?.fecha_ingreso,
-        property?.fecha_alta
+        property?.fecha_alta,
+        property?.in_fea,
+        property?.fechaac,
+        property?.fecactdata,
+        property?.fecha,
+        property?.in_fec
       ]
         .map(parseDateValue)
         .find((value) => value !== null) || null;
@@ -475,7 +476,20 @@ class XintelAPI {
         ficha.fotos = Array.isArray(images[index]) ? images[index] : [images[index]];
         ficha.img_princ = ficha.fotos[0];
       }
-      ficha.listingDate = dateCandidatesForProperty(ficha);
+      // Try known date fields first, then scan all fields for date-like values
+      let listingDate = dateCandidatesForProperty(ficha);
+      if (!listingDate) {
+        for (const key of Object.keys(ficha)) {
+          const kl = key.toLowerCase();
+          if (kl.includes('fec') || kl.includes('date') || kl.includes('alta') || kl.includes('creat') || kl.includes('ingres')) {
+            const parsed = parseDateValue(ficha[key]);
+            if (parsed) { listingDate = parsed; break; }
+          }
+        }
+      }
+      // Fallback: use API order (inverted index) so items without date stay in API order
+      ficha.listingDate = listingDate;
+      ficha._apiOrder = index;
       return ficha;
     });
 
