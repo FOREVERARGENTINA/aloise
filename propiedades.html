@@ -775,7 +775,7 @@
         emailjs.init(cfg.emailjs.publicKey);
 
         const now = new Date();
-        const fecha = now.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const fecha = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
         const hora = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
         emailjs.send(cfg.emailjs.serviceId, cfg.emailjs.templateId, {
