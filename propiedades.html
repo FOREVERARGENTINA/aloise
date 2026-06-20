@@ -819,12 +819,13 @@
           return;
         }
 
-        // Si la API devolvió mock (Xintel falló internamente), alertar también
-        if (result.mock) {
-          notifyXintelFailure('La API de Xintel no está disponible (fallback a mock)');
-        }
-
         let { properties, pagination } = result.data;
+
+        // Si no hay filtros activos y no llegaron propiedades, Xintel falló internamente
+        const hayFiltros = currentFilters.operationType || currentFilters.propertyType || currentFilters.location || currentFilters.bedrooms;
+        if (!hayFiltros && (!properties || properties.length === 0)) {
+          notifyXintelFailure('Xintel devolvió 0 propiedades sin filtros activos');
+        }
 
         // Fallback: si la API no devuelve resultados con ubicación, reintentar sin filtro y filtrar localmente
         if (normalizedLocation && properties.length === 0) {
