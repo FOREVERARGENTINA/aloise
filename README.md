@@ -50,6 +50,13 @@ Sitio web profesional para inmobiliaria en Caseros, Buenos Aires.
 - Sistema de caché para optimizar llamadas
 - Manejo robusto de errores
 
+✅ **Alerta automática por mail (EmailJS)**
+- Si Xintel se cae y un visitante entra a `/propiedades`, se manda un mail automático a `frandoweb@gmail.com`
+- El mail incluye fecha, hora, descripción del error y URL de la página
+- Se manda una sola vez por sesión (no spamea)
+- Configuración en `js/config.js` bajo `CONFIG.alerts`
+- Servicio: [EmailJS](https://emailjs.com) — plan gratuito (200 mails/mes)
+
 ✅ **Responsive Design**
 - Mobile-first approach
 - Breakpoints: 640px, 768px, 1024px, 1280px
