@@ -72,6 +72,17 @@ const CONFIG = {
     }
   },
 
+  // ========== ALERTAS (EmailJS) ==========
+  alerts: {
+    enabled: true,
+    emailjs: {
+      serviceId: 'service_xzwb6d2',
+      templateId: 'template_c5r7h8n',
+      publicKey: 'IDpccQZwuzY0RHYSQ'
+    },
+    recipientEmail: 'frandoweb@gmail.com'
+  },
+
   // ========== MODO DESARROLLO ==========
   development: {
     // Si no tienes API de Xintel, puedes usar datos de prueba

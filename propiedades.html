@@ -425,6 +425,9 @@
     </svg>
   </a>
 
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <!-- Firebase SDK - CDN -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
@@ -763,6 +766,30 @@
         return sorted;
       };
 
+      // Alerta por mail cuando Xintel no responde
+      function notifyXintelFailure(errorMsg) {
+        const cfg = CONFIG.alerts;
+        if (!cfg?.enabled || !cfg?.emailjs?.publicKey || cfg.emailjs.publicKey.startsWith('REEMPLAZAR')) return;
+        if (sessionStorage.getItem('xintel_alert_sent')) return;
+
+        emailjs.init(cfg.emailjs.publicKey);
+
+        const now = new Date();
+        const fecha = now.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const hora = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+
+        emailjs.send(cfg.emailjs.serviceId, cfg.emailjs.templateId, {
+          fecha: `${fecha} ${hora}`,
+          error: errorMsg || 'Sin detalles',
+          url: window.location.href
+        }).then(() => {
+          sessionStorage.setItem('xintel_alert_sent', '1');
+          console.log('📧 Alerta de Xintel enviada por mail');
+        }).catch((err) => {
+          console.warn('⚠️ No se pudo enviar la alerta por mail:', err);
+        });
+      }
+
       // Función para cargar propiedades
       async function loadProperties() {
         // Mostrar loading
@@ -787,6 +814,7 @@
         let result = await propertyService.getProperties(currentFilters);
 
         if (!result.success) {
+          notifyXintelFailure(result.error);
           renderer.renderErrorState('#propertiesGrid', result.error);
           return;
         }
