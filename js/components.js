@@ -1,10 +1,22 @@
 // Sistema de componentes moderno con async/await
 class Components {
+  static version = '20260704b';
+
   static async load(name, selector) {
     try {
-      const response = await fetch(`/components/${name}.html`);
+      const response = await fetch(`/components/${name}.html?v=${this.version}`, {
+        cache: 'no-store'
+      });
       const html = await response.text();
-      document.querySelector(selector).innerHTML = html;
+      const target = document.querySelector(selector);
+      // El navbar usa position:sticky; un wrapper de la misma altura que el
+      // header le quita el recorrido necesario para pegarse. El footer sí
+      // necesita conservar su wrapper #footer (host del CSS de footer-reveal).
+      if (name === 'navbar') {
+        target.outerHTML = html;
+      } else {
+        target.innerHTML = html;
+      }
     } catch (error) {
       console.error(`Error cargando ${name}:`, error);
     }
@@ -19,6 +31,58 @@ class Components {
     
     // Inicializar funcionalidades
     this.initMobileMenu();
+    this.initFooterReveal();
+  }
+
+  static applyFooterReveal() {
+    const content = document.querySelector('main');
+    const footerHost = document.querySelector('#footer');
+    const footer = document.querySelector('#site-footer');
+    const header = document.querySelector('.header');
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    if (!content || !footerHost || !footer) return;
+
+    document.body.classList.add('footer-reveal-page');
+
+    if (isMobile) {
+      content.style.marginBottom = '';
+      document.documentElement.style.setProperty('--footer-header-offset', '0px');
+      document.body.classList.remove('footer-reveal-active');
+      return;
+    }
+
+    const headerHeight = header ? Math.ceil(header.getBoundingClientRect().height) : 0;
+    const footerHeight = Math.ceil(footer.getBoundingClientRect().height);
+    const viewportHeight = Math.ceil(window.innerHeight);
+    const availableHeight = Math.max(0, viewportHeight - headerHeight);
+    const canReveal = footerHeight <= availableHeight - 16;
+
+    document.documentElement.style.setProperty('--footer-header-offset', `${headerHeight}px`);
+
+    if (!canReveal) {
+      content.style.marginBottom = '';
+      document.body.classList.remove('footer-reveal-active');
+      return;
+    }
+
+    document.body.classList.add('footer-reveal-active');
+    content.style.marginBottom = `${footerHeight}px`;
+  }
+
+  static initFooterReveal() {
+    const update = () => this.applyFooterReveal();
+    const footer = document.querySelector('#site-footer');
+
+    window.addEventListener('load', update, { once: true });
+    window.addEventListener('resize', update, { passive: true });
+
+    if (footer && 'ResizeObserver' in window) {
+      this.footerResizeObserver = new ResizeObserver(update);
+      this.footerResizeObserver.observe(footer);
+    }
+
+    update();
   }
 
   static initMobileMenu() {

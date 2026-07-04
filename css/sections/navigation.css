@@ -35,6 +35,13 @@
   position: relative;
   min-height: 90px;
   gap: var(--space-lg);
+  transition: padding var(--transition-base), min-height var(--transition-base);
+}
+
+.header.scrolled .header__container {
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  min-height: 64px;
 }
 
 /* Logo centrado */
@@ -52,18 +59,21 @@
   height: 48px;
   width: auto;
   object-fit: contain;
-  /* Removed gold glow (drop-shadow) per design request */
-  /* Removed invert filter - logo is already properly colored */
-  /* Improved image rendering quality */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
   backface-visibility: hidden;
-  -webkit-font-smoothing: subpixel-antialiased;
+  transition: height var(--transition-base);
+}
+
+.header.scrolled .header__logo-image {
+  height: 36px;
 }
 
 @media (min-width: 1024px) {
   .header__logo-image {
     height: 56px;
+  }
+
+  .header.scrolled .header__logo-image {
+    height: 42px;
   }
 }
 

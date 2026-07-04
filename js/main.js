@@ -155,12 +155,15 @@ function initMobileMenu() {
 // ========== HEADER SCROLL ==========
 
 function initHeaderScroll() {
-  const header = document.querySelector('.header');
-  if (!header) return;
-
   let ticking = false;
 
   function updateHeader() {
+    const header = document.querySelector('.header');
+    if (!header) {
+      ticking = false;
+      return;
+    }
+
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     // Agregar clase cuando se hace scroll
