@@ -25,7 +25,8 @@
       "Bash(curl -s -X POST \"https://xintelapi.com.ar/\" -F \"json=fichas.destacadas\" -F \"inm=GAB\" -F \"apiK=56YOXNKF4VLYBSAPY4HUVJATV\" -F \"limit=6\")",
       "Bash(curl -v -X POST \"https://xintelapi.com.ar/\" -F \"json=fichas.destacadas\" -F \"inm=GAB\" -F \"apiK=56YOXNKF4VLYBSAPY4HUVJATV\" -F \"limit=6\")",
       "Skill(agent-browser)",
-      "Bash(rtk git *)"
+      "Bash(rtk git *)",
+      "Bash(rtk grep *)"
     ],
     "deny": [],
     "ask": []
