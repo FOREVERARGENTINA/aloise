@@ -276,6 +276,7 @@ table {
 .text-accent { color: var(--color-accent); }
 .text-white { color: var(--color-white); }
 .text-muted { color: var(--color-gray-600); }
+.text-success { color: #1a7f37; }
 
 .text-xs { font-size: var(--font-size-xs); }
 .text-sm { font-size: var(--font-size-sm); }

@@ -1,14 +1,18 @@
-// Manejo simple del formulario de contacto
+// Envío del formulario de contacto vía EmailJS
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contact-form');
   const status = document.getElementById('form-status');
 
   if (!form) return;
 
+  const cfg = window.CONFIG?.contactForm;
+  if (cfg?.enabled && cfg?.emailjs?.publicKey && typeof emailjs !== 'undefined') {
+    emailjs.init(cfg.emailjs.publicKey);
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Validación simple
     const name = form.name.value.trim();
     const email = form.email.value.trim();
     const phone = form.phone.value.trim();
@@ -28,24 +32,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Componer mailto
-    const to = 'aloisepropiedades@gmail.com';
-    const subject = encodeURIComponent(`Consulta desde web - ${name}`);
-    const bodyLines = [
-      `Nombre: ${name}`,
-      `Email: ${email}`,
-      `Teléfono: ${phone}`,
-      '',
-      message
-    ];
-    const body = encodeURIComponent(bodyLines.join('\n'));
+    if (!cfg?.enabled || !cfg?.emailjs?.publicKey || typeof emailjs === 'undefined') {
+      status.textContent = 'No se pudo enviar el mensaje. Por favor escribinos a aloisepropiedades@gmail.com.';
+      status.className = 'form-error';
+      return;
+    }
 
-    // Intentar abrir cliente de correo
-    const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
-    window.location.href = mailto;
-
-    // Mostrar instrucción en la UI
-    status.textContent = 'Se abrirá tu cliente de correo para finalizar el envío.';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    status.textContent = 'Enviando...';
     status.className = 'text-muted';
+
+    emailjs.send(cfg.emailjs.serviceId, cfg.emailjs.templateId, {
+      name,
+      email,
+      phone: phone || 'No proporcionado',
+      message
+    }).then(() => {
+      status.textContent = '¡Mensaje enviado! Te contactaremos a la brevedad.';
+      status.className = 'text-success';
+      form.reset();
+    }).catch((err) => {
+      console.warn('No se pudo enviar el mensaje:', err);
+      status.textContent = 'No se pudo enviar el mensaje. Por favor escribinos a aloisepropiedades@gmail.com.';
+      status.className = 'form-error';
+    }).finally(() => {
+      submitBtn.disabled = false;
+    });
   });
 });

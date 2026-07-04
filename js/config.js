@@ -83,6 +83,16 @@ const CONFIG = {
     recipientEmail: 'frandoweb@gmail.com'
   },
 
+  // ========== FORMULARIO DE CONTACTO (EmailJS) ==========
+  contactForm: {
+    enabled: true,
+    emailjs: {
+      serviceId: 'service_xzwb6d2',
+      templateId: 'template_t7uoflo',
+      publicKey: 'IDpccQZwuzY0RHYSQ'
+    }
+  },
+
   // ========== MODO DESARROLLO ==========
   development: {
     // Si no tienes API de Xintel, puedes usar datos de prueba
