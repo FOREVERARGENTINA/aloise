@@ -12,6 +12,49 @@ class PropertyRenderer {
     this.defaultImage = '/images/properties/placeholder.jpg';
   }
 
+  escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+  }
+
+  safeURL(value, fallback = '#') {
+    const raw = String(value ?? '').trim();
+    if (!raw) return fallback;
+
+    try {
+      if (raw.startsWith('/') && !raw.startsWith('//')) {
+        return raw.replace(/[\u0000-\u001F\u007F\s"'<>`]/g, encodeURIComponent);
+      }
+
+      const baseURL = typeof window !== 'undefined' && window.location
+        ? window.location.origin
+        : 'https://example.invalid';
+      const parsed = new URL(raw, baseURL);
+      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+        return parsed.href;
+      }
+    } catch (error) {
+      console.warn('URL descartada por seguridad:', error);
+    }
+
+    return fallback;
+  }
+
+  safeClassToken(value, fallback = 'default') {
+    const token = String(value ?? '').toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    return token || fallback;
+  }
+
+  safeCallbackName(value) {
+    const callback = String(value ?? '');
+    return /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*$/.test(callback) ? callback : '';
+  }
+
   formatRoomsLabel(rooms) {
     const numericRooms = parseInt(String(rooms ?? '').replace(/[^\d]/g, ''), 10);
     if (!Number.isFinite(numericRooms)) return '';
@@ -263,7 +306,7 @@ class PropertyRenderer {
     const estado = _xintel ? (_xintel.estado || _xintel.in_est || '') : '';
     const estadoLower = String(estado || '').toLowerCase();
     const showEstado = estadoLower && estadoLower !== 'disponible';
-    const operationBadgeClass = `property-badge--${(operation_type || 'venta').toLowerCase()}`;
+    const operationBadgeClass = `property-badge--${this.safeClassToken(operation_type || 'venta')}`;
     let statusBadgeClass = 'property-badge--status';
     if (estadoLower.includes('reserv')) statusBadgeClass += ' property-badge--reserved';
     if (estadoLower.includes('vend')) statusBadgeClass += ' property-badge--sold';
@@ -280,6 +323,14 @@ class PropertyRenderer {
     // El título ya viene normalizado y completo desde normalizeXintelProperty
     // NO limpiar ambientes porque el título ya está bien formado
     const cleanedTitle = title || `${this.formatPropertyType(property_type)}${barrio ? ` en ${barrio}` : ''}`;
+    const safeCardUrl = this.safeURL(url || `/propiedades/${id}`, '#');
+    const safeImageUrl = this.safeURL(mainImage, this.defaultImage);
+    const safeTitle = this.escapeHTML(cleanedTitle || `${this.formatPropertyType(property_type)} en ${location}`);
+    const safeCity = this.escapeHTML(city || location || 'Ubicación a confirmar');
+    const safeStreet = this.escapeHTML(streetLabel || barrio || '');
+    const safePropertyId = this.escapeHTML(id);
+    const safeOperationType = this.escapeHTML(this.formatOperationType(operation_type || 'venta'));
+    const safeStatus = this.escapeHTML(estado);
 
     // Feature builder
     const formatArea = (n) => {
@@ -298,36 +349,36 @@ class PropertyRenderer {
 
     if (areaFormatted) {
       features.push(`
-        <span class="property-feature" title="${areaFormatted} m\u00B2">
+        <span class="property-feature" title="${this.escapeHTML(areaFormatted)} m\u00B2">
           <img src="/DATOS/metros2.png" alt="" role="presentation" class="property-feature__icon-img">
-          ${areaFormatted} m\u00B2
+          ${this.escapeHTML(areaFormatted)} m\u00B2
         </span>
       `);
     }
 
     if (bedrooms) {
       features.push(`
-        <span class="property-feature" title="${bedrooms} dormitorio${bedrooms > 1 ? 's' : ''}">
+        <span class="property-feature" title="${this.escapeHTML(bedrooms)} dormitorio${bedrooms > 1 ? 's' : ''}">
           <img src="/DATOS/dormitorios2.png" alt="" role="presentation" class="property-feature__icon-img">
-          ${bedrooms}
+          ${this.escapeHTML(bedrooms)}
         </span>
       `);
     }
 
     if (bathrooms) {
       features.push(`
-        <span class="property-feature" title="${bathrooms} baño${bathrooms > 1 ? 's' : ''}">
+        <span class="property-feature" title="${this.escapeHTML(bathrooms)} baño${bathrooms > 1 ? 's' : ''}">
           <img src="/DATOS/wc2.png" alt="" role="presentation" class="property-feature__icon-img">
-          ${bathrooms}
+          ${this.escapeHTML(bathrooms)}
         </span>
       `);
     }
 
     if (garagesValue > 0) {
       features.push(`
-        <span class="property-feature" title="${garagesValue} cochera${garagesValue > 1 ? 's' : ''}">
+        <span class="property-feature" title="${this.escapeHTML(garagesValue)} cochera${garagesValue > 1 ? 's' : ''}">
           <span class="material-symbols-outlined property-feature__icon" aria-hidden="true">directions_car</span>
-          ${garagesValue}
+          ${this.escapeHTML(garagesValue)}
         </span>
       `);
     }
@@ -342,31 +393,31 @@ class PropertyRenderer {
       : '';
 
     return `
-      <article class="property-card property-card--featured" data-property-id="${id}">
-        <a href="${url || `/propiedades/${id}`}" class="property-image-link">
+      <article class="property-card property-card--featured" data-property-id="${safePropertyId}">
+        <a href="${this.escapeHTML(safeCardUrl)}" class="property-image-link">
           <div class="property-image">
             <img
-              src="${mainImage}"
-              alt="${cleanedTitle || `${this.formatPropertyType(property_type)} en ${location}`}"
+              src="${this.escapeHTML(safeImageUrl)}"
+              alt="${safeTitle}"
               class="card__image"
               loading="lazy"
             >
-            <span class="property-badge property-badge--operation ${operationBadgeClass}">${this.formatOperationType(operation_type)}</span>
-            ${showEstado ? `<span class="property-badge ${statusBadgeClass}">${estado}</span>` : ''}
+            <span class="property-badge property-badge--operation ${operationBadgeClass}">${safeOperationType}</span>
+            ${showEstado ? `<span class="property-badge ${statusBadgeClass}">${safeStatus}</span>` : ''}
             <div class="property-price-overlay">${this.formatPrice(price, currency)}${expensesHtml}</div>
           </div>
         </a>
         <div class="card__body">
-          <p class="property-card__city">${city || location || 'Ubicación a confirmar'}</p>
-          <h3 class="property-card__title property-card__title--featured">${cleanedTitle}</h3>
-          ${streetLabel ? `<p class="property-card__street">${streetLabel}</p>` : (barrio ? `<p class="property-card__street">${barrio}</p>` : '')}
+          <p class="property-card__city">${safeCity}</p>
+          <h3 class="property-card__title property-card__title--featured">${safeTitle}</h3>
+          ${safeStreet ? `<p class="property-card__street">${safeStreet}</p>` : ''}
 
           <div class="property-card__details property-card__details--featured">
             ${featuresHtml || '<span class="property-feature">Características a confirmar</span>'}
           </div>
 
           <div class="property-card__cta">
-            <a href="${url || `/propiedades/${id}`}" class="property-card__link">Ver propiedad</a>
+            <a href="${this.escapeHTML(safeCardUrl)}" class="property-card__link">Ver propiedad</a>
           </div>
         </div>
       </article>
@@ -431,13 +482,14 @@ class PropertyRenderer {
     const container = document.querySelector(containerSelector);
     if (!container) return;
 
+    const safeMessage = this.escapeHTML(message);
     container.innerHTML = `
       <div class="error-state" style="text-align: center; padding: var(--space-4xl) var(--space-xl); grid-column: 1 / -1;">
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin: 0 auto var(--space-lg); color: var(--color-error);">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
         <h3 style="color: var(--color-gray-700); margin-bottom: var(--space-sm);">Error</h3>
-        <p style="color: var(--color-gray-600); margin-bottom: var(--space-lg);">${message}</p>
+        <p style="color: var(--color-gray-600); margin-bottom: var(--space-lg);">${safeMessage}</p>
         <button class="btn btn-primary" onclick="location.reload()">Reintentar</button>
       </div>
     `;
@@ -448,6 +500,9 @@ class PropertyRenderer {
    */
   renderPagination(currentPage, totalPages, onPageChange) {
     if (totalPages <= 1) return '';
+
+    const callbackName = this.safeCallbackName(onPageChange);
+    if (!callbackName) return '';
 
     const maxButtons = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
@@ -461,12 +516,12 @@ class PropertyRenderer {
 
     // Botón anterior
     if (currentPage > 1) {
-      html += `<button class="btn btn-outline btn-sm" onclick="${onPageChange}(${currentPage - 1})" aria-label="Página anterior">\u2039</button>`;
+      html += `<button class="btn btn-outline btn-sm" onclick="${callbackName}(${currentPage - 1})" aria-label="Página anterior">\u2039</button>`;
     }
 
     // Primera página
     if (startPage > 1) {
-      html += `<button class="btn btn-outline btn-sm" onclick="${onPageChange}(1)">1</button>`;
+      html += `<button class="btn btn-outline btn-sm" onclick="${callbackName}(1)">1</button>`;
       if (startPage > 2) {
         html += '<span style="padding: var(--space-sm);">...</span>';
       }
@@ -475,7 +530,7 @@ class PropertyRenderer {
     // Páginas numeradas
     for (let i = startPage; i <= endPage; i++) {
       const isActive = i === currentPage;
-      html += `<button class="btn ${isActive ? 'btn-primary' : 'btn-outline'} btn-sm" onclick="${onPageChange}(${i})" ${isActive ? 'aria-current="page"' : ''}>${i}</button>`;
+      html += `<button class="btn ${isActive ? 'btn-primary' : 'btn-outline'} btn-sm" onclick="${callbackName}(${i})" ${isActive ? 'aria-current="page"' : ''}>${i}</button>`;
     }
 
     // Última página
@@ -483,12 +538,12 @@ class PropertyRenderer {
       if (endPage < totalPages - 1) {
         html += '<span style="padding: var(--space-sm);">...</span>';
       }
-      html += `<button class="btn btn-outline btn-sm" onclick="${onPageChange}(${totalPages})">${totalPages}</button>`;
+      html += `<button class="btn btn-outline btn-sm" onclick="${callbackName}(${totalPages})">${totalPages}</button>`;
     }
 
     // Botón siguiente
     if (currentPage < totalPages) {
-      html += `<button class="btn btn-outline btn-sm" onclick="${onPageChange}(${currentPage + 1})" aria-label="Página siguiente">\u203A</button>`;
+      html += `<button class="btn btn-outline btn-sm" onclick="${callbackName}(${currentPage + 1})" aria-label="Página siguiente">\u203A</button>`;
     }
 
     html += '</div>';
@@ -512,7 +567,7 @@ class PropertyRenderer {
     // Por ahora retornamos un placeholder
     return `
       <div class="property-detail">
-        <h1>${property.title}</h1>
+        <h1>${this.escapeHTML(property.title)}</h1>
         <!-- Implementar galería, mapa, características completas, etc. -->
       </div>
     `;

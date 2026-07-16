@@ -772,6 +772,36 @@
         this.modalListenersReady = false;
       }
 
+      escapeHTML(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[char]));
+      }
+
+      safeURL(value, fallback = '') {
+        const raw = String(value ?? '').trim();
+        if (!raw) return fallback;
+
+        try {
+          if (raw.startsWith('/') && !raw.startsWith('//')) {
+            return raw.replace(/[\u0000-\u001F\u007F\s"'<>`]/g, encodeURIComponent);
+          }
+
+          const parsed = new URL(raw, window.location.origin);
+          if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+            return parsed.href;
+          }
+        } catch (error) {
+          console.warn('URL de propiedad descartada por seguridad:', error);
+        }
+
+        return fallback;
+      }
+
       async init() {
         // Obtener ID de la URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -919,7 +949,7 @@
               ${this.images.map((img, index) => `
                 <div class="swiper-slide">
                   <div class="gallery-slide-inner">
-                    <img src="${img}" alt="Imagen ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                    <img src="${this.escapeHTML(this.safeURL(img))}" alt="Imagen ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
                   </div>
                 </div>
               `).join('')}
@@ -949,7 +979,7 @@
               <div class="swiper-wrapper">
                 ${this.images.map((img, index) => `
                   <div class="swiper-slide gallery-thumb-slide">
-                    <img src="${img}" alt="Miniatura ${index + 1}" loading="lazy">
+                    <img src="${this.escapeHTML(this.safeURL(img))}" alt="Miniatura ${index + 1}" loading="lazy">
                   </div>
                 `).join('')}
               </div>
@@ -971,19 +1001,22 @@
         if (propiedad && Array.isArray(propiedad.fotos) && propiedad.fotos.length > 0) {
           propiedad.fotos.forEach((foto) => {
             const url = typeof foto === 'string' ? foto : (foto && foto.url ? foto.url : foto);
-            if (url && !images.includes(url)) images.push(url);
+            const safeUrl = this.safeURL(url);
+            if (safeUrl && !images.includes(safeUrl)) images.push(safeUrl);
           });
         }
 
         if (images.length === 0 && propiedad && propiedad.img_princ) {
-          images.push(propiedad.img_princ);
+          const safeUrl = this.safeURL(propiedad.img_princ);
+          if (safeUrl) images.push(safeUrl);
         }
 
         if (images.length === 0 && propiedad) {
           for (let i = 1; i <= 20; i++) {
             const key = `img_${i}`;
-            if (propiedad[key] && !images.includes(propiedad[key])) {
-              images.push(propiedad[key]);
+            const safeUrl = this.safeURL(propiedad[key]);
+            if (safeUrl && !images.includes(safeUrl)) {
+              images.push(safeUrl);
             }
           }
         }
@@ -1058,13 +1091,16 @@
 
         // Estado de la propiedad (ej: Reservado, Vendido, etc.)
         const estado = this.property.estado || this.property.in_est || '';
+        const safeTitle = this.escapeHTML(normalized.title);
+        const safeLocation = this.escapeHTML(location || 'Sin ubicación');
+        const safeEstado = this.escapeHTML(estado);
 
         document.getElementById('propertyHeader').innerHTML = `
           <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
             <span class="badge" style="background: var(--color-primary); color: white;">${operationType}</span>
-            ${estado && estado.toLowerCase() !== 'disponible' ? `<span class="property-status-badge">${estado}</span>` : ''}
+            ${estado && estado.toLowerCase() !== 'disponible' ? `<span class="property-status-badge">${safeEstado}</span>` : ''}
           </div>
-          <h1 class="property-title">${normalized.title}</h1>
+          <h1 class="property-title">${safeTitle}</h1>
           <p class="property-price">${renderer.formatPrice(normalized.price, normalized.currency)}</p>
           ${normalized.operation_type === 'alquiler' || normalized.operation_type === 'alquiler_temporal' ? `<p class="property-expenses">${normalized.expenses > 0 ? 'Expensas: ' + renderer.formatPrice(normalized.expenses, 'ARS') : 'Sin expensas'}</p>` : ''}
           <p class="property-location">
@@ -1072,7 +1108,7 @@
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2"/>
               <circle cx="12" cy="10" r="3" stroke-width="2"/>
             </svg>
-            ${location || 'Sin ubicación'}
+            ${safeLocation}
           </p>
         `;
       }
@@ -1164,8 +1200,8 @@
           <div class="feature">
             <div class="feature-icon"><i data-lucide="${feature.icon}" style="width: 24px; height: 24px;"></i></div>
             <div class="feature-info">
-              <span>${feature.label}</span>
-              <strong>${feature.value}</strong>
+              <span>${this.escapeHTML(feature.label)}</span>
+              <strong>${this.escapeHTML(feature.value)}</strong>
             </div>
           </div>
         `).join('');
@@ -1187,7 +1223,7 @@
         const cleanText = temp.textContent || temp.innerText || '';
 
         document.getElementById('propertyDescription').innerHTML = `
-          <p>${cleanText.replace(/\n/g, '<br>')}</p>
+          <p>${this.escapeHTML(cleanText).replace(/\n/g, '<br>')}</p>
         `;
       }
 
@@ -1212,7 +1248,7 @@
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
               <p style="margin-top: var(--space-md); font-weight: 600;">Sin ubicación precisa</p>
-              <p style="color: var(--color-gray-500);">${location}</p>
+              <p style="color: var(--color-gray-500);">${this.escapeHTML(location)}</p>
             </div>
           `;
           return;
@@ -1230,7 +1266,7 @@
           }).addTo(this.map);
 
           L.marker([lat, lng]).addTo(this.map)
-            .bindPopup(`<strong>${this.property.titulo || 'Propiedad'}</strong>`)
+            .bindPopup(`<strong>${this.escapeHTML(this.property.titulo || 'Propiedad')}</strong>`)
             .openPopup();
         }, 100);
       }
@@ -1317,7 +1353,7 @@
         filmstrip.style.display = 'flex';
         filmstrip.innerHTML = this.images.map((img, idx) => `
           <div class="filmstrip-thumb ${idx === this.currentImageIndex ? 'active' : ''}" onclick="propertyManager.goToImage(${idx})">
-            <img src="${img}" alt="Miniatura ${idx + 1}" loading="lazy">
+            <img src="${this.escapeHTML(this.safeURL(img))}" alt="Miniatura ${idx + 1}" loading="lazy">
           </div>
         `).join('');
       }
@@ -1360,7 +1396,7 @@
       }
 
       showError(message, details = '') {
-        const detailsHTML = details ? `<p style="color: var(--color-gray-600); margin: var(--space-sm) 0;">${details}</p>` : `<p style="color: var(--color-gray-600); margin: var(--space-sm) 0;">La propiedad que buscás no existe o fue removida.</p>`;
+        const detailsHTML = details ? `<p style="color: var(--color-gray-600); margin: var(--space-sm) 0;">${this.escapeHTML(details)}</p>` : `<p style="color: var(--color-gray-600); margin: var(--space-sm) 0;">La propiedad que buscás no existe o fue removida.</p>`;
 
         document.getElementById('loadingContainer').innerHTML = `
           <div style="text-align: center;">
@@ -1369,7 +1405,7 @@
               <line x1="15" y1="9" x2="9" y2="15" stroke-width="2"/>
               <line x1="9" y1="9" x2="15" y2="15" stroke-width="2"/>
             </svg>
-            <h2>${message}</h2>
+            <h2>${this.escapeHTML(message)}</h2>
             ${detailsHTML}
             <a href="/propiedades" class="btn btn-primary">Ver todas las propiedades</a>
           </div>
