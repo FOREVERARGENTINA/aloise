@@ -1,6 +1,18 @@
 # Seguridad
 
+Ultima revision local: 2026-07-16.
+
 Este repositorio es un sitio estatico publicado en Firebase Hosting. No tiene backend propio, sesiones, base de datos SQL ni endpoints privados dentro del repo.
+
+## Registro 2026-07-16
+
+- Se aplico hardening pragmatico segun `SECURITY_AGENT.md`, ajustado al alcance real del repo para evitar sobreingenieria.
+- Se endurecio el render de datos externos de Xintel contra XSS en `js/modules/property-renderer.js` y `ficha.html`.
+- Se agregaron headers de seguridad en `firebase.json`, incluyendo CSP compatible con los scripts inline y CDNs que el sitio ya usa.
+- Se redujo la superficie publicada por Firebase Hosting excluyendo archivos auxiliares, docs internas, scripts, PDFs, TXT e INI de trabajo.
+- Se amplio `.gitignore` para bloquear credenciales locales y archivos `.env.*`.
+- Se agregaron CodeQL y Dependabot para GitHub Actions.
+- No se agrego rate limiting server-side, CSRF, middleware de auth ni validadores de backend porque este repo no tiene servidor propio.
 
 ## Modelo de riesgo real
 

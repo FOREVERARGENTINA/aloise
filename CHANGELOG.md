@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-07-16
+
+### Security: hardening pragmático del sitio estático
+
+Se revisó `SECURITY_AGENT.md` contra la arquitectura real del repo para
+evitar sobreingeniería: el proyecto es un sitio estático en Firebase
+Hosting, sin backend propio, auth, sesiones, SQL ni endpoints privados.
+
+- `js/modules/property-renderer.js`: se agregaron helpers de escape HTML,
+  validación de URLs, tokens de clase y callbacks para reducir XSS al
+  renderizar datos externos de Xintel.
+- `ficha.html`: se endureció el render de detalle de propiedad
+  (título, estado, ubicación, descripción, galería, miniaturas, popup del
+  mapa y mensajes de error) para no insertar datos externos sin codificar.
+- `firebase.json`: se agregaron headers de seguridad compatibles con el
+  sitio actual (`Content-Security-Policy`, `X-Content-Type-Options`,
+  `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`, HSTS) y se
+  excluyeron del deploy archivos auxiliares/sensibles de trabajo
+  (`docs`, `scripts`, configs internas de `DATOS`, PDFs, TXT e INI).
+- `firebase.json`: `/js/config.js` queda con `no-store` para evitar cache
+  agresiva de configuración operativa.
+- `.gitignore`: se ampliaron patrones para `.env.*`, credenciales locales,
+  service accounts y claves privadas comunes.
+- `.github/workflows/codeql.yml` y `.github/dependabot.yml`: se agregaron
+  CodeQL y Dependabot para GitHub Actions.
+- `SECURITY.md`: se documentó el modelo de riesgo real, controles
+  aplicados, pendientes del propietario y puntos que no aplican por no
+  existir backend en este repo.
+
+**Pendiente importante:** `CONFIG.xintel.apiKey` está publicado en el
+frontend. En un sitio estático no se puede ocultar; debe tratarse como
+público, restringirse/rotarse en el proveedor o moverse a un backend/proxy
+si otorga permisos sensibles.
+
 ## 2026-07-04
 
 ### Fix: navbar no quedaba sticky al hacer scroll
