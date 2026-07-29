@@ -454,63 +454,9 @@
       let currentPage = 1;
       let currentFilters = {};
 
-      const locations = [
-        // Tres de Febrero
-        '3 de Febrero',
-        'Tres de Febrero',
-        'Caseros',
-        'Ciudad Jardín del Palomar',
-        'El Palomar',
-        'Villa Bosch',
-        'Martín Coronado',
-        'Pablo Podestá',
-        'José Ingenieros',
-        'Sáenz Peña',
-        'Santos Lugares',
-        'Ciudadela',
-        'Loma Hermosa',
-        'Villa Raffo',
-        'Ciudad Jardín',
-
-        // San Martín
-        'San Martín',
-        'Villa Ballester',
-        'San Andrés',
-        'Billinghurst',
-        'Villa Lynch',
-
-        // Morón
-        'Morón',
-        'Castelar',
-        'Ituzaingó',
-        'Haedo',
-        'Villa Sarmiento',
-
-        // La Matanza / otros cercanos
-        'Ramos Mejía',
-        'San Justo',
-        'Lomas del Mirador',
-        'La Tablada',
-        'Isidro Casanova',
-        'Ciudad Evita',
-        'Villa Madero',
-        'Tapiales',
-        'Aldo Bonzi',
-
-        // San Miguel
-        'San Miguel',
-        'Muñiz',
-        'Bella Vista',
-
-        // Hurlingham
-        'Hurlingham',
-        'Villa Tesei',
-
-        // CABA
-        'CABA',
-        'Capital Federal',
-        'Ciudad Autónoma de Buenos Aires'
-      ];
+      // Sugerencias de ubicación: se construyen desde el catálogo real (buildLocationSuggestions)
+      // en vez de una lista fija, que ofrecía 29 de 42 opciones sin propiedades.
+      let locations = [];
 
       const setupAutocomplete = () => {
         const input = document.getElementById('location');
@@ -550,7 +496,7 @@
 
             option.addEventListener('mousedown', (event) => {
               event.preventDefault();
-              input.value = item;
+              input.value = item.replace(/\s*\(\d+\)\s*$/, '');
               closeList();
               input.dispatchEvent(new Event('input', { bubbles: true }));
             });
@@ -638,9 +584,60 @@
         return raw;
       };
 
+      // Xintel no tiene campo de partido: la ficha sólo trae barrio y localidad.
+      // Buscar un partido debe traer también sus localidades.
+      const PARTIDOS = {
+        'tres de febrero': ['caseros', 'villa bosch', 'martin coronado', 'ciudad jardin', 'el palomar', 'saenz pena', 'santos lugares', 'ciudadela', 'loma hermosa', 'pablo podesta', 'remedios de escalada'],
+        'moron': ['moron', 'haedo', 'castelar', 'villa sarmiento'],
+        'san martin': ['san martin', 'billinghurst', 'villa ballester', 'san andres', 'jose leon suarez', 'villa lynch']
+      };
+
+      const PARTIDO_LABELS = {
+        'tres de febrero': 'Tres de Febrero',
+        'moron': 'Morón',
+        'san martin': 'San Martín'
+      };
+
+      const stripAccents = (value) => String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+      // Arma el desplegable con lo que existe en el catalogo, mas los partidos
+      // que tengan propiedades. Antes era una lista fija donde 29 de 42 opciones
+      // no devolvian nada (San Justo, CABA, Hurlingham...).
+      const buildLocationSuggestions = (properties = []) => {
+        const labels = new Map();
+        properties.forEach((prop) => {
+          [prop?.in_loc, prop?.in_bar].forEach((value) => {
+            const label = String(value || '').trim();
+            if (!label) return;
+            const key = stripAccents(label);
+            if (!labels.has(key)) labels.set(key, label);
+          });
+        });
+
+        const suggestions = [...labels.values()].map((label) => ({
+          label,
+          count: properties.filter((prop) => matchesLocation(prop, label)).length
+        }));
+
+        Object.keys(PARTIDOS).forEach((key) => {
+          if (labels.has(key)) return;
+          const count = properties.filter((prop) => matchesLocation(prop, key)).length;
+          if (!count) return;
+          suggestions.push({ label: PARTIDO_LABELS[key] || key, count });
+        });
+
+        return suggestions
+          .filter((item) => item.count > 0)
+          .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+          .map((item) => `${item.label} (${item.count})`);
+      };
+
       const matchesLocation = (property, query) => {
         if (!query) return true;
-        const q = query.toLowerCase();
+        const q = stripAccents(query);
         const candidates = [
           property?.in_bar,
           property?.in_loc,
@@ -650,9 +647,13 @@
           property?.direccion
         ]
           .filter(Boolean)
-          .map((val) => String(val).toLowerCase());
+          .map(stripAccents);
 
-        return candidates.some((text) => text.includes(q)) || q.includes('tres de febrero') && candidates.some((text) => text.includes('3 de febrero'));
+        // Buscar un partido incluye sus localidades (Caseros entra en Tres de Febrero)
+        const terms = [q, ...(PARTIDOS[q] || [])];
+        if (q === 'tres de febrero') terms.push('3 de febrero');
+
+        return candidates.some((text) => terms.some((term) => text.includes(term)));
       };
 
       const parseBedrooms = (property) => {
@@ -800,14 +801,17 @@
         const rawLocation = formData.get('location') || '';
         const normalizedLocation = normalizeLocationQuery(rawLocation);
 
+        // ponytail: la ubicación NO se manda a Xintel. Su parámetro `barrios1` sólo
+        // busca en `in_bar`, y muchas fichas tienen la localidad en `in_loc`
+        // (ej: GAB80 => in_bar 'Zona Centro' / in_loc 'Caseros'), así que la API
+        // devolvía 5 de 27. Se pide todo y filtra matchesLocation(), que mira ambos.
         currentFilters = {
           operationType: formData.get('operationType') || undefined,
           propertyType: formData.get('propertyType') || undefined,
-          location: normalizedLocation || undefined,
           bedrooms: formData.get('bedrooms') || undefined,
           sort: document.getElementById('sortBy').value || 'date_desc',
           page: currentPage,
-          limit: formData.get('bedrooms') ? 120 : CONFIG.xintel.defaultFilters.limit
+          limit: (formData.get('bedrooms') || normalizedLocation) ? 120 : CONFIG.xintel.defaultFilters.limit
         };
 
         // Obtener propiedades (primero con filtro directo)
@@ -822,28 +826,9 @@
         let { properties, pagination } = result.data;
 
         // Si no hay filtros activos y no llegaron propiedades, Xintel falló internamente
-        const hayFiltros = currentFilters.operationType || currentFilters.propertyType || currentFilters.location || currentFilters.bedrooms;
+        const hayFiltros = currentFilters.operationType || currentFilters.propertyType || normalizedLocation || currentFilters.bedrooms;
         if (!hayFiltros && (!properties || properties.length === 0)) {
           notifyXintelFailure('Xintel devolvió 0 propiedades sin filtros activos');
-        }
-
-        // Fallback: si la API no devuelve resultados con ubicación, reintentar sin filtro y filtrar localmente
-        if (normalizedLocation && properties.length === 0) {
-          const fallbackFilters = { ...currentFilters };
-          delete fallbackFilters.location;
-          fallbackFilters.page = 1;
-          result = await propertyService.getProperties(fallbackFilters);
-          if (result.success) {
-            properties = result.data.properties || [];
-            const fallbackFiltered = properties.filter((item) => matchesLocation(item, normalizedLocation));
-            properties = fallbackFiltered;
-            pagination = {
-              current_page: 1,
-              total_pages: 1,
-              total_items: fallbackFiltered.length,
-              items_per_page: fallbackFiltered.length || 0
-            };
-          }
         }
 
         const normalizedProperties = properties.map((item) => renderer.normalizeXintelProperty(item));
@@ -932,6 +917,13 @@
 
       // Cargar propiedades inicialmente
       loadProperties();
+
+      // Sugerencias del desplegable: del catálogo completo, no del listado filtrado
+      propertyService.getProperties({ limit: 200, sort: 'date_desc', page: 1 })
+        .then((res) => {
+          if (res?.success) locations = buildLocationSuggestions(res.data.properties || []);
+        })
+        .catch(() => {});
 
       // Log de estado de la API
       const apiStatus = propertyService.getAPIStatus();
