@@ -1,5 +1,50 @@
 # Changelog
 
+## 2026-07-29
+
+### Fix: el filtro de ubicación ocultaba propiedades
+
+Buscar "Caseros" devolvía 5 de 27 propiedades. El filtro enviaba la
+ubicación a Xintel como `barrios1`, parámetro que solo busca en `in_bar`
+(barrio). Las fichas están cargadas de forma inconsistente: unas tienen
+la localidad en `in_bar` y otras en `in_loc`.
+
+| Ficha | `in_bar` | `in_loc` | Antes |
+|-------|----------|----------|-------|
+| GAB16 | Caseros | Tres de Febrero | aparecía |
+| GAB80 | Zona Centro | Caseros | **no aparecía** |
+
+Había un fallback que filtraba localmente, pero solo se activaba cuando
+la API devolvía cero resultados; como devolvía 5, nunca corregía.
+
+- `propiedades.html`: la ubicación ya no se manda a Xintel. Se pide el
+  catálogo y se filtra con `matchesLocation()`, que mira `in_bar`,
+  `in_loc` y `direccion`. Se eliminó el fallback muerto.
+- Mapeo partido → localidades (`PARTIDOS`), porque Xintel no tiene campo
+  de partido. Santos Lugares pertenece íntegramente a Tres de Febrero.
+- Acentos normalizados: "Moron" encuentra "Morón".
+
+Resultado: Caseros 5 → **27**, 3 de Febrero 2 → **35**.
+
+### Fix: el desplegable de ubicación ofrecía localidades vacías
+
+29 de 42 opciones no tenían ni una propiedad (San Justo, Ciudad Evita,
+Hurlingham, CABA…) y faltaban barrios que sí existen en las fichas
+(Zona Centro, Lado Norte). La lista estaba escrita a mano.
+
+- `propiedades.html`: `buildLocationSuggestions()` arma el desplegable
+  desde el catálogo, con el conteo al lado ("Caseros (27)"), ordenado por
+  cantidad. Agrega los partidos que tengan propiedades. El contador se
+  descarta al seleccionar, para no romper la búsqueda.
+
+Verificado contra la API real (empresa `GAB`, 39 propiedades): las 13
+sugerencias devuelven resultados, ninguna da cero y cada contador
+coincide con lo que entrega el filtro.
+
+Pendiente: el mismo problema existe en FURNE PROPIEDADES (empresa `FFN`),
+donde "Tres de Febrero" devuelve 0 con 24 propiedades en ese partido y 27
+de 31 opciones del desplegable están vacías.
+
 ## 2026-07-16
 
 ### Security: hardening pragmático del sitio estático
