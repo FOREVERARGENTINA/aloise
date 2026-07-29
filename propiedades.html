@@ -498,7 +498,8 @@
               event.preventDefault();
               input.value = item.replace(/\s*\(\d+\)\s*$/, '');
               closeList();
-              input.dispatchEvent(new Event('input', { bubbles: true }));
+              // Elegir una sugerencia ya busca: no hace falta Enter ni "Buscar propiedades"
+              document.getElementById('filtersForm').requestSubmit();
             });
 
             list.appendChild(option);
@@ -638,13 +639,20 @@
       const matchesLocation = (property, query) => {
         if (!query) return true;
         const q = stripAccents(query);
+        // normalizeXintelProperty() colapsa barrio+localidad en un solo `location`
+        // y descarta in_bar/in_loc, asi que hay que mirar tambien en `_xintel`,
+        // donde quedan los campos originales. Sin esto, Caseros daba 10 de 27.
+        const raw = property?._xintel || {};
         const candidates = [
           property?.in_bar,
           property?.in_loc,
+          raw.in_bar,
+          raw.in_loc,
           property?.barrio,
           property?.localidad,
           property?.location,
-          property?.direccion
+          property?.direccion,
+          raw.direccion
         ]
           .filter(Boolean)
           .map(stripAccents);
