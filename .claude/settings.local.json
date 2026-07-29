@@ -27,7 +27,8 @@
       "Skill(agent-browser)",
       "Bash(rtk git *)",
       "Bash(rtk grep *)",
-      "Bash(rtk ls *)"
+      "Bash(rtk ls *)",
+      "Bash(rtk curl *)"
     ],
     "deny": [],
     "ask": []
