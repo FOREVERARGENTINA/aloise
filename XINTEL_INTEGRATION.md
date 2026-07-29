@@ -331,6 +331,30 @@ renderer.renderPropertiesGrid(result.data.properties, '#latest-properties-grid')
 - Ubicación (búsqueda por texto)
 - Cantidad mínima de dormitorios
 
+### Ubicación: por qué NO se filtra en la API
+
+**No mandar la ubicación a Xintel.** Su parámetro `barrios1` solo busca
+en `in_bar` (barrio), y las fichas están cargadas de forma inconsistente:
+
+| Ficha | `in_bar` | `in_loc` |
+|-------|----------|----------|
+| GAB16 | Caseros | Tres de Febrero |
+| GAB80 | Zona Centro | Caseros |
+
+Filtrando con `barrios1=Caseros`, la API devuelve solo las 5 fichas que
+tienen "Caseros" cargado como barrio, y oculta las otras 22 que lo tienen
+como localidad. Por eso se pide el catálogo y se filtra localmente con
+`matchesLocation()` (en `propiedades.html`), que revisa ambos campos.
+
+Dos cosas a tener en cuenta al tocar este filtro:
+
+1. **Xintel no tiene campo de partido.** Buscar "Tres de Febrero" no
+   coincide con una ficha cargada en "Caseros" salvo por el mapeo
+   `PARTIDOS`, que expande cada partido a sus localidades.
+2. **`normalizeXintelProperty()` descarta `in_bar` e `in_loc`**: los
+   colapsa en un único campo `location`. Si el filtro corre después de
+   normalizar, hay que leer los originales desde `_xintel`.
+
 ## Componentes Reutilizables
 
 ### PropertyRenderer

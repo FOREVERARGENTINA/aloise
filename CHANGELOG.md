@@ -41,9 +41,49 @@ Verificado contra la API real (empresa `GAB`, 39 propiedades): las 13
 sugerencias devuelven resultados, ninguna da cero y cada contador
 coincide con lo que entrega el filtro.
 
-Pendiente: el mismo problema existe en FURNE PROPIEDADES (empresa `FFN`),
-donde "Tres de Febrero" devuelve 0 con 24 propiedades en ese partido y 27
-de 31 opciones del desplegable están vacías.
+### Fix: "Caseros (27)" mostraba 10 propiedades
+
+Detectado probando en el navegador, no contra la API. El contador salía
+bien porque se calcula sobre las fichas crudas de Xintel, pero el listado
+filtra **después** de `normalizeXintelProperty()`, que colapsa `in_bar` +
+`in_loc` en un único campo `location` y descarta los originales. De las
+27 fichas con Caseros, solo 10 lo conservaban.
+
+- `propiedades.html`: `matchesLocation()` ahora también mira dentro de
+  `_xintel`, donde el renderer deja los campos sin tocar.
+
+Lección: verificar contra la API no alcanza; el pipeline de normalización
+transforma los datos antes de que los vea el filtro.
+
+### Fix: elegir una sugerencia no buscaba
+
+Había que apretar Enter o "Buscar propiedades". El `mousedown` solo
+re-disparaba el evento `input`, que volvía a abrir la lista.
+
+- `propiedades.html`: ahora hace `requestSubmit()` al elegir.
+
+Verificado en el navegador contra producción: un clic en "Caseros (27)"
+muestra 27, con GAB80 y GAB16 presentes. 3 de Febrero 35, "Moron" sin
+tilde 3.
+
+### Chore: repositorio y despliegue
+
+- Desplegado a Firebase Hosting (sitio `aloisepropiedades`).
+- `.firebase/hosting..cache` dejó de trackearse: `.gitignore` ya excluía
+  `.firebase/` pero el archivo había quedado trackeado de antes, así que
+  cambiaba en cada deploy y ensuciaba el estado del repo.
+- Las tres ramas (`backup/grandes-cambios-2025-12-22`, `master` y
+  `claude/gabriela-aloise-website-…`) quedaron alineadas en el mismo
+  commit. GitHub se usa como backup, así que todas deben reflejar lo
+  actual. El merge fue fast-forward, sin conflictos.
+
+Nota: se revisó si había archivos internos expuestos en producción
+(`SECURITY_AGENT.md`, `debug-*.html`). No los hay: las respuestas 200 son
+el `index.html` que sirve el rewrite `**` de `firebase.json`, no los
+archivos. El `ignore` funciona correctamente.
+
+El mismo problema de fondo existía en FURNE PROPIEDADES (empresa `FFN`);
+ver el CHANGELOG de ese repo.
 
 ## 2026-07-16
 
