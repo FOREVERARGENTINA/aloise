@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-07-30
+
+### Fix: la descripción de la ficha mostraba HTML crudo
+
+En `ficha.html`, la descripción de la propiedad empezó a llegar en
+`in_obs` con entidades HTML escapadas (`&lt;p&gt;`, `&amp;nbsp;`), por lo
+que el render anterior dejaba etiquetas y entidades visibles como texto.
+
+- `renderDescription()` dejó de aplanar la descripción a texto puro y
+  ahora decodifica entidades de forma iterativa con `<textarea>` antes de
+  renderizar.
+- Se incorporó `sanitizeDescriptionHTML()` para permitir solo HTML básico
+  de formato (`p`, `strong`, `em`, `span`, `ul`, `li`, etc.) y un
+  subconjunto acotado de estilos inline (`color`,
+  `background-color`, `font-weight`).
+- Durante la corrección apareció un bypass en la primera versión del
+  sanitizer: al remover una etiqueta no permitida promovía sus hijos sin
+  volver a sanearlos. La implementación actual recorre esos nodos antes
+  de reubicarlos, evitando que sobrevivan atributos de evento ejecutables
+  como `onerror` u `onclick`.
+
+Resultado: la ficha vuelve a mostrar párrafos y negritas sin exponer tags
+HTML crudos en pantalla. Matiz: la sanitización quedó endurecida, pero no
+se documenta como garantía formal de seguridad total.
+
 ## 2026-07-29
 
 ### Fix: el filtro de ubicación ocultaba propiedades

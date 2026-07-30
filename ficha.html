@@ -1215,16 +1215,61 @@
       }
 
       renderDescription() {
-        const description = this.property.in_obs || 'Sin descripción disponible';
+        let html = this.property.in_obs || 'Sin descripción disponible';
 
-        // Limpiar HTML
+        // Xintel devuelve las etiquetas ya escapadas (&lt;p&gt;) y a veces
+        // doblemente escapadas (&amp;nbsp;). Decodificar solo las entidades,
+        // sin tocar tags, usando <textarea> (nunca interpreta su contenido
+        // como HTML). Se repite hasta que decodificar no cambie nada.
+        const decoder = document.createElement('textarea');
+        for (let i = 0; i < 3; i++) {
+          decoder.innerHTML = html;
+          const decoded = decoder.value;
+          if (decoded === html) break;
+          html = decoded;
+        }
+
+        document.getElementById('propertyDescription').innerHTML = this.sanitizeDescriptionHTML(html);
+      }
+
+      // Permite solo tags/atributos de formato básico, sin scripts ni handlers.
+      sanitizeDescriptionHTML(html) {
+        const allowedTags = new Set(['P', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'SPAN', 'UL', 'OL', 'LI']);
+        const allowedStyleProps = new Set(['background-color', 'color', 'font-weight']);
+
         const temp = document.createElement('div');
-        temp.innerHTML = description;
-        const cleanText = temp.textContent || temp.innerText || '';
+        temp.innerHTML = html;
 
-        document.getElementById('propertyDescription').innerHTML = `
-          <p>${this.escapeHTML(cleanText).replace(/\n/g, '<br>')}</p>
-        `;
+        const walk = (node) => {
+          [...node.childNodes].forEach((child) => {
+            if (child.nodeType === Node.ELEMENT_NODE) {
+              if (!allowedTags.has(child.tagName)) {
+                walk(child);
+                child.replaceWith(...child.childNodes);
+                return;
+              }
+              [...child.attributes].forEach((attr) => {
+                if (attr.name === 'style') {
+                  const clean = attr.value.split(';')
+                    .map((decl) => decl.split(':').map((s) => s.trim()))
+                    .filter(([prop]) => allowedStyleProps.has(prop))
+                    .map(([prop, val]) => `${prop}: ${val}`)
+                    .join('; ');
+                  if (clean) child.setAttribute('style', clean);
+                  else child.removeAttribute('style');
+                } else {
+                  child.removeAttribute(attr.name);
+                }
+              });
+              walk(child);
+            } else if (child.nodeType !== Node.TEXT_NODE) {
+              child.remove();
+            }
+          });
+        };
+        walk(temp);
+
+        return temp.innerHTML || '<p>Sin descripción disponible</p>';
       }
 
       renderMap() {
