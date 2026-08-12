@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-08-08
+
+### Fix: el video del hero no cargaba en aloisepropiedades.com.ar
+
+La CSP de `firebase.json` no tenía directiva `media-src`, así que el
+navegador caía al fallback de `default-src 'self'` para los `<video>`.
+Las URLs de `hero.webm` y `por-que.webm` en `index.html` estaban
+hardcodeadas al dominio absoluto `https://aloisepropiedades.web.app/...`,
+que es un origen distinto de `aloisepropiedades.com.ar` (dominio custom
+sobre el mismo hosting de Firebase). Resultado: los videos se veían bien
+entrando por `.web.app`, pero quedaban bloqueados por CSP al entrar por
+`.com.ar`.
+
+- Se agregó `media-src 'self'` a la CSP en `firebase.json` (antes
+  ausente).
+- Se reemplazaron las 3 referencias absolutas a `aloisepropiedades.web.app`
+  en `index.html` (preload de `hero.webm` y los `<source>` de `hero.webm`
+  y `por-que.webm`) por rutas relativas (`/DATOS/...`), para que sean
+  mismo-origen sin importar el dominio de entrada.
+- Deployado a Firebase Hosting y verificado con `browse` (gstack) en
+  ambos dominios: video con `readyState: 4`, `paused: false`, sin errores
+  de CSP para los `.webm`.
+- Pendiente, no relacionado: sigue apareciendo un error de CSP para
+  `www.google.com/g/collect` (Google Analytics/GTM) porque `connect-src`
+  no incluye ese host. No se tocó en este fix.
+
 ## 2026-07-30
 
 ### Fix: la descripción de la ficha mostraba HTML crudo

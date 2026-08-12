@@ -28,7 +28,9 @@
       "Bash(rtk git *)",
       "Bash(rtk grep *)",
       "Bash(rtk ls *)",
-      "Bash(rtk curl *)"
+      "Bash(rtk curl *)",
+      "Bash(rtk read *)",
+      "Skill(browse)"
     ],
     "deny": [],
     "ask": []
